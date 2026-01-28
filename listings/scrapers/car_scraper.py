@@ -19,11 +19,9 @@ class MobileBgScraper(BaseScraper):
                 if href and not href.startswith('http'):
                     href = 'https:' + href
 
-                # --- ВАЖНО: ФИЛТЪРЪТ ---
-                # Ако линкът НЕ съдържа "mobile.bg/obiava", значи е новина или реклама.
-                # Прескачаме го!
+
                 if '/obiava' not in href:
-                    # print(f"Preskacham novina/reklama: {href}")
+
                     continue
 
                 # --- ЗАГЛАВИЕ ---
@@ -45,7 +43,7 @@ class MobileBgScraper(BaseScraper):
                             if clean_price.isdigit():
                                 price = int(clean_price)
 
-                # --- ГОДИНА (Без промяна) ---
+                # --- ГОДИНА ---
                 year = 2000
                 info_text = parent_container.get_text() if parent_container else ""
                 year_match = re.search(r'(19|20)\d{2}', info_text)

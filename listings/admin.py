@@ -11,4 +11,5 @@ class JobListingAdmin(admin.ModelAdmin):
 
 @admin.register(Search)
 class SearchAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'created_at')
+    list_display = ('title', 'category', 'brand', 'model', 'created_at')
+    search_fields = ('title', 'url')

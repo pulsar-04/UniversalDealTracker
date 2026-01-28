@@ -46,6 +46,8 @@ class Search(models.Model):
     title = models.CharField(max_length=100, verbose_name="Име на търсенето")
     url = models.URLField(verbose_name="Линк за следене")
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name="Категория")
+    brand = models.CharField(max_length=50, blank=True, null=True, verbose_name="Марка (за авто-попълване)")
+    model = models.CharField(max_length=50, blank=True, null=True, verbose_name="Модел (за авто-попълване)")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

@@ -5,14 +5,12 @@ import time
 
 class BaseScraper:
     """
-    Това е абстрактен клас. Той не знае КАКВО търсим (коли или работа),
-    но знае КАК да достъпи интернет и да вземе HTML-а.
+    Това е абстрактен клас. Той не знае КАКВО търсим
     """
 
     def __init__(self, url):
         self.url = url
-        # User-Agent е нашата "фалшива лична карта".
-        # Без нея сайтовете виждат, че сме скрипт и ни блокират.
+
         self.headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept-Language': 'en-US,en;q=0.9,bg;q=0.8',
@@ -25,8 +23,6 @@ class BaseScraper:
             response = requests.get(self.url, headers=self.headers, timeout=10)
             response.raise_for_status()
 
-            # --- НОВО: Оправяме кирилицата ---
-            # Казваме на requests да използва кодировката, която сайтът реално подава
             response.encoding = response.apparent_encoding
 
             return response.text

@@ -1,13 +1,13 @@
 from django.core.management.base import BaseCommand
 from listings.scrapers.car_scraper import MobileBgScraper
-from listings.models import CarListing, Search  # <-- Импортваме новия модел
+from listings.models import CarListing, Search
 
 
 class Command(BaseCommand):
     help = 'Scrapes cars based on saved Searches in database'
 
     def handle(self, *args, **kwargs):
-        # 1. Взимаме всички търсения от базата, които са за Коли
+
         searches = Search.objects.filter(category='car')
 
         if not searches.exists():
@@ -20,7 +20,7 @@ class Command(BaseCommand):
         for search in searches:
             self.stdout.write(f"--> Processing: {search.title}")
 
-            scraper = MobileBgScraper(search.url)  # Вече взимаме URL-а динамично!
+            scraper = MobileBgScraper(search.url)
             items = scraper.run()
 
             if not items:
@@ -38,10 +38,11 @@ class Command(BaseCommand):
                             'year': item['year'],
                             'category': 'car',
 
-                            # Тук можем да бъдем хитри и да вземем марката от името на Търсенето
-                            # Но за сега оставяме твърди стойности или Unknown
-                            'brand': 'Unknown',
-                            'model': 'Unknown',
+
+
+                            'brand': search.brand if search.brand else 'Unknown',
+                            'model': search.model if search.model else 'Unknown',
+
                             'kilometers': 0,
                             'fuel_type': 'Unknown'
                         }

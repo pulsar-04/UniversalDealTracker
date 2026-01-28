@@ -1,0 +1,48 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h1 class="fw-bold">Намерени Оферти</h1>
+        <p class="text-muted">Следим пазара за теб.</p>
+    </div>
+    <div class="col-auto">
+        <span class="badge bg-primary fs-6">{{ total_count }} обяви</span>
+    </div>
+</div>
+
+<div class="row">
+    {% for car in cars %}
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <span class="badge bg-secondary">{{ car.brand }}</span>
+                <span class="text-muted small">{{ car.date_posted|date:"d M Y" }}</span>
+            </div>
+            
+            <div class="card-body">
+                <h5 class="card-title text-truncate">{{ car.title }}</h5>
+                <p class="card-text text-muted">{{ car.model }} | {{ car.year }}г.</p>
+                
+                <h3 class="text-success fw-bold">
+                    {{ car.price|floatformat:0 }} EU.
+                </h3>
+            </div>
+            
+            <div class="card-footer bg-white border-top-0">
+                <a href="{{ car.url }}" target="_blank" class="btn btn-outline-primary w-100">
+                    Виж Обявата ↗
+                </a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <h3>Все още няма намерени коли... 🤖</h3>
+        <p>Пусни робота от терминала!</p>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
