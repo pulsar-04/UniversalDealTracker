@@ -33,3 +33,24 @@ class JobListing(Listing):
 
     class Meta:
         verbose_name = "Обява за Работа"
+
+class Search(models.Model):
+    """
+    Тук пазим линковете, които потребителят иска да следи.
+    """
+    CATEGORY_CHOICES = [
+        ('car', 'Car'),
+        ('job', 'Job'),
+    ]
+
+    title = models.CharField(max_length=100, verbose_name="Име на търсенето")
+    url = models.URLField(verbose_name="Линк за следене")
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, verbose_name="Категория")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title} ({self.category})"
+
+    class Meta:
+        verbose_name = "Търсене"
+        verbose_name_plural = "Търсения"
