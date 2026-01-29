@@ -12,6 +12,25 @@
     </div>
 </div>
 
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="btn-group" role="group">
+            <a href="{% url 'home' %}"
+               class="btn btn-outline-dark {% if not selected_brand %}active{% endif %}">
+               Всички
+            </a>
+
+            {% for brand in brands %}
+                {% if brand != 'Unknown' %} <a href="?brand={{ brand }}"
+                   class="btn btn-outline-dark {% if selected_brand == brand %}active{% endif %}">
+                   {{ brand }}
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
 <div class="row">
     {% for car in cars %}
     <div class="col-md-4 mb-4">
@@ -26,7 +45,7 @@
                 <p class="card-text text-muted">{{ car.model }} | {{ car.year }}г.</p>
                 
                 <h3 class="text-success fw-bold">
-                    {{ car.price|floatformat:0 }} EU.
+                    {{ car.price|floatformat:0 }} €
                 </h3>
             </div>
             
