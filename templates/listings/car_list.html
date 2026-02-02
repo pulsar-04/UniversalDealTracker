@@ -2,64 +2,81 @@
 
 {% block content %}
 
-<div class="row mb-4 align-items-center">
-    <div class="col">
-        <h1 class="fw-bold">Намерени Оферти</h1>
-        <p class="text-muted">Следим пазара за теб.</p>
+<div class="d-flex justify-content-between align-items-end mb-5">
+    <div>
+        <h1 class="fw-bold text-dark mb-1">Намерени Оферти</h1>
+        <p class="text-muted mb-0">Следим пазара за теб в реално време.</p>
     </div>
-    <div class="col-auto">
-        <span class="badge bg-primary fs-6">{{ total_count }} обяви</span>
+    <div>
+        <span class="badge bg-primary rounded-pill px-3 py-2">
+            {{ total_count }} обяви
+        </span>
     </div>
 </div>
 
-<div class="row mb-4">
-    <div class="col-12">
-        <div class="btn-group" role="group">
-            <a href="{% url 'home' %}"
-               class="btn btn-outline-dark {% if not selected_brand %}active{% endif %}">
-               Всички
-            </a>
+<div class="mb-5">
+    <div class="d-flex flex-wrap">
+        <a href="{% url 'car_list' %}"
+           class="filter-btn {% if not selected_brand %}active{% endif %}">
+           Всички
+        </a>
 
-            {% for brand in brands %}
-                {% if brand != 'Unknown' %} <a href="?brand={{ brand }}"
-                   class="btn btn-outline-dark {% if selected_brand == brand %}active{% endif %}">
-                   {{ brand }}
-                </a>
-                {% endif %}
-            {% endfor %}
-        </div>
+        {% for brand in brands %}
+            {% if brand != 'Unknown' %}
+            <a href="?brand={{ brand }}"
+               class="filter-btn {% if selected_brand == brand %}active{% endif %}">
+               {{ brand }}
+            </a>
+            {% endif %}
+        {% endfor %}
     </div>
 </div>
 
 <div class="row">
     {% for car in cars %}
     <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-header bg-white d-flex justify-content-between align-items-center">
-                <span class="badge bg-secondary">{{ car.brand }}</span>
-                <span class="text-muted small">{{ car.date_posted|date:"d M Y" }}</span>
-            </div>
-            
-            <div class="card-body">
-                <h5 class="card-title text-truncate">{{ car.title }}</h5>
-                <p class="card-text text-muted">{{ car.model }} | {{ car.year }}г.</p>
-                
-                <h3 class="text-success fw-bold">
+
+        <div class="listing-card">
+            <div class="listing-body">
+
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <span class="badge-custom">{{ car.brand }}</span>
+                    <small class="text-muted" style="font-size: 0.8rem;">
+                        {{ car.date_posted|date:"d M" }}
+                    </small>
+                </div>
+
+                <h5 class="fw-bold text-dark mb-2 text-truncate" title="{{ car.title }}">
+                    {{ car.title }}
+                </h5>
+
+                <div class="listing-meta">
+                    <i class="bi bi-car-front"></i>
+                    <span>{{ car.model }}</span>
+                    <span class="mx-1">•</span>
+                    <span>{{ car.year }}г.</span>
+                </div>
+
+                <div class="listing-price">
                     {{ car.price|floatformat:0 }} €
-                </h3>
-            </div>
-            
-            <div class="card-footer bg-white border-top-0">
-                <a href="{{ car.url }}" target="_blank" class="btn btn-outline-primary w-100">
-                    Виж Обявата ↗
-                </a>
+                </div>
+
+                <div class="mt-auto pt-3">
+                    <a href="{{ car.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center" style="font-size: 0.95rem;">
+                        Виж Обявата <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    </a>
+                </div>
+
             </div>
         </div>
-    </div>
+        </div>
     {% empty %}
     <div class="col-12 text-center py-5">
-        <h3>Все още няма намерени коли... 🤖</h3>
-        <p>Пусни робота от терминала!</p>
+        <div class="py-5">
+            <h1 style="font-size: 4rem;">🤖</h1>
+            <h3 class="fw-bold mt-3">Роботът почива...</h3>
+            <p class="text-muted">Все още няма намерени коли по тези критерии.</p>
+        </div>
     </div>
     {% endfor %}
 </div>

@@ -1,0 +1,68 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-end mb-5">
+    <div>
+        <h1 class="fw-bold text-dark mb-1">IT Кариери</h1>
+        <p class="text-muted mb-0">Актуални предложения от Dev.bg и водещи компании.</p>
+    </div>
+    <div>
+        <span class="badge bg-success rounded-pill px-3 py-2">
+            {{ total_count }} позиции
+        </span>
+    </div>
+</div>
+
+<div class="row">
+    {% for job in jobs %}
+    <div class="col-md-6 mb-4"> <div class="listing-card">
+            <div class="listing-body">
+
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <span class="company-name">
+                        <i class="bi bi-building me-1"></i> {{ job.company_name }}
+                    </span>
+                    <small class="text-muted" style="font-size: 0.8rem;">
+                        {{ job.date_posted|date:"d M" }}
+                    </small>
+                </div>
+
+                <h4 class="fw-bold text-dark mb-3">
+                    {{ job.title }}
+                </h4>
+
+                <div class="listing-meta mb-4">
+                    <div class="d-flex align-items-center">
+                        <i class="bi bi-geo-alt-fill text-danger me-2"></i>
+                        <span>{{ job.location }}</span>
+
+                        {% if job.is_remote %}
+                            <span class="badge-remote">
+                                <i class="bi bi-wifi"></i> Remote
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-2">
+                    <a href="{{ job.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center" style="font-size: 0.95rem;">
+                        Кандидатствай Сега ↗
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        </div>
+    {% empty %}
+    <div class="col-12 text-center py-5">
+        <div class="py-5">
+            <h1 style="font-size: 4rem;">💼</h1>
+            <h3 class="fw-bold mt-3">Няма намерени позиции</h3>
+            <p class="text-muted">Опитай да добавиш нови критерии за търсене.</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}

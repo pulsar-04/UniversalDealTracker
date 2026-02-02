@@ -1,0 +1,31 @@
+{% extends "listings/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-5">
+        <div class="card shadow">
+            <div class="card-header bg-dark text-white">
+                <h4 class="mb-0">Вход</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label>Потребителско име</label>
+                        <input type="text" name="username" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label>Парола</label>
+                        <input type="password" name="password" class="form-control" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-dark w-100">Влез</button>
+                </form>
+            </div>
+            <div class="card-footer text-center">
+                <small>Нямаш акаунт? <a href="{% url 'register' %}">Регистрирай се</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

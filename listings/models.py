@@ -5,7 +5,7 @@ class Listing(models.Model):
         ('car', 'Car'),
         ('job', 'Job'),
     ]
-    title = models.CharField(max_length=200, verbose_name="Заглавие")
+    title = models.CharField(max_length=300, verbose_name="Заглавие")
     url = models.URLField(unique=True, verbose_name="Линк")
     price = models.DecimalField(max_digits=12, decimal_places=2, null=True, blank=True, verbose_name="Цена")
     date_posted = models.DateTimeField(auto_now_add=True)
@@ -26,8 +26,8 @@ class CarListing(Listing):
         verbose_name = "Обява за Кола"
 
 class JobListing(Listing):
-    company_name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
+    company_name = models.CharField(max_length=200)
+    location = models.CharField(max_length=200)
     salary_min = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     is_remote = models.BooleanField(default=False)
 

@@ -1,0 +1,90 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+<div class="row mb-5">
+    <div class="col-md-8">
+        <h1 class="fw-bold text-dark">🎛️ Контролен Панел</h1>
+        <p class="text-muted">Добави линкове, които искаш роботът да следи.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="auth-card p-4"> <h4 class="fw-bold mb-3">➕ Добави Търсене</h4>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                <div class="mb-3">
+                    <label class="form-label-custom small">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="text-danger small">{{ field.errors }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary-custom w-100 mt-2">
+                    Запиши Търсенето
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+            <div class="card-header bg-white p-4 border-bottom">
+                <h5 class="fw-bold m-0">Активни Задачи ({{ searches.count }})</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light">
+                        <tr>
+                            <th class="ps-4 py-3">Име</th>
+                            <th>Категория</th>
+                            <th>Детайли</th>
+                            <th class="text-end pe-4">Действие</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for search in searches %}
+                        <tr>
+                            <td class="ps-4">
+                                <span class="fw-bold text-dark">{{ search.title }}</span><br>
+                                <a href="{{ search.url }}" target="_blank" class="small text-muted text-decoration-none">
+                                    <i class="bi bi-link-45deg"></i> Линк към източника
+                                </a>
+                            </td>
+                            <td>
+                                {% if search.category == 'car' %}
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Коли</span>
+                                {% else %}
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle">Работа</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    {% if search.brand %}{{ search.brand }}{% endif %} 
+                                    {% if search.model %}/ {{ search.model }}{% endif %}
+                                </small>
+                            </td>
+                            <td class="text-end pe-4">
+                                <a href="{% url 'delete_search' search.id %}" 
+                                   class="btn btn-sm btn-outline-danger border-0"
+                                   onclick="return confirm('Сигурен ли си, че искаш да спреш това търсене?')">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="4" class="text-center py-5 text-muted">
+                                Все още няма добавени търсения.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

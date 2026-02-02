@@ -1,0 +1,69 @@
+{% extends 'listings/base.html' %}
+
+{% block content %}
+<div class="container pb-5">
+
+    <div class="hero-section">
+        <h1 class="hero-title">
+            Спри да търсиш.<br>
+            <span style="color: var(--accent-color);">Започни да намираш.</span> 🚀
+        </h1>
+
+        <p class="hero-subtitle">
+            DealTracker е твоят личен асистент, който сканира всички сайтове за обяви
+            (Mobile.bg, Dev.bg) и ти показва само най-добрите оферти в реално време.
+        </p>
+
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'register' %}" class="btn btn-primary-custom">
+                Започни Безплатно
+            </a>
+            <a href="{% url 'login' %}" class="btn btn-secondary-custom">
+                Вход в системата
+            </a>
+        </div>
+    </div>
+
+    <div class="row mt-5">
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <i class="bi bi-car-front-fill"></i>
+                </div>
+                <h4 class="fw-bold mb-3">Авто Агрегатор</h4>
+                <p class="text-muted">
+                    Следим пазара на автомобили на всеки 30 минути.
+                    Виждаш веднага, когато излезе нова "далавера" за BMW или Mitsubishi.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+                <h4 class="fw-bold mb-3">IT Кариери</h4>
+                <p class="text-muted">
+                    Не изпускай мечтаната работа. Агрегираме Junior и Senior позиции
+                    от водещите IT портали директно в твоя дашборд.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="feature-card">
+                <div class="feature-icon-wrapper">
+                    <i class="bi bi-graph-up-arrow"></i>
+                </div>
+                <h4 class="fw-bold mb-3">История на Цените</h4>
+                <p class="text-muted">
+                    Ние помним това, което търговците трият.
+                    Виж дали цената е била променена и хвани най-добрия момент за покупка.
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
