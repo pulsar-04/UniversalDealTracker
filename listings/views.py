@@ -33,15 +33,23 @@ def car_list(request):
 
 @login_required
 def job_list(request):
-
     jobs = JobListing.objects.filter(is_active=True).order_by('-date_posted')
+
+    job_searches = Search.objects.filter(category='job')
+
+    selected_search_id = request.GET.get('search_id')
+
+    if selected_search_id:
+        search_obj = get_object_or_404(Search, pk=selected_search_id)
+        jobs = jobs.filter(title__icontains=search_obj.title)
 
     context = {
         'jobs': jobs,
-        'total_count': jobs.count()
+        'total_count': jobs.count(),
+        'job_searches': job_searches,
+        'selected_search_id': selected_search_id,
     }
     return render(request, 'listings/job_list.html', context)
-
 
 def about(request):
     return render(request, 'listings/about.html')

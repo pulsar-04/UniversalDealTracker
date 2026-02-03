@@ -14,6 +14,27 @@
     </div>
 </div>
 
+
+
+    <div class="mb-5">
+    <div class="d-flex flex-wrap">
+
+        <a href="{% url 'job_list' %}"
+           class="filter-btn {% if not selected_search_id %}active{% endif %}">
+           Всички
+        </a>
+
+        {% for search in job_searches %}
+            <a href="?search_id={{ search.id }}"
+               class="filter-btn {% if selected_search_id|stringformat:'s' == search.id|stringformat:'s' %}active{% endif %}">
+               {{ search.title }}
+            </a>
+        {% endfor %}
+
+    </div>
+</div>
+
+
 <div class="row">
     {% for job in jobs %}
     <div class="col-md-6 mb-4"> <div class="listing-card">
