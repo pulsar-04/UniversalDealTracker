@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 class Listing(models.Model):
     CATEGORY_CHOICES = [
@@ -50,6 +51,7 @@ class Search(models.Model):
     model = models.CharField(max_length=50, blank=True, null=True, verbose_name="Модел (за авто-попълване)")
     created_at = models.DateTimeField(auto_now_add=True)
 
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.title} ({self.category})"
 

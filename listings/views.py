@@ -5,27 +5,39 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SearchForm
 from .models import Search
 from django.contrib import messages
+from django.db.models import Q
 
 
+def landing(request):
 
+    if request.user.is_authenticated:
+        return redirect('car_list')
+
+    return render(request, 'listings/landing.html')
+
+
+@login_required
 def car_list(request):
 
-    if not request.user.is_authenticated:
-        return render(request, 'listings/landing.html')
+    user_searches = Search.objects.filter(user=request.user, category='car')
+    user_brands = user_searches.values_list('brand', flat=True).distinct()
 
+    if user_brands:
 
-    cars = CarListing.objects.filter(is_active=True).order_by('-date_posted')
+        cars = CarListing.objects.filter(is_active=True, brand__in=user_brands).order_by('-date_posted')
+    else:
+
+        cars = CarListing.objects.none()
+
 
     selected_brand = request.GET.get('brand')
     if selected_brand:
         cars = cars.filter(brand=selected_brand)
 
-    brands = CarListing.objects.values_list('brand', flat=True).distinct()
-
     context = {
         'cars': cars,
         'total_count': cars.count(),
-        'brands': brands,
+        'brands': user_brands,
         'selected_brand': selected_brand,
     }
     return render(request, 'listings/car_list.html', context)
@@ -33,14 +45,24 @@ def car_list(request):
 
 @login_required
 def job_list(request):
-    jobs = JobListing.objects.filter(is_active=True).order_by('-date_posted')
 
-    job_searches = Search.objects.filter(category='job')
+    job_searches = Search.objects.filter(user=request.user, category='job')
+
+    if job_searches.exists():
+        query = Q()
+
+        for search in job_searches:
+            query |= Q(title__icontains=search.title)
+
+        jobs = JobListing.objects.filter(is_active=True).filter(query).order_by('-date_posted')
+    else:
+
+        jobs = JobListing.objects.none()
 
     selected_search_id = request.GET.get('search_id')
-
     if selected_search_id:
-        search_obj = get_object_or_404(Search, pk=selected_search_id)
+
+        search_obj = get_object_or_404(Search, pk=selected_search_id, user=request.user)
         jobs = jobs.filter(title__icontains=search_obj.title)
 
     context = {
@@ -54,6 +76,7 @@ def job_list(request):
 def about(request):
     return render(request, 'listings/about.html')
 
+
 @login_required
 def dashboard(request):
 
@@ -61,14 +84,18 @@ def dashboard(request):
         form = SearchForm(request.POST)
         if form.is_valid():
 
-            form.save()
-            messages.success(request, "Успешно добави ново търсене! Роботът ще го обходи скоро.")
+            new_search = form.save(commit=False)
+
+            new_search.user = request.user
+
+            new_search.save()
+
+            messages.success(request, "Успешно добави ново търсене!")
             return redirect('dashboard')
     else:
         form = SearchForm()
 
-    # 2. Взимаме всички налични търсения
-    searches = Search.objects.all().order_by('-created_at')
+    searches = Search.objects.filter(user=request.user).order_by('-created_at')
 
     return render(request, 'listings/dashboard.html', {'form': form, 'searches': searches})
 
@@ -77,11 +104,9 @@ def dashboard(request):
 def delete_search(request, pk):
     search = get_object_or_404(Search, pk=pk)
 
-
     if search.category == 'car':
 
         cars_to_delete = CarListing.objects.filter(brand=search.brand)
-
 
         if search.model:
             cars_to_delete = cars_to_delete.filter(model=search.model)
