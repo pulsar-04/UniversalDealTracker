@@ -14,6 +14,7 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -136,3 +137,21 @@ STATICFILES_DIRS = [
 ]
 LOGIN_REDIRECT_URL = 'car_list'
 LOGIN_URL = 'login'
+
+# CELERY SETTINGS
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
+
+# CELERY BEAT SCHEDULE
+CELERY_BEAT_SCHEDULE = {
+    'scrape-cars-every-30-mins': {
+        'task': 'listings.tasks.auto_crawl_cars',
+        'schedule': crontab(minute='*/30'),
+    },
+    'scrape-jobs-every-1-hour': {
+        'task': 'listings.tasks.auto_crawl_jobs',
+        'schedule': crontab(minute='0', hour='*'),
+    },
+}
