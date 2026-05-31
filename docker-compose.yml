@@ -1,9 +1,76 @@
 version: '3.8'
 
 services:
+
+  db:
+    image: postgres:15-alpine
+    container_name: dealtracker_db
+    env_file:
+      - .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+
   redis:
     image: redis:7-alpine
     container_name: dealtracker_redis
-    ports:
-      - "6379:6379"
     restart: unless-stopped
+
+  # Главното приложение (Django + Gunicorn)
+  web:
+    build: .
+    container_name: dealtracker_web
+    command: gunicorn UniversalDealTracker.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    environment:
+
+      - DB_HOST=db
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+
+  celery_worker:
+    build: .
+    container_name: dealtracker_celery_worker
+    command: celery -A UniversalDealTracker worker -l INFO
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+
+  celery_beat:
+    build: .
+    container_name: dealtracker_celery_beat
+    command: celery -A UniversalDealTracker beat -l INFO
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+      - CELERY_BROKER_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+
+
+volumes:
+  postgres_data:
