@@ -4,18 +4,18 @@
 
 <div class="d-flex justify-content-between align-items-end mb-5">
     <div>
-        <h1 class="fw-bold text-dark mb-1">Намерени Оферти</h1>
-        <p class="text-muted mb-0">Следим пазара за теб в реално време.</p>
+        <h1 class="fw-bold text-white mb-1"><i class="bi bi-car-front-fill text-accent me-2"></i>Намерени Оферти</h1>
+        <p class="text-light mb-0">Следим пазара за теб в реално време.</p>
     </div>
     <div>
-        <span class="badge bg-primary rounded-pill px-3 py-2">
+        <span class="badge rounded-pill px-3 py-2" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid var(--accent-color); font-size: 0.9rem;">
             {{ total_count }} обяви
         </span>
     </div>
 </div>
 
 <div class="mb-5">
-    <div class="d-flex flex-wrap">
+    <div class="d-flex flex-wrap gap-2">
         <a href="{% url 'car_list' %}"
            class="filter-btn {% if not selected_brand %}active{% endif %}">
            Всички
@@ -35,18 +35,16 @@
 <div class="row">
     {% for car in cars %}
     <div class="col-md-4 mb-4">
-
         <div class="listing-card">
             <div class="listing-body">
-
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <span class="badge-custom">{{ car.brand }}</span>
                     <small class="text-muted" style="font-size: 0.8rem;">
-                        {{ car.date_posted|date:"d M" }}
+                        <i class="bi bi-clock"></i> {{ car.date_posted|date:"d M" }}
                     </small>
                 </div>
 
-                <h5 class="fw-bold text-dark mb-2 text-truncate" title="{{ car.title }}">
+                <h5 class="fw-bold text-white mb-2 text-truncate" title="{{ car.title }}">
                     {{ car.title }}
                 </h5>
 
@@ -62,20 +60,19 @@
                 </div>
 
                 <div class="mt-auto pt-3">
-                    <a href="{{ car.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center" style="font-size: 0.95rem;">
+                    <a href="{{ car.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center">
                         Виж Обявата <i class="bi bi-box-arrow-up-right ms-1"></i>
                     </a>
                 </div>
-
             </div>
         </div>
-        </div>
+    </div>
     {% empty %}
     <div class="col-12 text-center py-5">
-        <div class="py-5">
-            <h1 style="font-size: 4rem;">🤖</h1>
-            <h3 class="fw-bold mt-3">Роботът почива...</h3>
-            <p class="text-muted">Все още няма намерени коли по тези критерии.</p>
+        <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
+            <i class="bi bi-robot d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
+            <h3 class="fw-bold text-white mt-3">Роботът почива...</h3>
+            <p class="text-light">Все още няма намерени автомобили по тези критерии.</p>
         </div>
     </div>
     {% endfor %}

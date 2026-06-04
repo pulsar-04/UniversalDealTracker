@@ -5,9 +5,10 @@
     <div class="col-md-6 col-lg-5">
 
         <div class="text-center mb-4">
-            <h1 style="font-size: 3rem;">🚀</h1>
-            <h2 class="fw-bold text-dark">Създай профил</h2>
-            <p class="text-muted">Започни да следиш пазара професионално.</p>
+            <h3 class="fw-bold text-white">
+                <i class="bi bi-person-plus text-accent me-2"></i>Създай профил
+            </h3>
+            <p class="text-light small">Започни да следиш пазара професионално.</p>
         </div>
 
         <div class="auth-card">
@@ -15,7 +16,7 @@
                 {% csrf_token %}
 
                 {% for field in form %}
-                <div class="mb-3">
+                <div class="mb-4">
                     <label class="form-label-custom">{{ field.label }}</label>
 
                     <div class="custom-input-wrapper">
@@ -39,9 +40,8 @@
                 </button>
             </form>
 
-            <div class="auth-footer">
-                Вече имаш акаунт? <br>
-                <a href="{% url 'login' %}">Влез тук</a>
+            <div class="auth-footer mt-4 pt-3" style="border-top: 1px solid var(--glass-border);">
+                <small class="text-light">Вече имаш акаунт? <a href="{% url 'login' %}" class="text-accent text-decoration-none ms-1">Влез тук</a></small>
             </div>
         </div>
 
@@ -49,6 +49,7 @@
 </div>
 
 <script>
+    // Този скрипт автоматично добавя новите ни стъклени класове към генерираните от Django полета
     document.querySelectorAll('input').forEach(input => {
         input.classList.add('form-control-custom');
         input.classList.add('w-100');

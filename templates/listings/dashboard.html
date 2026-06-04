@@ -1,74 +1,80 @@
 {% extends 'listings/base.html' %}
 
 {% block content %}
-<div class="row mb-5">
+<div class="row mb-4">
     <div class="col-md-8">
-        <h1 class="fw-bold text-dark">🎛️ Контролен Панел</h1>
-        <p class="text-muted">Добави линкове, които искаш роботът да следи.</p>
+        <h1 class="fw-bold text-white">🎛️ Контролен Панел</h1>
+        <p class="text-light">Конфигурирай задачите за автоматично събиране на данни.</p>
     </div>
 </div>
 
 <div class="row">
     <div class="col-md-4 mb-4">
-        <div class="auth-card p-4"> <h4 class="fw-bold mb-3">➕ Добави Търсене</h4>
+        <div class="dashboard-card p-4">
+            <h4 class="fw-bold mb-4 text-white">
+                <i class="bi bi-plus-square text-accent me-2"></i>Нова Задача
+            </h4>
             <form method="POST">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="mb-3">
-                    <label class="form-label-custom small">{{ field.label }}</label>
+                    <label class="form-label-custom">{{ field.label }}</label>
                     {{ field }}
                     {% if field.errors %}
-                        <div class="text-danger small">{{ field.errors }}</div>
+                        <div class="text-danger small mt-1">{{ field.errors }}</div>
                     {% endif %}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-primary-custom w-100 mt-2">
-                    Запиши Търсенето
+                <button type="submit" class="btn btn-primary-custom w-100 mt-3">
+                    <i class="bi bi-cpu me-1"></i> Стартирай Търсене
                 </button>
             </form>
         </div>
     </div>
 
     <div class="col-md-8">
-        <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-            <div class="card-header bg-white p-4 border-bottom">
-                <h5 class="fw-bold m-0">Активни Задачи ({{ searches.count }})</h5>
+        <div class="dashboard-card overflow-hidden">
+            <div class="p-4 border-bottom" style="border-color: var(--glass-border) !important;">
+                <h5 class="fw-bold m-0 text-white">
+                    <i class="bi bi-activity text-success me-2"></i>Активни Процеси ({{ searches.count }})
+                </h5>
             </div>
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead class="bg-light">
+                <table class="table table-dark table-hover align-middle mb-0" style="background-color: transparent;">
+                    <thead style="background: rgba(255,255,255,0.02);">
                         <tr>
-                            <th class="ps-4 py-3">Име</th>
-                            <th>Категория</th>
-                            <th>Детайли</th>
-                            <th class="text-end pe-4">Действие</th>
+                            <th class="ps-4 py-3" style="border-bottom: 1px solid var(--glass-border); color: var(--text-muted);">Задача</th>
+                            <th style="border-bottom: 1px solid var(--glass-border); color: var(--text-muted);">Тип</th>
+                            <th style="border-bottom: 1px solid var(--glass-border); color: var(--text-muted);">Детайли</th>
+                            <th class="text-end pe-4" style="border-bottom: 1px solid var(--glass-border); color: var(--text-muted);">Действие</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for search in searches %}
                         <tr>
-                            <td class="ps-4">
-                                <span class="fw-bold text-dark">{{ search.title }}</span><br>
+                            <td class="ps-4" style="border-bottom: 1px solid var(--glass-border); background: transparent;">
+                                <span class="fw-bold text-white d-block mb-1">{{ search.title }}</span>
                                 <a href="{{ search.url }}" target="_blank" class="small text-muted text-decoration-none">
-                                    <i class="bi bi-link-45deg"></i> Линк към източника
+                                    <i class="bi bi-link-45deg"></i> Източник
                                 </a>
                             </td>
-                            <td>
+                            <td style="border-bottom: 1px solid var(--glass-border); background: transparent;">
                                 {% if search.category == 'car' %}
-                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Коли</span>
+                                    <span class="badge" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid var(--accent-color);">Коли</span>
                                 {% else %}
-                                    <span class="badge bg-success-subtle text-success border border-success-subtle">Работа</span>
+                                    <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid var(--success-color);">Работа</span>
                                 {% endif %}
                             </td>
-                            <td>
-                                <small class="text-muted">
-                                    {% if search.brand %}{{ search.brand }}{% endif %} 
+                            <td style="border-bottom: 1px solid var(--glass-border); background: transparent;">
+                                <small class="text-light">
+                                    {% if search.brand %}{{ search.brand }}{% endif %}
                                     {% if search.model %}/ {{ search.model }}{% endif %}
                                 </small>
                             </td>
-                            <td class="text-end pe-4">
-                                <a href="{% url 'delete_search' search.id %}" 
-                                   class="btn btn-sm btn-outline-danger border-0"
+                            <td class="text-end pe-4" style="border-bottom: 1px solid var(--glass-border); background: transparent;">
+                                <a href="{% url 'delete_search' search.id %}"
+                                   class="btn btn-sm btn-outline-danger"
+                                   style="border-color: rgba(220, 53, 69, 0.5);"
                                    onclick="return confirm('Сигурен ли си, че искаш да спреш това търсене?')">
                                     <i class="bi bi-trash"></i>
                                 </a>
@@ -76,8 +82,9 @@
                         </tr>
                         {% empty %}
                         <tr>
-                            <td colspan="4" class="text-center py-5 text-muted">
-                                Все още няма добавени търсения.
+                            <td colspan="4" class="text-center py-5 text-muted" style="border-bottom: none; background: transparent;">
+                                <i class="bi bi-inbox fs-1 d-block mb-3 opacity-50"></i>
+                                Все още няма активни процеси.
                             </td>
                         </tr>
                         {% endfor %}

@@ -7,19 +7,19 @@
         <div class="auth-card text-center p-5">
 
             <div class="mb-4">
-                <div style="width: 80px; height: 80px; background: #eff6ff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto;">
+                <div style="width: 80px; height: 80px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-color); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px var(--accent-glow);">
                     <i class="bi bi-shield-check" style="font-size: 2.5rem; color: var(--accent-color);"></i>
                 </div>
             </div>
 
-            <h2 class="fw-bold text-dark mb-2">Успешен изход</h2>
+            <h2 class="fw-bold text-white mb-2">Успешен изход</h2>
 
-            <p class="text-muted mb-5">
+            <p class="text-light mb-5">
                 Ти излезе от профила си сигурно.<br>
-                Благодарим, че използва DealTracker! 🚀
+                Благодарим, че използва <span class="text-accent">DealTracker</span>! 🚀
             </p>
 
-            <a href="{% url 'car_list' %}" class="btn btn-secondary-custom w-100">
+            <a href="{% url 'landing' %}" class="btn btn-secondary-custom w-100">
                 <i class="bi bi-arrow-left me-2"></i> Към началната страница
             </a>
 
@@ -27,7 +27,7 @@
 
         <div class="text-center mt-4">
             <p class="text-muted small">
-                Искаш да влезеш пак? <a href="{% url 'login' %}" style="color: var(--accent-color); font-weight: 600;">Влез тук</a>
+                Искаш да влезеш пак? <a href="{% url 'login' %}" class="text-accent text-decoration-none" style="font-weight: 600;">Влез тук</a>
             </p>
         </div>
 

@@ -4,21 +4,18 @@
 
 <div class="d-flex justify-content-between align-items-end mb-5">
     <div>
-        <h1 class="fw-bold text-dark mb-1">IT Кариери</h1>
-        <p class="text-muted mb-0">Актуални предложения от Dev.bg и водещи компании.</p>
+        <h1 class="fw-bold text-white mb-1"><i class="bi bi-briefcase-fill text-success me-2"></i>IT Кариери</h1>
+        <p class="text-light mb-0">Актуални предложения от Dev.bg и водещи компании.</p>
     </div>
     <div>
-        <span class="badge bg-success rounded-pill px-3 py-2">
+        <span class="badge rounded-pill px-3 py-2" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid var(--success-color); font-size: 0.9rem;">
             {{ total_count }} позиции
         </span>
     </div>
 </div>
 
-
-
-    <div class="mb-5">
-    <div class="d-flex flex-wrap">
-
+<div class="mb-5">
+    <div class="d-flex flex-wrap gap-2">
         <a href="{% url 'job_list' %}"
            class="filter-btn {% if not selected_search_id %}active{% endif %}">
            Всички
@@ -30,36 +27,35 @@
                {{ search.title }}
             </a>
         {% endfor %}
-
     </div>
 </div>
 
-
 <div class="row">
     {% for job in jobs %}
-    <div class="col-md-6 mb-4"> <div class="listing-card">
+    <div class="col-md-6 mb-4">
+        <div class="listing-card">
             <div class="listing-body">
 
                 <div class="d-flex justify-content-between align-items-start mb-2">
-                    <span class="company-name">
+                    <span class="company-name text-accent">
                         <i class="bi bi-building me-1"></i> {{ job.company_name }}
                     </span>
                     <small class="text-muted" style="font-size: 0.8rem;">
-                        {{ job.date_posted|date:"d M" }}
+                        <i class="bi bi-clock"></i> {{ job.date_posted|date:"d M" }}
                     </small>
                 </div>
 
-                <h4 class="fw-bold text-dark mb-3">
+                <h4 class="fw-bold text-white mb-3">
                     {{ job.title }}
                 </h4>
 
                 <div class="listing-meta mb-4">
                     <div class="d-flex align-items-center">
-                        <i class="bi bi-geo-alt-fill text-danger me-2"></i>
-                        <span>{{ job.location }}</span>
+                        <i class="bi bi-geo-alt-fill text-success me-2"></i>
+                        <span class="text-light">{{ job.location }}</span>
 
                         {% if job.is_remote %}
-                            <span class="badge-remote">
+                            <span class="badge-remote ms-3" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.3);">
                                 <i class="bi bi-wifi"></i> Remote
                             </span>
                         {% endif %}
@@ -68,19 +64,19 @@
 
                 <div class="mt-auto pt-2">
                     <a href="{{ job.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center" style="font-size: 0.95rem;">
-                        Кандидатствай Сега ↗
+                        Кандидатствай Сега <i class="bi bi-box-arrow-up-right ms-1"></i>
                     </a>
                 </div>
 
             </div>
         </div>
-        </div>
+    </div>
     {% empty %}
     <div class="col-12 text-center py-5">
-        <div class="py-5">
-            <h1 style="font-size: 4rem;">💼</h1>
-            <h3 class="fw-bold mt-3">Няма намерени позиции</h3>
-            <p class="text-muted">Опитай да добавиш нови критерии за търсене.</p>
+        <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
+            <i class="bi bi-briefcase d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
+            <h3 class="fw-bold text-white mt-3">Няма намерени позиции</h3>
+            <p class="text-light">Опитай да добавиш нови критерии за търсене в Контролния панел.</p>
         </div>
     </div>
     {% endfor %}

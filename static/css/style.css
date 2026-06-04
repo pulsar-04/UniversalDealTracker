@@ -1,27 +1,30 @@
-
-
 /* --- 1. CONFIGURATION & VARIABLES --- */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 
 :root {
-    /* Цветова Палитра */
-    --primary-color: #0f172a;
-    --primary-light: #1e293b;
-    --accent-color: #3b82f6;
-    --accent-hover: #2563eb;
+    /* Premium Dark SaaS Palette */
+    --bg-body: #050505;
+    --glass-bg: rgba(22, 27, 34, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+
+    /* Neon Accents */
+    --accent-color: #38bdf8;
+    --accent-hover: #0ea5e9;
+    --accent-glow: rgba(56, 189, 248, 0.15);
     --success-color: #10b981;
-    --text-main: #334155;
+
+    /* Typography */
+    --text-main: #f8fafc;
     --text-light: #94a3b8;
-    --bg-body: #f1f5f9;
+    --text-muted: #64748b;
 
     /* Размери и Ефекти */
-    --radius: 12px;
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-nav: 0 4px 6px -1px rgba(15, 23, 42, 0.1);
-    --shadow-hover: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    --radius: 16px;
+    --shadow-glass: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --shadow-hover: 0 0 20px var(--accent-glow);
 }
 
-/* --- 2. GLOBAL RESET --- */
+/* --- 2. GLOBAL RESET & BACKGROUND --- */
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--bg-body);
@@ -29,28 +32,47 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
 }
+
+/* Ambient Glow Effects */
+.bg-glow {
+    position: absolute;
+    width: 40vw;
+    height: 40vw;
+    background: radial-gradient(circle, rgba(0,240,255,0.05) 0%, rgba(5,5,5,0) 70%);
+    border-radius: 50%;
+    z-index: -1;
+    pointer-events: none;
+}
+.glow-top-left { top: -20vw; left: -20vw; }
+.glow-bottom-right { bottom: -20vw; right: -20vw; background: radial-gradient(circle, rgba(16,185,129,0.03) 0%, rgba(5,5,5,0) 70%); }
 
 a {
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
 }
 
-/* --- 3. NAVBAR STYLING --- */
+.text-accent { color: var(--accent-color) !important; }
+
+/* --- 3. GLASSMORPHISM NAVBAR --- */
 .custom-navbar {
-    background-color: var(--primary-color);
+    background: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
     padding: 1rem 0;
-    box-shadow: var(--shadow-nav);
 }
 
 .brand-logo {
     color: #fff;
     font-size: 1.5rem;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: -0.5px;
 }
 .brand-logo:hover {
-    color: var(--accent-color);
+    text-shadow: 0 0 10px var(--accent-glow);
 }
 
 .nav-link-custom {
@@ -58,155 +80,132 @@ a {
     font-weight: 500;
     margin: 0 10px;
     font-size: 0.95rem;
+    position: relative;
 }
-
 .nav-link-custom:hover,
 .nav-link-custom.active {
     color: #fff !important;
-    transform: translateY(-1px);
 }
 
-.nav-divider {
-    color: #334155;
-    margin: 0 15px;
-}
+.nav-divider { color: var(--text-muted); margin: 0 15px; }
 
 .user-greeting {
-    color: var(--accent-color);
-    font-weight: 600;
+    color: #fff;
+    font-weight: 500;
     margin-right: 15px;
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 50px;
+    border: 1px solid var(--glass-border);
 }
 
 /* --- 4. BUTTONS (Global) --- */
 .btn-custom-outline {
-    border: 1px solid var(--text-light);
+    border: 1px solid var(--glass-border);
     color: #fff;
     border-radius: 8px;
-    padding: 6px 16px;
+    padding: 8px 20px;
     font-size: 0.9rem;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
 }
 .btn-custom-outline:hover {
     border-color: var(--accent-color);
-    background-color: var(--accent-color);
-    color: #fff;
+    background-color: rgba(0, 240, 255, 0.1);
+    color: var(--accent-color);
+    box-shadow: var(--shadow-hover);
 }
 
 .btn-primary-custom {
     background-color: var(--accent-color);
-    color: white;
+    color: #000 !important;
+    padding: 12px 32px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 50px;
+    box-shadow: 0 0 15px var(--accent-glow);
+    border: none;
+    transition: all 0.3s ease;
+}
+.btn-primary-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
+    background-color: var(--accent-hover);
+}
+
+.btn-secondary-custom {
+    background-color: transparent;
+    color: #fff;
+    border: 1px solid var(--glass-border);
     padding: 12px 32px;
     font-size: 1rem;
     font-weight: 600;
     border-radius: 50px;
-    box-shadow: 0 4px 14px 0 rgba(59, 130, 246, 0.39);
-    border: none;
-    transition: all 0.2s ease;
-}
-.btn-primary-custom:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(59, 130, 246, 0.23);
-    background-color: var(--accent-hover);
-    color: white;
-}
-
-.btn-secondary-custom {
-    background-color: white;
-    color: var(--primary-color);
-    border: 2px solid #e2e8f0;
-    padding: 10px 32px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
 }
 .btn-secondary-custom:hover {
-    border-color: var(--primary-color);
-    background-color: transparent;
-    color: var(--primary-color);
+    border-color: #fff;
+    background-color: rgba(255,255,255,0.05);
 }
 
-/* --- 5. FOOTER --- */
-.custom-footer {
-    background-color: #fff;
-    border-top: 1px solid #e2e8f0;
-    margin-top: auto;
-    padding: 2rem 0;
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-/* --- 6. LANDING PAGE --- */
-.hero-section {
-    padding: 80px 0 60px;
-    text-align: center;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 800;
-    line-height: 1.2;
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    letter-spacing: -1px;
-}
-
-.hero-subtitle {
-    font-size: 1.25rem;
-    color: var(--text-light);
-    max-width: 600px;
-    margin: 0 auto 3rem;
-    font-weight: 400;
-}
-
-/* --- 7. FEATURE CARDS --- */
-.feature-card {
-    background: white;
-    padding: 2rem;
+/* --- 5. GLASSMORPHISM CARDS (Base class for all cards) --- */
+.feature-card, .listing-card, .auth-card, .dashboard-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
     border-radius: var(--radius);
-    border: 1px solid #f1f5f9;
-    box-shadow: var(--shadow-sm);
-    height: 100%;
+    box-shadow: var(--shadow-glass);
     transition: all 0.3s ease;
 }
-
-.feature-card:hover {
+.feature-card:hover, .listing-card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--accent-color);
+    border-color: rgba(0, 240, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 240, 255, 0.1);
 }
 
-.feature-icon-wrapper {
-    width: 60px;
-    height: 60px;
-    background-color: #eff6ff;
-    border-radius: 16px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-    color: var(--accent-color);
-    font-size: 1.75rem;
+/* --- 6. FORMS & INPUTS --- */
+.form-label-custom {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0.5rem;
+    display: block;
 }
-
-/* --- 8. LISTING CARDS (Cars & Jobs) --- */
-.listing-card {
-    background: white;
-    border-radius: var(--radius);
-    border: 1px solid #e2e8f0;
-    box-shadow: var(--shadow-sm);
+.form-control-custom {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    color: #fff;
+    padding: 12px 16px;
+    border-radius: 10px;
     transition: all 0.3s ease;
-    height: 100%;
+}
+.form-control-custom:focus {
+    background-color: rgba(0, 0, 0, 0.4);
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+    color: #fff;
+    outline: none;
+}
+
+/* --- 7. FOOTER --- */
+.custom-footer {
+    background-color: transparent;
+    border-top: 1px solid var(--glass-border);
+    padding: 2rem 0;
+    color: var(--text-muted);
+    margin-top: auto;
+}
+
+/* --- 8. RESTORED & DARK-THEMED LISTING CARDS --- */
+.listing-card {
     display: flex;
     flex-direction: column;
     overflow: hidden;
     position: relative;
-}
-
-.listing-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
-    border-color: var(--accent-color);
+    height: 100%;
 }
 
 .listing-body {
@@ -217,7 +216,7 @@ a {
 }
 
 .badge-custom {
-    background-color: #eff6ff;
+    background-color: rgba(0, 240, 255, 0.1);
     color: var(--accent-color);
     font-weight: 600;
     padding: 6px 12px;
@@ -225,6 +224,7 @@ a {
     font-size: 0.8rem;
     letter-spacing: 0.5px;
     display: inline-block;
+    border: 1px solid rgba(0, 240, 255, 0.2);
 }
 
 .listing-price {
@@ -234,6 +234,7 @@ a {
     letter-spacing: -0.5px;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
 }
 
 .listing-meta {
@@ -245,11 +246,11 @@ a {
     gap: 6px;
 }
 
-/* --- 9. FILTERS --- */
+/* --- 9. FILTERS (Dark Theme) --- */
 .filter-btn {
-    border: 1px solid #cbd5e1;
-    background: white;
-    color: var(--text-main);
+    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text-light);
     border-radius: 50px;
     padding: 8px 20px;
     font-size: 0.9rem;
@@ -260,23 +261,17 @@ a {
     display: inline-block;
 }
 
-.filter-btn:hover {
-    border-color: var(--primary-color);
-    color: var(--primary-color);
-    background-color: transparent;
-}
-
-.filter-btn.active {
-    background-color: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.2);
+.filter-btn:hover, .filter-btn.active {
+    border-color: var(--accent-color);
+    color: #fff;
+    background-color: rgba(0, 240, 255, 0.1);
+    box-shadow: var(--shadow-hover);
 }
 
 /* --- 10. JOB SPECIFIC --- */
 .badge-remote {
-    background-color: #dcfce7;
-    color: #166534;
+    background-color: rgba(16, 185, 129, 0.1);
+    color: var(--success-color);
     font-size: 0.75rem;
     padding: 4px 8px;
     border-radius: 6px;
@@ -284,60 +279,28 @@ a {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-left: 8px;
+    border: 1px solid rgba(16, 185, 129, 0.3);
 }
 
 .company-name {
-    color: var(--text-light);
+    color: var(--accent-color);
     font-weight: 600;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* --- 11. FORMS & AUTH --- */
-.auth-card {
-    background: white;
-    border-radius: var(--radius);
-    padding: 3rem;
-    box-shadow: var(--shadow-hover);
-    border: 1px solid #e2e8f0;
+/* --- 11. ULTIMATE STICKY FOOTER FIX --- */
+html, body {
+    height: 100%;
 }
-
-.form-label-custom {
-    font-weight: 600;
-    font-size: 0.9rem;
-    color: var(--primary-color);
-    margin-bottom: 0.5rem;
-    display: block;
+body {
+    display: flex;
+    flex-direction: column;
 }
-
-.form-control-custom {
-    padding: 12px 16px;
-    border-radius: 10px;
-    border: 1px solid #cbd5e1;
-    font-size: 1rem;
-    transition: all 0.2s ease;
-    background-color: #f8fafc;
+.main-content {
+    flex: 1 0 auto;
 }
-
-.form-control-custom:focus {
-    background-color: #fff;
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    outline: none;
-}
-
-.auth-footer {
-    text-align: center;
-    margin-top: 2rem;
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-.auth-footer a {
-    color: var(--accent-color);
-    font-weight: 600;
-}
-.auth-footer a:hover {
-    text-decoration: underline;
+.custom-footer {
+    flex-shrink: 0;
 }
