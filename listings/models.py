@@ -50,6 +50,8 @@ class Search(models.Model):
     brand = models.CharField(max_length=50, blank=True, null=True, verbose_name="Марка (за авто-попълване)")
     model = models.CharField(max_length=50, blank=True, null=True, verbose_name="Модел (за авто-попълване)")
     created_at = models.DateTimeField(auto_now_add=True)
+    is_initial_scan_done = models.BooleanField(default=False)
+
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):

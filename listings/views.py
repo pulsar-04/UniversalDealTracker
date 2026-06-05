@@ -6,6 +6,8 @@ from .forms import SearchForm
 from .models import Search
 from django.contrib import messages
 from django.db.models import Q
+from .tasks import auto_crawl_cars, auto_crawl_jobs
+
 
 
 def landing(request):
@@ -79,24 +81,24 @@ def about(request):
 
 @login_required
 def dashboard(request):
-
     if request.method == 'POST':
         form = SearchForm(request.POST)
         if form.is_valid():
-
             new_search = form.save(commit=False)
-
             new_search.user = request.user
-
             new_search.save()
 
-            messages.success(request, "Успешно добави ново търсене!")
+            messages.success(request, "Успешно добави ново търсене! Роботът започва да сканира веднага.")
+
+            if new_search.category == 'car':
+                auto_crawl_cars.delay()
+            elif new_search.category == 'job':
+                auto_crawl_jobs.delay()
             return redirect('dashboard')
     else:
         form = SearchForm()
 
     searches = Search.objects.filter(user=request.user).order_by('-created_at')
-
     return render(request, 'listings/dashboard.html', {'form': form, 'searches': searches})
 
 
