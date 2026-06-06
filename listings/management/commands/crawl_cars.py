@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand
-from listings.scrapers.car_scraper import MobileBgScraper
+from listings.scrapers.car_scraper import MobileBgScraper, CarsBgScraper
 from listings.models import CarListing, Search
 from django.core.mail import send_mail
 from django.conf import settings
@@ -20,7 +20,14 @@ class Command(BaseCommand):
         for search in searches:
             self.stdout.write(f"--> Processing: {search.title}")
 
-            scraper = MobileBgScraper(search.url)
+            if 'mobile.bg' in search.url:
+                scraper = MobileBgScraper(search.url)
+            elif 'cars.bg' in search.url:
+                scraper = CarsBgScraper(search.url)
+            else:
+                self.stdout.write(self.style.ERROR(f"   [Грешка] Неподдържан сайт в линка: {search.url}"))
+                continue
+            # ------------------------------------------------------
             items = scraper.run()
 
             if not items:

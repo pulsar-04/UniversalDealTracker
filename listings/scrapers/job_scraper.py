@@ -57,3 +57,57 @@ class DevBgScraper(BaseScraper):
                 continue
 
         return items
+
+
+class JobsBgScraper(BaseScraper):
+    def scrape_items(self, soup):
+        items = []
+        containers = soup.find_all('div', class_='mdc-card')
+
+        if not containers:
+            return []
+
+        print(f"🔎 [Jobs.bg] Намерих {len(containers)} потенциални обяви...")
+
+        for container in containers:
+            try:
+
+                link_tag = container.find('a', class_='black-link-b')
+                if not link_tag:
+                    continue
+
+                href = link_tag.get('href')
+                if not href.startswith('http'):
+                    href = 'https://www.jobs.bg/' + href.lstrip('/')
+
+
+                title = link_tag.get('title')
+                if not title:
+                    title_div = container.find('div', class_='card-title')
+                    title = title_div.get_text(strip=True) if title_div else "Неизвестна позиция"
+
+
+                company_tag = container.find('div', class_='secondary-text')
+                company = company_tag.get_text(strip=True) if company_tag else "Неизвестна компания"
+
+
+                info_tag = container.find('div', class_='card-info')
+                info_text = info_tag.get_text(strip=True) if info_tag else ""
+                location = info_text.split(';')[0].strip() if info_text else "Неизвестна локация"
+                info_lower = info_text.lower()
+                is_remote = 'вкъщи' in info_lower or 'дистанционн' in info_lower or 'remote' in info_lower
+
+                items.append({
+                    'title': title,
+                    'company': company,
+                    'location': location,
+                    'remote': is_remote,
+                    'salary': 0.0,
+                    'link': href
+                })
+
+            except Exception as e:
+                print(f"Error parsing Jobs.bg ad: {e}")
+                continue
+
+        return items

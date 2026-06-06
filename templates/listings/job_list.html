@@ -82,4 +82,30 @@
     {% endfor %}
 </div>
 
+{% if jobs.has_other_pages %}
+<div class="d-flex justify-content-center mt-5 mb-4">
+    <div class="d-flex flex-wrap gap-2">
+        {% if jobs.has_previous %}
+            <a href="?page={{ jobs.previous_page_number }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">
+                <i class="bi bi-chevron-left me-1"></i> Предишна
+            </a>
+        {% endif %}
+
+        {% for num in jobs.paginator.page_range %}
+            {% if jobs.number == num %}
+                <span class="filter-btn active" style="padding: 8px 16px; margin: 0; cursor: default;">{{ num }}</span>
+            {% elif num > jobs.number|add:'-3' and num < jobs.number|add:'3' %}
+                <a href="?page={{ num }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">{{ num }}</a>
+            {% endif %}
+        {% endfor %}
+
+        {% if jobs.has_next %}
+            <a href="?page={{ jobs.next_page_number }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">
+                Следваща <i class="bi bi-chevron-right ms-1"></i>
+            </a>
+        {% endif %}
+    </div>
+</div>
+{% endif %}
+
 {% endblock %}
