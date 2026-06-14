@@ -58,56 +58,43 @@ class DevBgScraper(BaseScraper):
 
         return items
 
+    def run(self):
+        all_jobs = []
+        original_url = self.url
+        page = 1
+        max_pages = 15
 
-class JobsBgScraper(BaseScraper):
-    def scrape_items(self, soup):
-        items = []
-        containers = soup.find_all('div', class_='mdc-card')
+        while page <= max_pages:
+            print(f"📄 [Dev.bg] Сканирам страница {page}...")
 
-        if not containers:
-            return []
+            if page == 1:
+                self.url = original_url
+            else:
+                # Хакваме системата на WordPress за странициране
+                if '?' in original_url:
+                    self.url = f"{original_url}&_paged={page}"
+                else:
+                    # Махаме наклонената черта накрая, ако я има, и добавяме /page/2/
+                    base_url = original_url.rstrip('/')
+                    self.url = f"{base_url}/page/{page}/"
 
-        print(f"🔎 [Jobs.bg] Намерих {len(containers)} потенциални обяви...")
+            html = self.fetch_page()
+            if not html:
+                break
 
-        for container in containers:
-            try:
+            soup = self.parse_html(html)
+            items = self.scrape_items(soup)
 
-                link_tag = container.find('a', class_='black-link-b')
-                if not link_tag:
-                    continue
-
-                href = link_tag.get('href')
-                if not href.startswith('http'):
-                    href = 'https://www.jobs.bg/' + href.lstrip('/')
-
-
-                title = link_tag.get('title')
-                if not title:
-                    title_div = container.find('div', class_='card-title')
-                    title = title_div.get_text(strip=True) if title_div else "Неизвестна позиция"
+            if not items:
+                print(f"🏁 [Dev.bg] Няма повече обяви (достигнат край след Страница {page - 1}).")
+                break
 
 
-                company_tag = container.find('div', class_='secondary-text')
-                company = company_tag.get_text(strip=True) if company_tag else "Неизвестна компания"
+            if page > 1 and all_jobs and items[0]['link'] == all_jobs[0]['link']:
+                print("⚠ [Dev.bg] Засечено скрито пренасочване към Страница 1. Спираме.")
+                break
 
+            all_jobs.extend(items)
+            page += 1
 
-                info_tag = container.find('div', class_='card-info')
-                info_text = info_tag.get_text(strip=True) if info_tag else ""
-                location = info_text.split(';')[0].strip() if info_text else "Неизвестна локация"
-                info_lower = info_text.lower()
-                is_remote = 'вкъщи' in info_lower or 'дистанционн' in info_lower or 'remote' in info_lower
-
-                items.append({
-                    'title': title,
-                    'company': company,
-                    'location': location,
-                    'remote': is_remote,
-                    'salary': 0.0,
-                    'link': href
-                })
-
-            except Exception as e:
-                print(f"Error parsing Jobs.bg ad: {e}")
-                continue
-
-        return items
+        return all_jobs

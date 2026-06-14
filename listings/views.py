@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from .models import CarListing, Search, JobListing
+from .models import CarListing, JobListing
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SearchForm
@@ -9,7 +8,7 @@ from django.db.models import Q
 from .tasks import auto_crawl_cars, auto_crawl_jobs
 from django.core.paginator import Paginator
 import json
-
+from django.core.management import call_command
 
 
 def landing(request):
@@ -54,24 +53,19 @@ def job_list(request):
     job_searches = Search.objects.filter(user=request.user, category='job')
 
     if job_searches.exists():
-        query = Q()
-        for search in job_searches:
-            query |= Q(title__icontains=search.title)
 
-        jobs = JobListing.objects.filter(is_active=True).filter(query).order_by('-date_posted')
+        jobs = JobListing.objects.filter(is_active=True, search__in=job_searches).order_by('-date_posted')
     else:
         jobs = JobListing.objects.none()
 
     selected_search_id = request.GET.get('search_id')
     if selected_search_id:
-        search_obj = get_object_or_404(Search, pk=selected_search_id, user=request.user)
-        jobs = jobs.filter(title__icontains=search_obj.title)
 
+        jobs = jobs.filter(search_id=selected_search_id)
 
     paginator = Paginator(jobs, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
-
 
     context = {
         'jobs': page_obj,
@@ -94,12 +88,18 @@ def dashboard(request):
             new_search.user = request.user
             new_search.save()
 
-            messages.success(request, "Успешно добави ново търсене! Роботът започва да сканира веднага.")
+            messages.success(request, "Успешно добави ново търсене! Роботът започва да сканира веднага. Моля изчакай...")
 
-            if new_search.category == 'car':
-                auto_crawl_cars.delay()
-            elif new_search.category == 'job':
-                auto_crawl_jobs.delay()
+
+            try:
+                if new_search.category == 'car':
+                    call_command('crawl_cars')
+                elif new_search.category == 'job':
+                    call_command('crawl_jobs')
+            except Exception as e:
+                print(f"Грешка при първоначално стартиране на робота: {e}")
+
+
             return redirect('dashboard')
     else:
         form = SearchForm()

@@ -12,6 +12,7 @@ class Listing(models.Model):
     date_posted = models.DateTimeField(auto_now_add=True)
     category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
     is_active = models.BooleanField(default=True)
+    search = models.ForeignKey('Search', on_delete=models.CASCADE, null=True, blank=True, related_name='listings')
 
     def __str__(self):
         return self.title

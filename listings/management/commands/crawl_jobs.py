@@ -1,20 +1,20 @@
 from django.core.management.base import BaseCommand
-from listings.scrapers.job_scraper import DevBgScraper, JobsBgScraper
+from listings.scrapers.job_scraper import DevBgScraper
 from listings.models import JobListing, Search
 from django.core.mail import send_mail
 from django.conf import settings
-
 
 class Command(BaseCommand):
     help = 'Scrapes jobs from Dev.bg based on Search entries'
 
     def handle(self, *args, **kwargs):
-
         searches = Search.objects.filter(category='job')
 
         if not searches.exists():
             self.stdout.write(self.style.WARNING("Няма записани търсения за работа! Добави в Админа."))
             return
+
+        self.stdout.write(f"Found {searches.count()} active job searches. Starting job...")
 
         for search in searches:
             self.stdout.write(f"--> Processing Jobs: {search.title}")
@@ -24,6 +24,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(self.style.ERROR(f"   [Грешка] Неподдържан сайт в линка: {search.url}"))
                 continue
+
             items = scraper.run()
 
             if not items:
@@ -31,34 +32,28 @@ class Command(BaseCommand):
                 continue
 
             saved_count = 0
-
-
             is_first_run = not search.is_initial_scan_done
 
             for item in items:
                 try:
-                    obj, created = JobListing.objects.update_or_create(
-                        url=item['link'],
-                        defaults={
-                            'title': item['title'],
-                            'category': 'job',
-                            'company_name': item['company'],
-                            'location': item['location'],
-                            'is_remote': item['remote'],
-                            'salary_min': item['salary']
-                        }
-                    )
+                    job = JobListing.objects.filter(url=item['link']).first()
 
-                    if created:
+                    if not job:
+                        job = JobListing.objects.create(
+                            url=item['link'],
+                            title=item['title'],
+                            category='job',
+                            company_name=item['company'],
+                            location=item['location'],
+                            is_remote=item['remote'],
+                            salary_min=item['salary'],
+                            search=search  # <-- ДОБАВЕНО ТУК ЗА НОВИ ОБЯВИ
+                        )
                         saved_count += 1
 
-
                         if not is_first_run and search.user.email:
-                            subject = f"💼 DealTracker: Нова IT позиция за {search.title}"
-
-
                             remote_text = " (Remote)" if item['remote'] else ""
-
+                            subject = f"💼 DealTracker: Нова IT позиция за {search.title}"
                             message = f"""
                             Здравей, {search.user.username}!
 
@@ -73,7 +68,6 @@ class Command(BaseCommand):
                             Поздрави,
                             DealTracker Bot 🤖
                             """
-
                             send_mail(
                                 subject=subject,
                                 message=message,
@@ -81,11 +75,18 @@ class Command(BaseCommand):
                                 recipient_list=[search.user.email],
                                 fail_silently=True
                             )
+                    else:
+                        job.title = item['title']
+                        job.company_name = item['company']
+                        job.location = item['location']
+                        job.is_remote = item['remote']
+                        job.search = search
+                        job.save()
+
                 except Exception as e:
                     print(f"Error saving job: {e}")
 
-            self.stdout.write(self.style.SUCCESS(f"   Saved {saved_count} new jobs."))
-
+            self.stdout.write(self.style.SUCCESS(f"   Saved {saved_count} new jobs for '{search.title}'"))
 
             if is_first_run:
                 search.is_initial_scan_done = True
