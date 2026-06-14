@@ -60,8 +60,8 @@
                 </div>
 
                 <div class="mt-auto pt-3">
-                    <a href="{{ car.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center">
-                        Виж Обявата <i class="bi bi-box-arrow-up-right ms-1"></i>
+                    <a href="{% url 'car_detail' car.pk %}" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center">
+                        Виж Анализ <i class="bi bi-graph-up ms-1"></i>
                     </a>
                 </div>
             </div>

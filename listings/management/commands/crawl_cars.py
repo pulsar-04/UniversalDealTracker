@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand
 from listings.scrapers.car_scraper import MobileBgScraper, CarsBgScraper
-from listings.models import CarListing, Search
+from listings.models import CarListing, Search, PriceHistory
 from django.core.mail import send_mail
 from django.conf import settings
 
@@ -27,7 +27,7 @@ class Command(BaseCommand):
             else:
                 self.stdout.write(self.style.ERROR(f"   [Грешка] Неподдържан сайт в линка: {search.url}"))
                 continue
-            # ------------------------------------------------------
+
             items = scraper.run()
 
             if not items:
@@ -35,28 +35,32 @@ class Command(BaseCommand):
                 continue
 
             saved_count = 0
-
             is_first_run = not search.is_initial_scan_done
 
             for item in items:
                 try:
-                    obj, created = CarListing.objects.update_or_create(
-                        url=item['link'],
-                        defaults={
-                            'title': item['title'],
-                            'price': item['price'],
-                            'year': item['year'],
-                            'category': 'car',
-                            'brand': search.brand if search.brand else 'Unknown',
-                            'model': search.model if search.model else 'Unknown',
-                            'kilometers': 0,
-                            'fuel_type': 'Unknown'
-                        }
-                    )
 
-                    if created:
+                    car = CarListing.objects.filter(url=item['link']).first()
+                    new_price = item['price']
+
+                    if not car:
+
+                        car = CarListing.objects.create(
+                            url=item['link'],
+                            title=item['title'],
+                            price=new_price,
+                            year=item['year'],
+                            category='car',
+                            brand=search.brand if search.brand else 'Unknown',
+                            model=search.model if search.model else 'Unknown',
+                            kilometers=0,
+                            fuel_type='Unknown'
+                        )
                         saved_count += 1
 
+
+                        if new_price:
+                            PriceHistory.objects.create(listing=car, price=new_price)
 
                         if not is_first_run and search.user.email:
                             subject = f"🚀 DealTracker: Нова обява за {search.title}"
@@ -74,7 +78,6 @@ class Command(BaseCommand):
                             Поздрави,
                             DealTracker Bot 🤖
                             """
-
                             send_mail(
                                 subject=subject,
                                 message=message,
@@ -82,6 +85,21 @@ class Command(BaseCommand):
                                 recipient_list=[search.user.email],
                                 fail_silently=True
                             )
+
+                    else:
+
+                        old_price = car.price
+
+                        car.title = item['title']
+                        car.price = new_price
+                        car.save()
+
+
+                        if old_price != new_price and new_price:
+                            PriceHistory.objects.create(listing=car, price=new_price)
+                            self.stdout.write(
+                                self.style.WARNING(f"   [Price Change] {car.title}: {old_price} -> {new_price}"))
+
                 except Exception as e:
                     print(f"Error saving: {e}")
 

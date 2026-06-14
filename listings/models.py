@@ -60,3 +60,23 @@ class Search(models.Model):
     class Meta:
         verbose_name = "Търсене"
         verbose_name_plural = "Търсения"
+
+
+class PriceHistory(models.Model):
+    """
+    Таблица за проследяване на промените в цените на дадена обява.
+    """
+
+
+    listing = models.ForeignKey(Listing, on_delete=models.CASCADE, related_name='price_history')
+
+    price = models.DecimalField(max_digits=12, decimal_places=2, verbose_name="Цена")
+    date_recorded = models.DateTimeField(auto_now_add=True, verbose_name="Дата на записа")
+
+    class Meta:
+        verbose_name = "История на цената"
+        verbose_name_plural = "История на цените"
+        ordering = ['-date_recorded']
+
+    def __str__(self):
+        return f"{self.listing.title} - {self.price} ({self.date_recorded.strftime('%Y-%m-%d')})"

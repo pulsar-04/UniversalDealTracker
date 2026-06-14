@@ -8,6 +8,7 @@ from django.contrib import messages
 from django.db.models import Q
 from .tasks import auto_crawl_cars, auto_crawl_jobs
 from django.core.paginator import Paginator
+import json
 
 
 
@@ -135,3 +136,37 @@ def delete_search(request, pk):
     messages.success(request, "Търсенето и всички свързани с него обяви бяха изтрити!")
     return redirect('dashboard')
 
+
+@login_required
+def car_detail(request, pk):
+
+    car = get_object_or_404(CarListing, pk=pk)
+
+
+    history = car.price_history.all().order_by('date_recorded')
+
+
+    dates = []
+    prices = []
+
+
+    if not history.exists():
+        dates.append(car.date_posted.strftime('%d %b %Y'))
+        prices.append(float(car.price))
+    else:
+        for entry in history:
+            dates.append(entry.date_recorded.strftime('%d %b %Y'))
+            prices.append(float(entry.price))
+
+
+        if float(car.price) != prices[-1]:
+            dates.append('Днес')
+            prices.append(float(car.price))
+
+    context = {
+        'car': car,
+
+        'chart_dates': json.dumps(dates),
+        'chart_prices': json.dumps(prices),
+    }
+    return render(request, 'listings/car_detail.html', context)
