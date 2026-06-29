@@ -1,8 +1,12 @@
+import logging
 from django.core.management.base import BaseCommand
 from listings.scrapers.job_scraper import DevBgScraper
 from listings.models import JobListing, Search
 from django.core.mail import send_mail
 from django.conf import settings
+
+
+logger = logging.getLogger('scrapers')
 
 class Command(BaseCommand):
     help = 'Scrapes jobs from Dev.bg based on Search entries'
@@ -11,24 +15,24 @@ class Command(BaseCommand):
         searches = Search.objects.filter(category='job')
 
         if not searches.exists():
-            self.stdout.write(self.style.WARNING("Няма записани търсения за работа! Добави в Админа."))
+            logger.warning("Няма записани търсения за работа! Добави в Админа.")
             return
 
-        self.stdout.write(f"Found {searches.count()} active job searches. Starting job...")
+        logger.info(f"Found {searches.count()} active job searches. Starting job...")
 
         for search in searches:
-            self.stdout.write(f"--> Processing Jobs: {search.title}")
+            logger.info(f"--> Processing Jobs: {search.title}")
 
             if 'dev.bg' in search.url:
                 scraper = DevBgScraper(search.url)
             else:
-                self.stdout.write(self.style.ERROR(f"   [Грешка] Неподдържан сайт в линка: {search.url}"))
+                logger.error(f"   [Грешка] Неподдържан сайт в линка: {search.url}")
                 continue
 
             items = scraper.run()
 
             if not items:
-                self.stdout.write(self.style.WARNING(f"   No items found for {search.title}"))
+                logger.warning(f"   No items found for {search.title}")
                 continue
 
             saved_count = 0
@@ -47,7 +51,7 @@ class Command(BaseCommand):
                             location=item['location'],
                             is_remote=item['remote'],
                             salary_min=item['salary'],
-                            search=search  # <-- ДОБАВЕНО ТУК ЗА НОВИ ОБЯВИ
+                            search=search
                         )
                         saved_count += 1
 
@@ -84,12 +88,11 @@ class Command(BaseCommand):
                         job.save()
 
                 except Exception as e:
-                    print(f"Error saving job: {e}")
+                    logger.error(f"Error saving job: {e}", exc_info=True)
 
-            self.stdout.write(self.style.SUCCESS(f"   Saved {saved_count} new jobs for '{search.title}'"))
+            logger.info(f"   Saved {saved_count} new jobs for '{search.title}'")
 
             if is_first_run:
                 search.is_initial_scan_done = True
                 search.save()
-                self.stdout.write(
-                    self.style.SUCCESS(f"   [Muted] Initial scan completed. Future updates will trigger emails."))
+                logger.info(f"   [Muted] Initial scan completed. Future updates will trigger emails.")

@@ -1,9 +1,12 @@
+import logging
 from django.core.management.base import BaseCommand
 from listings.scrapers.car_scraper import MobileBgScraper, CarsBgScraper
 from listings.models import CarListing, Search, PriceHistory
 from django.core.mail import send_mail
 from django.conf import settings
 
+
+logger = logging.getLogger('scrapers')
 
 class Command(BaseCommand):
     help = 'Scrapes cars based on saved Searches in database'
@@ -12,26 +15,26 @@ class Command(BaseCommand):
         searches = Search.objects.filter(category='car')
 
         if not searches.exists():
-            self.stdout.write(self.style.WARNING("No searches found in database! Go to Admin and add one."))
+            logger.warning("No searches found in database! Go to Admin and add one.")
             return
 
-        self.stdout.write(f"Found {searches.count()} active searches. Starting job...")
+        logger.info(f"Found {searches.count()} active searches. Starting job...")
 
         for search in searches:
-            self.stdout.write(f"--> Processing: {search.title}")
+            logger.info(f"--> Processing: {search.title}")
 
             if 'mobile.bg' in search.url:
                 scraper = MobileBgScraper(search.url)
             elif 'cars.bg' in search.url:
                 scraper = CarsBgScraper(search.url)
             else:
-                self.stdout.write(self.style.ERROR(f"   [Грешка] Неподдържан сайт в линка: {search.url}"))
+                logger.error(f"   [Грешка] Неподдържан сайт в линка: {search.url}")
                 continue
 
             items = scraper.run()
 
             if not items:
-                self.stdout.write(self.style.WARNING(f"   No items found for {search.title}"))
+                logger.warning(f"   No items found for {search.title}")
                 continue
 
             saved_count = 0
@@ -39,12 +42,10 @@ class Command(BaseCommand):
 
             for item in items:
                 try:
-
                     car = CarListing.objects.filter(url=item['link']).first()
                     new_price = item['price']
 
                     if not car:
-
                         car = CarListing.objects.create(
                             url=item['link'],
                             title=item['title'],
@@ -57,7 +58,6 @@ class Command(BaseCommand):
                             fuel_type='Unknown'
                         )
                         saved_count += 1
-
 
                         if new_price:
                             PriceHistory.objects.create(listing=car, price=new_price)
@@ -87,26 +87,22 @@ class Command(BaseCommand):
                             )
 
                     else:
-
                         old_price = car.price
 
                         car.title = item['title']
                         car.price = new_price
                         car.save()
 
-
                         if old_price != new_price and new_price:
                             PriceHistory.objects.create(listing=car, price=new_price)
-                            self.stdout.write(
-                                self.style.WARNING(f"   [Price Change] {car.title}: {old_price} -> {new_price}"))
+                            logger.warning(f"   [Price Change] {car.title}: {old_price} -> {new_price}")
 
                 except Exception as e:
-                    print(f"Error saving: {e}")
+                    logger.error(f"Error saving car: {e}", exc_info=True)
 
-            self.stdout.write(self.style.SUCCESS(f"   Saved {saved_count} new cars for '{search.title}'"))
+            logger.info(f"   Saved {saved_count} new cars for '{search.title}'")
 
             if is_first_run:
                 search.is_initial_scan_done = True
                 search.save()
-                self.stdout.write(
-                    self.style.SUCCESS(f"   [Muted] Initial scan completed. Future updates will trigger emails."))
+                logger.info(f"   [Muted] Initial scan completed. Future updates will trigger emails.")
