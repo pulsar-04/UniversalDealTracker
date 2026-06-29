@@ -22,6 +22,6 @@ urlpatterns = [
     ##  (home, jobs)
     path('', include('listings.urls')),
     # --- Authentication URLS ---
-    # (login, register, logout)
+    #    (login, register, logout)
     path('', include('users.urls')),
 ]

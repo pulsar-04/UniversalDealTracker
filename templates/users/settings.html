@@ -1,0 +1,50 @@
+{% extends "listings/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center mt-4">
+    <div class="col-md-8 col-lg-6">
+        
+        <div class="text-center mb-4">
+            <h2 class="fw-bold text-white">Настройки на профила</h2>
+            <p class="text-light">Управлявай своите данни и сигурност.</p>
+        </div>
+
+        <div class="auth-card mb-4">
+            <h5 class="text-accent mb-3"><i class="bi bi-person-lines-fill me-2"></i>Лични данни</h5>
+            <form method="POST" action="{% url 'profile_settings' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label-custom">Потребителско име</label>
+                    <input type="text" name="username" value="{{ user.username }}" class="form-control-custom w-100" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label-custom">Имейл адрес (за известия)</label>
+                    <input type="email" name="email" value="{{ user.email }}" class="form-control-custom w-100" required>
+                </div>
+                <button type="submit" class="btn btn-primary-custom w-100 mt-2">Запази промените</button>
+            </form>
+        </div>
+
+        <div class="auth-card mb-4">
+            <h5 class="text-accent mb-3"><i class="bi bi-shield-lock me-2"></i>Сигурност</h5>
+            <p class="text-light small mb-3">Препоръчително е да сменяш паролата си на всеки 6 месеца.</p>
+            <a href="{% url 'change_password' %}" class="btn btn-outline-light w-100" style="border-radius: 10px;">
+                Смени паролата си
+            </a>
+        </div>
+
+        <div class="auth-card" style="border: 1px solid rgba(255, 77, 77, 0.3);">
+            <h5 class="text-danger mb-3"><i class="bi bi-exclamation-triangle me-2"></i>Danger Zone</h5>
+            <p class="text-light small mb-3">Изтриването на профила е необратимо. Всички твои активни задачи за стъргане и запазени обяви ще бъдат премахнати.</p>
+            
+            <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Сигурен ли си, че искаш да изтриеш профила си завинаги?');">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger w-100" style="border-radius: 10px; background: rgba(220, 53, 69, 0.8);">
+                    Изтрий профила завинаги
+                </button>
+            </form>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

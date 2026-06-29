@@ -1,10 +1,9 @@
-from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.contrib.auth import login
-
-
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth import logout
 from .forms import CustomUserCreationForm
-
 
 def register(request):
     if request.method == 'POST':
@@ -21,3 +20,34 @@ def register(request):
         form = CustomUserCreationForm()
 
     return render(request, 'users/register.html', {'form': form})
+
+@login_required
+def profile_settings(request):
+    if request.method == 'POST':
+        new_username = request.POST.get('username')
+        new_email = request.POST.get('email')
+
+        from django.contrib.auth.models import User
+        if User.objects.filter(username=new_username).exclude(pk=request.user.pk).exists():
+            messages.error(request, 'Това потребителско име вече е заето!')
+        else:
+
+            request.user.username = new_username
+            request.user.email = new_email
+            request.user.save()
+            messages.success(request, 'Профилът ти беше успешно обновен!')
+            return redirect('profile_settings')
+
+    return render(request, 'users/settings.html')
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, 'Профилът ти беше изтрит завинаги. Ще се радваме да се върнеш отново!')
+        return redirect('landing')
+
+    return redirect('profile_settings')
