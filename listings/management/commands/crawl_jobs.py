@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'Scrapes jobs from Dev.bg based on Search entries'
 
     def handle(self, *args, **kwargs):
-        searches = Search.objects.filter(category='job')
+        searches = Search.objects.filter(category='job', is_paused=False)
 
         if not searches.exists():
             logger.warning("Няма записани търсения за работа! Добави в Админа.")

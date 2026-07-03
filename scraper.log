@@ -3,3 +3,23 @@
 [2026-07-03 07:00:00] WARNING [crawl_jobs]: Няма записани търсения за работа! Добави в Админа.
 [2026-07-03 07:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
 [2026-07-03 07:30:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 08:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 08:00:00] WARNING [crawl_jobs]: Няма записани търсения за работа! Добави в Админа.
+[2026-07-03 08:30:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 09:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 09:00:00] WARNING [crawl_jobs]: Няма записани търсения за работа! Добави в Админа.
+[2026-07-03 09:30:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 10:00:00] WARNING [crawl_jobs]: Няма записани търсения за работа! Добави в Админа.
+[2026-07-03 10:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 10:30:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 11:00:00] WARNING [crawl_jobs]: Няма записани търсения за работа! Добави в Админа.
+[2026-07-03 11:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-03 11:26:03] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-03 11:26:03] INFO [crawl_cars]: --> Processing: Nissan Skyline
+[2026-07-03 11:26:05] INFO [crawl_cars]:    Saved 1 new cars for 'Nissan Skyline'
+[2026-07-03 11:26:05] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-03 11:27:49] INFO [crawl_jobs]: Found 1 active job searches. Starting job...
+[2026-07-03 11:27:49] INFO [crawl_jobs]: --> Processing Jobs: Devops
+[2026-07-03 11:27:57] INFO [crawl_jobs]:    Saved 37 new jobs for 'Devops'
+[2026-07-03 11:27:57] INFO [crawl_jobs]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-03 11:30:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.

@@ -12,7 +12,7 @@ class Command(BaseCommand):
     help = 'Scrapes cars based on saved Searches in database'
 
     def handle(self, *args, **kwargs):
-        searches = Search.objects.filter(category='car')
+        searches = Search.objects.filter(category='car', is_paused=False)
 
         if not searches.exists():
             logger.warning("No searches found in database! Go to Admin and add one.")

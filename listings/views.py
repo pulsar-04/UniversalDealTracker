@@ -105,7 +105,18 @@ def dashboard(request):
         form = SearchForm()
 
     searches = Search.objects.filter(user=request.user).order_by('-created_at')
-    return render(request, 'listings/dashboard.html', {'form': form, 'searches': searches})
+
+    active_robots = searches.filter(is_paused=False).count()
+
+    user_cars_count = CarListing.objects.filter(brand__in=searches.values_list('brand', flat=True)).count()
+    user_jobs_count = JobListing.objects.filter(search__in=searches).count()
+    total_items = user_cars_count + user_jobs_count
+
+    return render(request, 'listings/dashboard.html', {'form': form,
+                                                       'searches': searches,
+                                                       'total_items': total_items,
+                                                       'active_robots': active_robots
+                                                       })
 
 
 @login_required
@@ -170,3 +181,18 @@ def car_detail(request, pk):
         'chart_prices': json.dumps(prices),
     }
     return render(request, 'listings/car_detail.html', context)
+
+
+@login_required
+def toggle_search_status(request, pk):
+    search = get_object_or_404(Search, pk=pk, user=request.user)
+
+    search.is_paused = not search.is_paused
+    search.save()
+
+    if search.is_paused:
+        messages.warning(request, f"⏸️ Търсенето '{search.title}' е поставено на пауза. Роботът спира да го следи.")
+    else:
+        messages.success(request, f"▶️ Търсенето '{search.title}' отново е активно! Роботът продължава работа.")
+
+    return redirect('dashboard')

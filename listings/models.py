@@ -52,7 +52,7 @@ class Search(models.Model):
     model = models.CharField(max_length=50, blank=True, null=True, verbose_name="Модел (за авто-попълване)")
     created_at = models.DateTimeField(auto_now_add=True)
     is_initial_scan_done = models.BooleanField(default=False)
-
+    is_paused = models.BooleanField(default=False, verbose_name="На пауза")
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     def __str__(self):
