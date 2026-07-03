@@ -21,6 +21,24 @@
                     <label class="form-label-custom">Имейл адрес (за известия)</label>
                     <input type="email" name="email" value="{{ user.email }}" class="form-control-custom w-100" required>
                 </div>
+                <div class="mb-4 mt-4 form-check form-switch custom-switch d-flex align-items-center">
+                    <input class="form-check-input" type="checkbox" role="switch" id="receiveEmails" name="receive_emails" style="width: 2.5em; height: 1.25em; cursor: pointer;" {% if user.profile.receive_emails %}checked{% endif %}>
+                    <label class="form-check-label text-light ms-3 fw-medium" for="receiveEmails" style="cursor: pointer; font-size: 0.95rem;">
+                        Получавай имейл известия при нови обяви
+                    </label>
+                </div>
+
+                <style>
+                    .custom-switch .form-check-input:checked {
+                        background-color: var(--accent-color);
+                        border-color: var(--accent-color);
+                        box-shadow: 0 0 15px var(--accent-glow);
+                    }
+                    .custom-switch .form-check-input {
+                        background-color: rgba(255, 255, 255, 0.1);
+                        border-color: rgba(255, 255, 255, 0.2);
+                    }
+                </style>
                 <button type="submit" class="btn btn-primary-custom w-100 mt-2">Запази промените</button>
             </form>
         </div>

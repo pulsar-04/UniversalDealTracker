@@ -55,7 +55,7 @@ class Command(BaseCommand):
                         )
                         saved_count += 1
 
-                        if not is_first_run and search.user.email:
+                        if not is_first_run and search.user.email and hasattr(search.user, 'profile') and search.user.profile.receive_emails:
                             remote_text = " (Remote)" if item['remote'] else ""
                             subject = f"💼 DealTracker: Нова IT позиция за {search.title}"
                             message = f"""

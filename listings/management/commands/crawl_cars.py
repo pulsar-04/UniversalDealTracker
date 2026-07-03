@@ -62,7 +62,7 @@ class Command(BaseCommand):
                         if new_price:
                             PriceHistory.objects.create(listing=car, price=new_price)
 
-                        if not is_first_run and search.user.email:
+                        if not is_first_run and search.user.email and hasattr(search.user, 'profile') and search.user.profile.receive_emails:
                             subject = f"🚀 DealTracker: Нова обява за {search.title}"
                             message = f"""
                             Здравей, {search.user.username}!

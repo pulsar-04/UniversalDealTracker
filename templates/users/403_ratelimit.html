@@ -1,0 +1,39 @@
+{% extends "listings/base.html" %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+    <div class="col-md-6 col-lg-5">
+
+        <div class="auth-card text-center p-5" style="border: 1px solid rgba(220, 53, 69, 0.4); box-shadow: 0 0 30px rgba(220, 53, 69, 0.15);">
+            
+            <div class="mb-4">
+                <div style="width: 80px; height: 80px; background: rgba(220, 53, 69, 0.1); border: 1px solid #dc3545; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px rgba(220, 53, 69, 0.3);">
+                    <i class="bi bi-shield-lock-fill" style="font-size: 2.5rem; color: #dc3545;"></i>
+                </div>
+            </div>
+
+            <h2 class="fw-bolder text-white mb-3" style="letter-spacing: -0.5px;">Достъпът е временно ограничен</h2>
+            
+            <p class="text-light mb-4" style="font-size: 0.95rem;">
+                Засякохме твърде много неуспешни опити за вход от твоя IP адрес. От съображения за сигурност, системата автоматично блокира достъпа до тази форма.
+            </p>
+
+            <div class="alert p-3 mb-4 text-center fw-bold" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 8px;">
+                <i class="bi bi-clock-history me-2"></i>Моля, опитай отново след 15 минути.
+            </div>
+
+            <a href="{% url 'landing' %}" class="btn w-100 py-3 fw-bold text-white" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; transition: all 0.3s ease;">
+                Върни се в началото
+            </a>
+
+        </div>
+
+    </div>
+</div>
+
+<style>
+    .auth-card a:hover {
+        background: rgba(255,255,255,0.1) !important;
+    }
+</style>
+{% endblock %}
