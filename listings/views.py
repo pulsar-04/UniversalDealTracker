@@ -9,6 +9,10 @@ from .tasks import auto_crawl_cars, auto_crawl_jobs
 from django.core.paginator import Paginator
 import json
 from django.core.management import call_command
+import csv
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from .models import CarListing, Search
 
 
 def landing(request):
@@ -196,3 +200,47 @@ def toggle_search_status(request, pk):
         messages.success(request, f"▶️ Търсенето '{search.title}' отново е активно! Роботът продължава работа.")
 
     return redirect('dashboard')
+
+
+@login_required
+def export_cars_csv(request):
+    response = HttpResponse(content_type='text/csv')
+
+    response['Content-Disposition'] = 'attachment; filename="my_dealtracker_cars.csv"'
+    response.write('\ufeff'.encode('utf8'))
+
+    writer = csv.writer(response)
+
+    writer.writerow(['Марка', 'Модел', 'Година', 'Цена (лв)', 'Линк'])
+
+    user_searches = Search.objects.filter(user=request.user, category='car')
+    user_brands = user_searches.values_list('brand', flat=True)
+
+    cars = CarListing.objects.filter(brand__in=user_brands)
+
+    for car in cars:
+        writer.writerow([car.brand, car.model, car.year, car.price, car.url])
+
+    return response
+
+
+@login_required
+def export_jobs_csv(request):
+    response = HttpResponse(content_type='text/csv; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="my_dealtracker_jobs.csv"'
+
+    response.write('\ufeff'.encode('utf8'))
+
+    writer = csv.writer(response)
+    writer.writerow(['Позиция', 'Компания', 'Локация', 'Remote', 'Линк'])
+
+    user_searches = Search.objects.filter(user=request.user, category='job')
+    jobs = JobListing.objects.filter(search__in=user_searches)
+
+    for job in jobs:
+        is_remote_bg = 'Да' if job.is_remote else 'Не'
+        writer.writerow([job.title, job.company_name, job.location, is_remote_bg, job.url])
+
+    return response
+
+

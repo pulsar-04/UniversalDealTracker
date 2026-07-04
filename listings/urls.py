@@ -10,4 +10,7 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('dashboard/delete/<int:pk>/', views.delete_search, name='delete_search'),
     path('search/<int:pk>/toggle/', views.toggle_search_status, name='toggle_search_status'),
+    path('export/cars/', views.export_cars_csv, name='export_cars_csv'),
+    path('export/jobs/', views.export_jobs_csv, name='export_jobs_csv'),
+
 ]

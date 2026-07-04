@@ -1,8 +1,56 @@
 from .base import BaseScraper
 import re
-
+import time
+import requests
+from bs4 import BeautifulSoup
 
 class MobileBgScraper(BaseScraper):
+
+    def run(self):
+        all_items = []
+        current_url = self.url
+
+        while current_url:
+            print(f"🌍 Зареждам страница: {current_url}")
+
+            headers = {
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+            }
+            try:
+                response = requests.get(current_url, headers=headers, timeout=10)
+                soup = BeautifulSoup(response.content, 'html.parser')
+            except Exception as e:
+                print(f"❌ Грешка при зареждане на {current_url}: {e}")
+                break
+
+            page_items = self.scrape_items(soup)
+
+            if not page_items:
+                break
+
+            all_items.extend(page_items)
+
+            next_btn = soup.find('a', class_='saveSlink next')
+
+            if next_btn and next_btn.get('href'):
+                next_url = next_btn.get('href')
+
+                if next_url.startswith('//'):
+                    current_url = 'https:' + next_url
+                elif next_url.startswith('/'):
+                    current_url = 'https://www.mobile.bg' + next_url
+                else:
+                    current_url = next_url
+
+                time.sleep(2)
+            else:
+                print(f"✅ Край! Достигната е последната страница. Общо събрани: {len(all_items)}")
+                current_url = None
+
+        return all_items
+
+
+
     def scrape_items(self, soup):
         items = []
         ad_links = soup.find_all('a', class_='title')

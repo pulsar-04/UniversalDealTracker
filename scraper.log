@@ -27,3 +27,19 @@
 [2026-07-03 11:40:14] INFO [crawl_jobs]: --> Processing Jobs: DevOps
 [2026-07-03 11:40:23] INFO [crawl_jobs]:    Saved 37 new jobs for 'DevOps'
 [2026-07-03 11:40:23] INFO [crawl_jobs]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-04 06:36:51] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-04 06:36:51] INFO [crawl_jobs]: Found 1 active job searches. Starting job...
+[2026-07-04 06:36:51] INFO [crawl_jobs]: --> Processing Jobs: DevOps
+[2026-07-04 06:36:59] INFO [crawl_jobs]:    Saved 0 new jobs for 'DevOps'
+[2026-07-04 06:38:41] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-04 06:38:41] INFO [crawl_cars]: --> Processing: Ferrari
+[2026-07-04 06:38:43] INFO [crawl_cars]:    Saved 20 new cars for 'Ferrari'
+[2026-07-04 06:38:43] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-04 06:58:09] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-04 06:58:09] INFO [crawl_cars]: --> Processing: Ferrari
+[2026-07-04 06:58:26] INFO [crawl_cars]:    Saved 152 new cars for 'Ferrari'
+[2026-07-04 06:58:26] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-04 07:00:00] WARNING [crawl_jobs]: Няма записани търсения за работа! Добави в Админа.
+[2026-07-04 07:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-04 07:00:00] INFO [crawl_cars]: --> Processing: Ferrari
+[2026-07-04 07:00:16] INFO [crawl_cars]:    Saved 0 new cars for 'Ferrari'
