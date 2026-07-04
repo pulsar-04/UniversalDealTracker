@@ -26,7 +26,11 @@
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Парола</label>
                     <input type="password" name="password" class="form-control text-light custom-input" required>
                 </div>
-
+                <div class="text-end mt-2 mb-4">
+                    <a href="{% url 'reset_password' %}" class="small text-decoration-none" style="color: #00f0ff; letter-spacing: 0.5px;">
+                        Забравена парола?
+                    </a>
+                </div>
                 <button type="submit" class="btn w-100 py-3 mt-3 fw-bold text-white" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 8px; letter-spacing: 0.5px;">
                     Влез в профила
                 </button>
