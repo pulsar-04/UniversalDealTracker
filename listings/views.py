@@ -8,6 +8,7 @@ from django.db.models import Q
 from .tasks import auto_crawl_cars, auto_crawl_jobs
 from django.core.paginator import Paginator
 import json
+from listings.tasks import auto_crawl_cars, auto_crawl_jobs
 from django.core.management import call_command
 import csv
 from django.http import HttpResponse
@@ -37,17 +38,18 @@ def car_list(request):
     if selected_brand:
         cars = cars.filter(brand=selected_brand)
 
-
     paginator = Paginator(cars, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    is_scanning = user_searches.filter(is_initial_scan_done=False).exists()
 
     context = {
         'cars': page_obj,
         'total_count': paginator.count,
         'brands': user_brands,
         'selected_brand': selected_brand,
+        'is_scanning': is_scanning,
     }
     return render(request, 'listings/car_list.html', context)
 
@@ -57,25 +59,25 @@ def job_list(request):
     job_searches = Search.objects.filter(user=request.user, category='job')
 
     if job_searches.exists():
-
         jobs = JobListing.objects.filter(is_active=True, search__in=job_searches).order_by('-date_posted')
     else:
         jobs = JobListing.objects.none()
 
     selected_search_id = request.GET.get('search_id')
     if selected_search_id:
-
         jobs = jobs.filter(search_id=selected_search_id)
 
     paginator = Paginator(jobs, 12)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
+    is_scanning = job_searches.filter(is_initial_scan_done=False).exists()
     context = {
         'jobs': page_obj,
         'total_count': paginator.count,
         'job_searches': job_searches,
         'selected_search_id': selected_search_id,
+        'is_scanning': is_scanning,
     }
     return render(request, 'listings/job_list.html', context)
 
@@ -92,35 +94,33 @@ def dashboard(request):
             new_search.user = request.user
             new_search.save()
 
-            messages.success(request, "Успешно добави ново търсене! Роботът започва да сканира веднага. Моля изчакай...")
-
+            messages.success(request, "Успешно добави ново търсене! Роботът започва да сканира в бекграунд. Презареди страницата след малко.")
 
             try:
                 if new_search.category == 'car':
-                    call_command('crawl_cars')
+                    auto_crawl_cars.delay()
                 elif new_search.category == 'job':
-                    call_command('crawl_jobs')
+                    auto_crawl_jobs.delay()
             except Exception as e:
-                print(f"Грешка при първоначално стартиране на робота: {e}")
-
+                print(f"Грешка при пускане на Celery задача: {e}")
 
             return redirect('dashboard')
     else:
         form = SearchForm()
 
     searches = Search.objects.filter(user=request.user).order_by('-created_at')
-
     active_robots = searches.filter(is_paused=False).count()
 
     user_cars_count = CarListing.objects.filter(brand__in=searches.values_list('brand', flat=True)).count()
     user_jobs_count = JobListing.objects.filter(search__in=searches).count()
     total_items = user_cars_count + user_jobs_count
 
-    return render(request, 'listings/dashboard.html', {'form': form,
-                                                       'searches': searches,
-                                                       'total_items': total_items,
-                                                       'active_robots': active_robots
-                                                       })
+    return render(request, 'listings/dashboard.html', {
+        'form': form,
+        'searches': searches,
+        'total_items': total_items,
+        'active_robots': active_robots
+    })
 
 
 @login_required

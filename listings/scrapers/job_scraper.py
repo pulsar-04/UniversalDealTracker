@@ -5,8 +5,6 @@ import re
 class DevBgScraper(BaseScraper):
     def scrape_items(self, soup):
         items = []
-
-
         job_cards = soup.find_all('div', class_='job-list-item')
 
         if not job_cards:
@@ -17,31 +15,35 @@ class DevBgScraper(BaseScraper):
 
         for card in job_cards:
             try:
-
                 link_tag = card.find('a', class_='overlay-link')
                 if not link_tag:
                     continue
 
                 href = link_tag.get('href')
 
-
                 title_tag = card.find('h6', class_='job-title')
                 title = title_tag.get_text(strip=True) if title_tag else "Unknown Position"
-
 
                 company_tag = card.find(class_='company-name')
                 company = company_tag.get_text(strip=True) if company_tag else "Unknown Company"
 
-
                 location = "Unknown"
                 badge = card.find('span', class_='badge')
-
                 if badge:
                     location = badge.get_text(strip=True)
 
-
                 salary_min = None
 
+                image_url = ""
+
+                img_tag = card.find('img', class_=re.compile(r'company-logo'))
+                if not img_tag:
+                    img_tag = card.find('img')
+
+                if img_tag:
+                    src = img_tag.get('data-lazy-src') or img_tag.get('data-src') or img_tag.get('src')
+                    if src:
+                        image_url = src
 
                 items.append({
                     'title': title,
@@ -49,7 +51,8 @@ class DevBgScraper(BaseScraper):
                     'location': location,
                     'link': href,
                     'salary': salary_min,
-                    'remote': 'Remote' in location or 'Hybrid' in location  # Проста проверка
+                    'remote': 'Remote' in location or 'Hybrid' in location,
+                    'image_url': image_url
                 })
 
             except Exception as e:
@@ -59,7 +62,6 @@ class DevBgScraper(BaseScraper):
         return items
 
     def run(self):
-        all_jobs = []
         original_url = self.url
         page = 1
         max_pages = 15
@@ -70,11 +72,9 @@ class DevBgScraper(BaseScraper):
             if page == 1:
                 self.url = original_url
             else:
-                # Хакваме системата на WordPress за странициране
                 if '?' in original_url:
                     self.url = f"{original_url}&_paged={page}"
                 else:
-                    # Махаме наклонената черта накрая, ако я има, и добавяме /page/2/
                     base_url = original_url.rstrip('/')
                     self.url = f"{base_url}/page/{page}/"
 
@@ -89,12 +89,5 @@ class DevBgScraper(BaseScraper):
                 print(f"🏁 [Dev.bg] Няма повече обяви (достигнат край след Страница {page - 1}).")
                 break
 
-
-            if page > 1 and all_jobs and items[0]['link'] == all_jobs[0]['link']:
-                print("⚠ [Dev.bg] Засечено скрито пренасочване към Страница 1. Спираме.")
-                break
-
-            all_jobs.extend(items)
+            yield items
             page += 1
-
-        return all_jobs

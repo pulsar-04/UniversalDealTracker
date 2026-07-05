@@ -35,7 +35,17 @@
 <div class="row">
     {% for car in cars %}
     <div class="col-md-4 mb-4">
-        <div class="listing-card">
+        <div class="listing-card" style="overflow: hidden;">
+            {% if car.image_url %}
+            <div style="height: 200px; width: 100%; background-color: rgba(0,0,0,0.5);">
+                <img src="{{ car.image_url }}" alt="{{ car.brand }}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            {% else %}
+            <div style="height: 200px; width: 100%; background: rgba(255,255,255,0.02); display: flex; justify-content: center; align-items: center;">
+                <i class="bi bi-car-front text-muted" style="font-size: 3.5rem; opacity: 0.5;"></i>
+            </div>
+            {% endif %}
+
             <div class="listing-body">
                 <div class="d-flex justify-content-between align-items-start mb-3">
                     <span class="badge-custom">{{ car.brand }}</span>
@@ -69,11 +79,36 @@
     </div>
     {% empty %}
     <div class="col-12 text-center py-5">
-        <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
-            <i class="bi bi-robot d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
-            <h3 class="fw-bold text-white mt-3">Роботът почива...</h3>
-            <p class="text-light">Все още няма намерени автомобили по тези критерии.</p>
-        </div>
+        {% if is_scanning %}
+            <div class="py-5 mx-auto" style="max-width: 500px;">
+                <div class="scanner-container mb-4 mx-auto" style="width: 100px; height: 100px; position: relative;">
+                    <div class="scanner-circle" style="width: 100%; height: 100%; border: 3px solid #00f0ff; border-radius: 50%; position: absolute; top: 0; left: 0; animation: pulse 1.5s infinite;"></div>
+                    <i class="bi bi-radar text-accent" style="font-size: 3rem; line-height: 100px;"></i>
+                </div>
+                <h3 class="fw-bold text-white mt-3">Роботът сканира мрежата...</h3>
+                <p class="text-light">Събираме най-добрите оферти в момента. Страницата ще се обнови автоматично.</p>
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    window.location.reload();
+                }, 5000);
+            </script>
+
+            <style>
+                @keyframes pulse {
+                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
+                    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(0, 240, 255, 0); }
+                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+                }
+            </style>
+        {% else %}
+            <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
+                <i class="bi bi-robot d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
+                <h3 class="fw-bold text-white mt-3">Роботът почива...</h3>
+                <p class="text-light">Все още няма намерени автомобили по тези критерии.</p>
+            </div>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

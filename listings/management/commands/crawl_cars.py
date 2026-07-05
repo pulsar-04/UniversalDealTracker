@@ -1,12 +1,13 @@
 import logging
+import types
 from django.core.management.base import BaseCommand
 from listings.scrapers.car_scraper import MobileBgScraper, CarsBgScraper
 from listings.models import CarListing, Search, PriceHistory
 from django.core.mail import send_mail
 from django.conf import settings
 
-
 logger = logging.getLogger('scrapers')
+
 
 class Command(BaseCommand):
     help = 'Scrapes cars based on saved Searches in database'
@@ -31,74 +32,64 @@ class Command(BaseCommand):
                 logger.error(f"   [Грешка] Неподдържан сайт в линка: {search.url}")
                 continue
 
-            items = scraper.run()
+            results = scraper.run()
 
-            if not items:
-                logger.warning(f"   No items found for {search.title}")
-                continue
+            if isinstance(results, types.GeneratorType):
+                pages = results
+            else:
+                pages = [results] if results else []
 
             saved_count = 0
             is_first_run = not search.is_initial_scan_done
 
-            for item in items:
-                try:
-                    car = CarListing.objects.filter(url=item['link']).first()
-                    new_price = item['price']
+            for page_items in pages:
+                if not page_items:
+                    continue
 
-                    if not car:
-                        car = CarListing.objects.create(
-                            url=item['link'],
-                            title=item['title'],
-                            price=new_price,
-                            year=item['year'],
-                            category='car',
-                            brand=search.brand if search.brand else 'Unknown',
-                            model=search.model if search.model else 'Unknown',
-                            kilometers=0,
-                            fuel_type='Unknown'
-                        )
-                        saved_count += 1
+                for item in page_items:
+                    try:
+                        car = CarListing.objects.filter(url=item['link']).first()
+                        new_price = item['price']
 
-                        if new_price:
-                            PriceHistory.objects.create(listing=car, price=new_price)
-
-                        if not is_first_run and search.user.email and hasattr(search.user, 'profile') and search.user.profile.receive_emails:
-                            subject = f"🚀 DealTracker: Нова обява за {search.title}"
-                            message = f"""
-                            Здравей, {search.user.username}!
-
-                            Роботът току-що откри нова обява, която отговаря на твоето търсене "{search.title}":
-
-                            🚗 Автомобил: {item['title']}
-                            💰 Цена: {item['price']} лв/евро
-                            📅 Година: {item['year']}
-
-                            Виж я веднага тук: {item['link']}
-
-                            Поздрави,
-                            DealTracker Bot 🤖
-                            """
-                            send_mail(
-                                subject=subject,
-                                message=message,
-                                from_email=settings.DEFAULT_FROM_EMAIL,
-                                recipient_list=[search.user.email],
-                                fail_silently=True
+                        if not car:
+                            car = CarListing.objects.create(
+                                url=item['link'],
+                                title=item['title'],
+                                price=new_price,
+                                year=item['year'],
+                                category='car',
+                                brand=search.brand if search.brand else 'Unknown',
+                                model=search.model if search.model else 'Unknown',
+                                kilometers=0,
+                                fuel_type='Unknown',
+                                image_url=item.get('image_url')
                             )
+                            saved_count += 1
 
-                    else:
-                        old_price = car.price
+                            if new_price:
+                                PriceHistory.objects.create(listing=car, price=new_price)
 
-                        car.title = item['title']
-                        car.price = new_price
-                        car.save()
+                            if not is_first_run and search.user.email and hasattr(search.user,
+                                                                                  'profile') and search.user.profile.receive_emails:
+                                subject = f"🚀 DealTracker: Нова обява за {search.title}"
+                                message = f"Здравей, {search.user.username}!\n\nРоботът откри нова обява:\n🚗 {item['title']}\n💰 {item['price']} лв\n\nЛинк: {item['link']}"
+                                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [search.user.email],
+                                          fail_silently=True)
 
-                        if old_price != new_price and new_price:
-                            PriceHistory.objects.create(listing=car, price=new_price)
-                            logger.warning(f"   [Price Change] {car.title}: {old_price} -> {new_price}")
+                        else:
+                            old_price = car.price
+                            car.title = item['title']
+                            car.price = new_price
+                            if item.get('image_url'):
+                                car.image_url = item.get('image_url')
+                            car.save()
 
-                except Exception as e:
-                    logger.error(f"Error saving car: {e}", exc_info=True)
+                            if old_price != new_price and new_price:
+                                PriceHistory.objects.create(listing=car, price=new_price)
+                                logger.warning(f"   [Price Change] {car.title}: {old_price} -> {new_price}")
+
+                    except Exception as e:
+                        logger.error(f"Error saving car: {e}", exc_info=True)
 
             logger.info(f"   Saved {saved_count} new cars for '{search.title}'")
 

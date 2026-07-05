@@ -36,10 +36,22 @@
         <div class="listing-card">
             <div class="listing-body">
 
-                <div class="d-flex justify-content-between align-items-start mb-2">
-                    <span class="company-name text-accent">
-                        <i class="bi bi-building me-1"></i> {{ job.company_name }}
-                    </span>
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div class="d-flex align-items-center gap-2">
+                        {% if job.image_url %}
+                        <div style="width: 32px; height: 32px; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 2px;">
+                            <img src="{{ job.image_url }}" alt="Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                        </div>
+                        {% else %}
+                        <div style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
+                            <i class="bi bi-building text-success"></i>
+                        </div>
+                        {% endif %}
+                        <span class="company-name text-accent mb-0 fw-bold">
+                            {{ job.company_name }}
+                        </span>
+                    </div>
+
                     <small class="text-muted" style="font-size: 0.8rem;">
                         <i class="bi bi-clock"></i> {{ job.date_posted|date:"d M" }}
                     </small>
@@ -73,11 +85,34 @@
     </div>
     {% empty %}
     <div class="col-12 text-center py-5">
-        <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
-            <i class="bi bi-briefcase d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
-            <h3 class="fw-bold text-white mt-3">Няма намерени позиции</h3>
-            <p class="text-light">Опитай да добавиш нови критерии за търсене в Контролния панел.</p>
-        </div>
+        {% if is_scanning %}
+            <div class="py-5 mx-auto" style="max-width: 500px;">
+                <div class="scanner-container mb-4 mx-auto" style="width: 100px; height: 100px; position: relative;">
+                    <div class="scanner-circle" style="width: 100%; height: 100%; border: 3px solid #10b981; border-radius: 50%; position: absolute; top: 0; left: 0; animation: pulse-green 1.5s infinite;"></div>
+                    <i class="bi bi-radar text-success" style="font-size: 3rem; line-height: 100px;"></i>
+                </div>
+                <h3 class="fw-bold text-white mt-3">Роботът търси позиции...</h3>
+                <p class="text-light">Анализираме пазара за нови обяви. Страницата ще се обнови автоматично.</p>
+            </div>
+            <script>
+                setTimeout(function() {
+                    window.location.reload();
+                }, 5000);
+            </script>
+            <style>
+                @keyframes pulse-green {
+                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+                    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
+                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+                }
+            </style>
+        {% else %}
+            <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
+                <i class="bi bi-briefcase d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
+                <h3 class="fw-bold text-white mt-3">Няма намерени позиции</h3>
+                <p class="text-light">Опитай да добавиш нови критерии за търсене в Контролния панел.</p>
+            </div>
+        {% endif %}
     </div>
     {% endfor %}
 </div>

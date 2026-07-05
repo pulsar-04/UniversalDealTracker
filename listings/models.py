@@ -24,6 +24,7 @@ class CarListing(Listing):
     kilometers = models.PositiveIntegerField()
     fuel_type = models.CharField(max_length=50)
 
+    image_url = models.URLField(max_length=500, blank=True, null=True)
     class Meta:
         verbose_name = "Обява за Кола"
 
@@ -32,6 +33,7 @@ class JobListing(Listing):
     location = models.CharField(max_length=200)
     salary_min = models.DecimalField(max_digits=10, decimal_places=2, null=True, blank=True)
     is_remote = models.BooleanField(default=False)
+    image_url = models.URLField(max_length=500, blank=True, null=True)
 
     class Meta:
         verbose_name = "Обява за Работа"
