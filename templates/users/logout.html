@@ -1,36 +1,52 @@
 {% extends "listings/base.html" %}
 
 {% block content %}
-<div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+<div class="row justify-content-center align-items-center flex-grow-1" style="min-height: 75vh;">
     <div class="col-md-6 col-lg-4">
 
-        <div class="auth-card text-center p-5">
+        <div class="auth-card text-center p-5 shadow-lg" data-aos="zoom-in" data-aos-duration="600" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
 
-            <div class="mb-4">
-                <div style="width: 80px; height: 80px; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-color); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px var(--accent-glow);">
-                    <i class="bi bi-shield-check" style="font-size: 2.5rem; color: var(--accent-color);"></i>
+            <div class="mb-4 position-relative">
+                <div class="position-absolute top-50 start-50 translate-middle" style="width: 100px; height: 100px; background: rgba(16, 185, 129, 0.2); border-radius: 50%; filter: blur(15px); animation: pulse-green 2s infinite;"></div>
+
+                <div style="width: 80px; height: 80px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success-color); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin: 0 auto; box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); position: relative; z-index: 2;">
+                    <i class="bi bi-shield-check" style="font-size: 2.5rem; color: var(--success-color);"></i>
                 </div>
             </div>
 
-            <h2 class="fw-bold text-white mb-2">Успешен изход</h2>
+            <h2 class="fw-bolder text-white mb-3" style="letter-spacing: -0.5px;">Сесията е прекратена</h2>
 
-            <p class="text-light mb-5">
-                Ти излезе от профила си сигурно.<br>
-                Благодарим, че използва <span class="text-accent">DealTracker</span>! 🚀
+            <p class="text-light opacity-75 mb-5 small" style="line-height: 1.6;">
+                Излязохте успешно от криптирания тунел.<br>
+                Системата преустанови следенето на вашите активни процеси.
             </p>
 
-            <a href="{% url 'landing' %}" class="btn btn-secondary-custom w-100">
-                <i class="bi bi-arrow-left me-2"></i> Към началната страница
+            <a href="{% url 'landing' %}" class="btn w-100 py-3 fw-bold text-white mb-3" style="background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; transition: all 0.3s ease;">
+                <i class="bi bi-house-door me-2"></i> Към Началния Екран
             </a>
-
         </div>
 
-        <div class="text-center mt-4">
+        <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="300">
             <p class="text-muted small">
-                Искаш да влезеш пак? <a href="{% url 'login' %}" class="text-accent text-decoration-none" style="font-weight: 600;">Влез тук</a>
+                Необходим ви е нов достъп? <a href="{% url 'login' %}" class="text-info text-decoration-none hover-accent" style="font-weight: 600; letter-spacing: 0.5px;">Оторизирай се тук</a>
             </p>
         </div>
 
     </div>
 </div>
+
+<style>
+    .auth-card a.btn:hover {
+        background: rgba(255,255,255,0.1) !important;
+        transform: translateY(-2px);
+    }
+    .hover-accent:hover {
+        text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    }
+    @keyframes pulse-green {
+        0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+        50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; }
+        100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; }
+    }
+</style>
 {% endblock %}

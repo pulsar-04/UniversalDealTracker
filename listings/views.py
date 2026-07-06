@@ -14,7 +14,8 @@ import csv
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from .models import CarListing, Search
-
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404
 
 def landing(request):
 
@@ -188,16 +189,14 @@ def car_detail(request, pk):
 
 
 @login_required
-def toggle_search_status(request, pk):
-    search = get_object_or_404(Search, pk=pk, user=request.user)
+def toggle_search_status(request, search_id):
+    search = get_object_or_404(Search, id=search_id, user=request.user)
 
     search.is_paused = not search.is_paused
     search.save()
 
-    if search.is_paused:
-        messages.warning(request, f"⏸️ Търсенето '{search.title}' е поставено на пауза. Роботът спира да го следи.")
-    else:
-        messages.success(request, f"▶️ Търсенето '{search.title}' отново е активно! Роботът продължава работа.")
+    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+        return JsonResponse({'is_paused': search.is_paused})
 
     return redirect('dashboard')
 

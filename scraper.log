@@ -86065,3 +86065,21 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-05 16:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
 [2026-07-05 16:00:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
 [2026-07-05 16:00:02] INFO [crawl_cars]:    Saved 1 new cars for 'BMW-cars.bg'
+[2026-07-05 16:03:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-05 16:03:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-05 16:03:49] INFO [crawl_cars]:    Saved 395 new cars for 'BMW-cars.bg'
+[2026-07-05 16:03:49] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-06 12:12:32] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-06 12:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-06 12:30:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-06 12:30:00] WARNING [crawl_cars]:    [Price Change] BMW 520 gaz inj: 1750.00 -> 1499
+[2026-07-06 12:30:00] WARNING [crawl_cars]:    [Price Change] BMW 318 1.8 ci: 2400.00 -> 2300
+[2026-07-06 12:30:00] WARNING [crawl_cars]:    [Price Change] BMW 320 COUPE: 5000.00 -> 4999
+[2026-07-06 12:30:01] WARNING [crawl_cars]:    [Price Change] BMW 323: 3500.00 -> 3200
+[2026-07-06 12:30:01] WARNING [crawl_cars]:    [Price Change] BMW 318 is Газов Инжекцион: 1999.00 -> 1950
+[2026-07-06 12:30:06] WARNING [crawl_cars]:    [Price Change] BMW 318: 2500.00 -> 2450
+[2026-07-06 12:30:06] WARNING [crawl_cars]:    [Price Change] BMW 523 2.3: 3799.00 -> 3750
+[2026-07-06 12:30:07] WARNING [crawl_cars]:    [Price Change] BMW 525 n52b25a XI: 5000.00 -> 5225
+[2026-07-06 12:30:07] WARNING [crawl_cars]:    [Price Change] BMW 530: 4550.00 -> 4500
+[2026-07-06 12:30:07] WARNING [crawl_cars]:    [Price Change] BMW X3: 3199.00 -> 2999
+[2026-07-06 12:30:54] INFO [crawl_cars]:    Saved 5 new cars for 'BMW-cars.bg'

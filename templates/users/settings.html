@@ -1,68 +1,104 @@
 {% extends "listings/base.html" %}
 
 {% block content %}
-<div class="row justify-content-center mt-4">
+<div class="row justify-content-center mt-4 flex-grow-1">
     <div class="col-md-8 col-lg-6">
-        
-        <div class="text-center mb-4">
-            <h2 class="fw-bold text-white">Настройки на профила</h2>
-            <p class="text-light">Управлявай своите данни и сигурност.</p>
+
+        <div class="text-center mb-5" data-aos="fade-down" data-aos-duration="800">
+            <div class="d-inline-block mb-3 p-3 rounded-circle" style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.15); box-shadow: 0 0 20px rgba(0, 240, 255, 0.1);">
+                <i class="bi bi-sliders2 text-accent fs-2"></i>
+            </div>
+            <h2 class="fw-bolder text-white" style="letter-spacing: -0.5px;">Параметри на Профила</h2>
+            <p class="text-secondary small">Конфигурация на персоналната ви среда и сигурност.</p>
         </div>
 
-        <div class="auth-card mb-4">
-            <h5 class="text-accent mb-3"><i class="bi bi-person-lines-fill me-2"></i>Лични данни</h5>
+        <div class="auth-card p-4 p-sm-5 mb-4 shadow-lg" data-aos="fade-up" data-aos-delay="100" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
+            <h5 class="text-white fw-bold mb-4 d-flex align-items-center" style="letter-spacing: -0.3px;">
+                <i class="bi bi-person-badge text-accent me-2"></i> Идентификационни данни
+            </h5>
+
             <form method="POST" action="{% url 'profile_settings' %}">
                 {% csrf_token %}
-                <div class="mb-3">
-                    <label class="form-label-custom">Потребителско име</label>
-                    <input type="text" name="username" value="{{ user.username }}" class="form-control-custom w-100" required>
+                <div class="mb-4">
+                    <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Потребителско име</label>
+                    <div class="custom-form-wrapper">
+                        <input type="text" name="username" value="{{ user.username }}" required>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label-custom">Имейл адрес (за известия)</label>
-                    <input type="email" name="email" value="{{ user.email }}" class="form-control-custom w-100" required>
+
+                <div class="mb-4">
+                    <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Имейл адрес (Нотификации)</label>
+                    <div class="custom-form-wrapper">
+                        <input type="email" name="email" value="{{ user.email }}" required>
+                    </div>
                 </div>
-                <div class="mb-4 mt-4 form-check form-switch custom-switch d-flex align-items-center">
-                    <input class="form-check-input" type="checkbox" role="switch" id="receiveEmails" name="receive_emails" style="width: 2.5em; height: 1.25em; cursor: pointer;" {% if user.profile.receive_emails %}checked{% endif %}>
-                    <label class="form-check-label text-light ms-3 fw-medium" for="receiveEmails" style="cursor: pointer; font-size: 0.95rem;">
-                        Получавай имейл известия при нови обяви
+
+                <div class="mb-4 mt-4 form-check form-switch custom-switch d-flex align-items-center p-0">
+                    <input class="form-check-input ms-0" type="checkbox" role="switch" id="receiveEmails" name="receive_emails" style="width: 2.6em; height: 1.35em; cursor: pointer;" {% if user.profile.receive_emails %}checked{% endif %}>
+                    <label class="form-check-label text-light ms-3 fw-medium" for="receiveEmails" style="cursor: pointer; font-size: 0.9rem; opacity: 0.85;">
+                        Автоматични имейл известия при нов запис от роботите
                     </label>
                 </div>
 
-                <style>
-                    .custom-switch .form-check-input:checked {
-                        background-color: var(--accent-color);
-                        border-color: var(--accent-color);
-                        box-shadow: 0 0 15px var(--accent-glow);
-                    }
-                    .custom-switch .form-check-input {
-                        background-color: rgba(255, 255, 255, 0.1);
-                        border-color: rgba(255, 255, 255, 0.2);
-                    }
-                </style>
-                <button type="submit" class="btn btn-primary-custom w-100 mt-2">Запази промените</button>
+                <button type="submit" class="btn w-100 py-3 mt-3 fw-bold text-dark" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 12px; letter-spacing: 0.5px; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.2);">
+                    Запази Конфигурацията <i class="bi bi-check2-circle ms-1"></i>
+                </button>
             </form>
         </div>
 
-        <div class="auth-card mb-4">
-            <h5 class="text-accent mb-3"><i class="bi bi-shield-lock me-2"></i>Сигурност</h5>
-            <p class="text-light small mb-3">Препоръчително е да сменяш паролата си на всеки 6 месеца.</p>
-            <a href="{% url 'change_password' %}" class="btn btn-outline-light w-100" style="border-radius: 10px;">
-                Смени паролата си
+        <div class="auth-card p-4 p-sm-5 mb-4 shadow-lg" data-aos="fade-up" data-aos-delay="200" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
+            <h5 class="text-white fw-bold mb-3 d-flex align-items-center" style="letter-spacing: -0.3px;">
+                <i class="bi bi-shield-lock text-accent me-2"></i> Криптографска защита
+            </h5>
+            <p class="text-light opacity-75 small mb-4" style="line-height: 1.6;">За поддържане на максимално ниво на сигурност е силно препоръчително периодичното опресняване на паролата.</p>
+
+            <a href="{% url 'change_password' %}" class="btn w-100 py-3 fw-bold text-white text-center" style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; transition: 0.3s;" onmouseover="this.style.background='rgba(255,255,255,0.08)'" onmouseout="this.style.background='rgba(255,255,255,0.04)'">
+                Смяна на текущата парола <i class="bi bi-key ms-1 text-accent"></i>
             </a>
         </div>
 
-        <div class="auth-card" style="border: 1px solid rgba(255, 77, 77, 0.3);">
-            <h5 class="text-danger mb-3"><i class="bi bi-exclamation-triangle me-2"></i>Danger Zone</h5>
-            <p class="text-light small mb-3">Изтриването на профила е необратимо. Всички твои активни задачи за стъргане и запазени обяви ще бъдат премахнати.</p>
-            
-            <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Сигурен ли си, че искаш да изтриеш профила си завинаги?');">
+        <div class="auth-card p-4 p-sm-5 shadow-lg" data-aos="fade-up" data-aos-delay="300" style="background: rgba(20, 10, 10, 0.4); border: 1px solid rgba(220, 53, 69, 0.25); border-radius: 20px; backdrop-filter: blur(16px);">
+            <h5 class="text-danger fw-bold mb-3 d-flex align-items-center" style="letter-spacing: -0.3px;">
+                <i class="bi bi-exclamation-octagon text-danger me-2"></i> Зона с висок риск
+            </h5>
+            <p class="text-light opacity-75 small mb-4" style="line-height: 1.6;">Прекратяването на акаунта е окончателно деструктивно действие. Всички ваши нишки за парсване и хронологични данни ще бъдат изтрити от базата данни.</p>
+
+            <form method="POST" action="{% url 'delete_account' %}" onsubmit="return confirm('Сигурен ли си, че искаш да деактивираш и изтриеш профила си завинаги? Действието е необратимо!');">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger w-100" style="border-radius: 10px; background: rgba(220, 53, 69, 0.8);">
-                    Изтрий профила завинаги
+                <button type="submit" class="btn w-100 py-3 fw-bold text-white text-center" style="background: rgba(220, 53, 69, 0.15); border: 1px solid rgba(220, 53, 69, 0.4); border-radius: 12px; transition: all 0.3s ease;" onmouseover="this.style.background='rgba(220, 53, 69, 0.3)'; this.style.boxShadow='0 0 15px rgba(220, 53, 69, 0.3)'" onmouseout="this.style.background='rgba(220, 53, 69, 0.15)'; this.style.boxShadow='none'">
+                    Унищожи профила окончателно <i class="bi bi-trash3 ms-1"></i>
                 </button>
             </form>
         </div>
 
     </div>
 </div>
+
+<style>
+    .custom-form-wrapper input {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 10px !important;
+        padding: 0.9rem 1rem !important;
+        color: #f8fafc !important;
+        transition: all 0.3s ease;
+    }
+    .custom-form-wrapper input:focus {
+        outline: none;
+        border-color: #00f0ff !important;
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15) !important;
+    }
+
+    .custom-switch .form-check-input:checked {
+        background-color: var(--accent-color) !important;
+        border-color: var(--accent-color) !important;
+        box-shadow: 0 0 15px var(--accent-glow) !important;
+    }
+    .custom-switch .form-check-input {
+        background-color: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255,255,255,0.15);
+    }
+</style>
 {% endblock %}

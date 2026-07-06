@@ -2,34 +2,60 @@
 
 {% block content %}
 <div class="container py-5">
-    <div class="row justify-content-center">
+
+    <div class="row justify-content-center" data-aos="fade-down" data-aos-duration="1000">
         <div class="col-md-8 text-center">
-            <h1 class="fw-bold mb-4 text-white">Нашата Мисия <i class="bi bi-rocket-takeoff text-accent"></i></h1>
-            <p class="lead text-light">
-                В света на хиляди обяви е трудно да намериш "златната игла" в купа сено.
-                Ние създадохме <strong class="text-accent">DealTracker</strong>, за да направим пазаруването умно.
+            <div class="d-inline-block mb-3 px-3 py-1 rounded-pill" style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); color: var(--accent-color); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+                <i class="bi bi-radar me-1"></i> Относно Проекта
+            </div>
+            <h1 class="display-5 fw-bolder mb-4 text-white" style="letter-spacing: -1px;">Архитектура на Умните Сделки</h1>
+            <p class="lead text-light opacity-75" style="line-height: 1.8;">
+                В ерата на информационния шум е трудно да отсееш ценните данни.
+                <strong class="text-white">DealTracker</strong> не е просто търсачка – това е автономен агрегатор, създаден да даде асиметрично предимство на потребителите си.
             </p>
         </div>
     </div>
 
-    <hr class="my-5" style="border-color: var(--glass-border);">
+    <hr class="my-5" style="border-color: rgba(255,255,255,0.05);" data-aos="fade-in">
 
     <div class="row align-items-center mt-5">
-        <div class="col-md-6">
-            <h3 class="fw-bold text-white mb-4"><i class="bi bi-search text-accent me-2"></i> Как работим?</h3>
-            <p class="text-light">
-                Нашите роботи сканират най-популярните сайтове за автомобили и работа в България (Mobile.bg, Dev.bg) на всеки 30 минути.
+        <div class="col-md-6" data-aos="fade-right" data-aos-delay="200">
+            <h3 class="fw-bold text-white mb-4" style="letter-spacing: -0.5px;">
+                <i class="bi bi-hdd-network text-accent me-2"></i> Как работи ядрото?
+            </h3>
+            <p class="text-light opacity-75 mb-4" style="line-height: 1.7;">
+                Използваме разпределена система от скрейпъри, които обхождат пазара на автомобили и IT сектора в България. Чрез асинхронни Celery задачи, данните се валидират и индексират на всеки 30 минути.
             </p>
-            <ul class="list-unstyled mt-4 text-light">
-                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Агрегираме всичко на едно място.</li>
-                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Следим историята на цените.</li>
-                <li class="mb-3"><i class="bi bi-check-circle-fill text-success me-2"></i> Показва само актуални оферти.</li>
-            </ul>
+
+            <div class="feature-card p-4 mt-4" style="background: rgba(10, 10, 15, 0.5); border: 1px solid rgba(255,255,255,0.05); border-left: 3px solid var(--accent-color);">
+                <ul class="list-unstyled mb-0 text-light">
+                    <li class="mb-3 d-flex align-items-center">
+                        <i class="bi bi-cpu text-accent me-3 fs-5"></i>
+                        <span><strong class="text-white">Continuous Aggregation:</strong> Събиране на данни в реално време.</span>
+                    </li>
+                    <li class="mb-3 d-flex align-items-center">
+                        <i class="bi bi-clock-history text-accent me-3 fs-5"></i>
+                        <span><strong class="text-white">Price Versioning:</strong> Запис и проследяване на исторически цени.</span>
+                    </li>
+                    <li class="mb-0 d-flex align-items-center">
+                        <i class="bi bi-shield-check text-accent me-3 fs-5"></i>
+                        <span><strong class="text-white">Data Sanitization:</strong> Филтриране на дубликати и неактивни оферти.</span>
+                    </li>
+                </ul>
+            </div>
         </div>
-        <div class="col-md-6 text-center mt-4 mt-md-0">
-            <div class="feature-card d-inline-block p-5 text-center">
-                <div class="feature-icon-wrapper mx-auto mb-0" style="background: rgba(0, 240, 255, 0.1); width: 100px; height: 100px; border-radius: 24px;">
-                    <i class="bi bi-robot" style="font-size: 3.5rem; color: var(--accent-color); text-shadow: 0 0 15px var(--accent-glow);"></i>
+
+        <div class="col-md-6 text-center mt-5 mt-md-0" data-aos="fade-left" data-aos-delay="400">
+            <div class="position-relative d-inline-block">
+                <div class="position-absolute" style="top: -20px; right: -20px; width: 60px; height: 60px; background: rgba(0, 240, 255, 0.1); border-radius: 50%; filter: blur(20px);"></div>
+                <div class="position-absolute" style="bottom: -20px; left: -20px; width: 80px; height: 80px; background: rgba(16, 185, 129, 0.1); border-radius: 50%; filter: blur(20px);"></div>
+
+                <div class="feature-card p-5" style="background: rgba(10, 10, 15, 0.7); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); position: relative; z-index: 2;">
+                    <div class="feature-icon-wrapper mx-auto mb-4" style="background: rgba(0, 240, 255, 0.05); width: 120px; height: 120px; border-radius: 30px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 240, 255, 0.2);">
+                        <i class="bi bi-braces-asterisk" style="font-size: 4rem; color: var(--accent-color); text-shadow: 0 0 20px var(--accent-glow);"></i>
+                    </div>
+                    <h5 class="text-white fw-bold mb-1">Pulsar Architecture</h5>
+                    <p class="text-muted small mb-0">Powered by Django & Python</p>
                 </div>
             </div>
         </div>

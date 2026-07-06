@@ -1,43 +1,62 @@
 {% extends "listings/base.html" %}
 
 {% block content %}
-<div class="row justify-content-center align-items-center" style="min-height: 75vh;">
+<div class="row justify-content-center align-items-center flex-grow-1" style="min-height: 75vh;">
     <div class="col-md-6 col-lg-4">
 
-        <div class="text-center mb-5">
-            <h2 class="fw-bolder text-white" style="letter-spacing: -0.5px;">Вход</h2>
-            <p class="text-secondary small">Добре дошъл отново в системата.</p>
+        <div class="text-center mb-5" data-aos="fade-down" data-aos-duration="800">
+            <div class="d-inline-block mb-3 p-3 rounded-circle" style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-color); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
+                <i class="bi bi-shield-lock text-accent fs-2"></i>
+            </div>
+            <h2 class="fw-bolder text-white" style="letter-spacing: -0.5px;">Добре дошъл!</h2>
+            <p class="text-secondary small">Оторизация в DealTracker мрежата.</p>
         </div>
 
-        <div class="auth-card p-4 p-sm-5" style="background: rgba(15, 15, 20, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; backdrop-filter: blur(10px);">
+        <div class="auth-card p-4 p-sm-5 shadow-lg" data-aos="fade-up" data-aos-duration="1000" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
             <form method="POST">
                 {% csrf_token %}
+
                 {% if form.errors %}
-                <div class="alert alert-danger p-2 mb-4 text-center small fw-bold" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.5); color: #ff6b6b; border-radius: 8px;">
-                    <i class="bi bi-exclamation-triangle-fill me-1"></i> Грешно потребителско име или парола!
+                <div class="alert alert-danger p-3 mb-4 text-center small fw-bold" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 10px;">
+                    <i class="bi bi-exclamation-triangle-fill me-1"></i> Отказан достъп. Опитай отново.
                 </div>
                 {% endif %}
-                <div class="mb-4">
+
+                <div class="mb-4 position-relative">
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Потребителско име</label>
-                    <input type="text" name="username" class="form-control text-light custom-input" required>
+                    <div class="input-group">
+                        <span class="input-group-text border-0" style="background: rgba(0,0,0,0.4); color: var(--text-muted);"><i class="bi bi-person"></i></span>
+                        <input type="text" name="username" class="form-control text-light custom-input border-start-0 pl-0" required placeholder="admin_user">
+                    </div>
                 </div>
 
-                <div class="mb-4">
+                <div class="mb-4 position-relative">
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Парола</label>
-                    <input type="password" name="password" class="form-control text-light custom-input" required>
+                    <div class="input-group">
+                        <span class="input-group-text border-0" style="background: rgba(0,0,0,0.4); color: var(--text-muted);"><i class="bi bi-key"></i></span>
+                        <input type="password" name="password" class="form-control text-light custom-input border-start-0 pl-0" required placeholder="••••••••">
+                    </div>
                 </div>
-                <div class="text-end mt-2 mb-4">
-                    <a href="{% url 'reset_password' %}" class="small text-decoration-none" style="color: #00f0ff; letter-spacing: 0.5px;">
+
+                <div class="d-flex justify-content-between align-items-center mt-3 mb-4">
+                    <div class="form-check custom-checkbox">
+                        <input class="form-check-input" type="checkbox" name="remember_me" id="rememberMe">
+                        <label class="form-check-label text-light small" for="rememberMe" style="cursor: pointer; opacity: 0.8;">
+                            Запомни ме
+                        </label>
+                    </div>
+                    <a href="{% url 'reset_password' %}" class="small text-decoration-none hover-accent" style="color: var(--accent-color); letter-spacing: 0.5px; transition: 0.3s;">
                         Забравена парола?
                     </a>
                 </div>
-                <button type="submit" class="btn w-100 py-3 mt-3 fw-bold text-white" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 8px; letter-spacing: 0.5px;">
-                    Влез в профила
+
+                <button type="submit" class="btn w-100 py-3 mt-2 fw-bold text-dark" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 12px; letter-spacing: 0.5px; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); transition: transform 0.2s;">
+                    Вход в системата <i class="bi bi-box-arrow-in-right ms-1"></i>
                 </button>
             </form>
 
             <div class="text-center mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
-                <p class="text-secondary small mb-0">Нямаш акаунт? <a href="{% url 'register' %}" class="text-info text-decoration-none fw-semibold ms-1">Регистрирай се</a></p>
+                <p class="text-secondary small mb-0">Нов си тук? <a href="{% url 'register' %}" class="text-info text-decoration-none fw-bold ms-1 hover-accent">Инициализирай акаунт</a></p>
             </div>
 
         </div>
@@ -46,16 +65,41 @@
 
 <style>
     .custom-input {
-        background-color: rgba(0, 0, 0, 0.3) !important;
+        background-color: rgba(0, 0, 0, 0.4) !important;
         border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 8px !important;
-        padding: 0.8rem 1rem !important;
+        border-radius: 0 10px 10px 0 !important;
+        padding: 0.9rem 1rem !important;
         transition: all 0.3s ease;
+    }
+    .input-group-text {
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-right: none !important;
+        border-radius: 10px 0 0 10px !important;
     }
     .custom-input:focus {
         border-color: #00f0ff !important;
-        box-shadow: 0 0 0 0.2rem rgba(0, 240, 255, 0.15) !important;
-        background-color: rgba(0, 0, 0, 0.5) !important;
+        box-shadow: none !important;
+        background-color: rgba(0, 0, 0, 0.6) !important;
+    }
+    .input-group:focus-within .input-group-text,
+    .input-group:focus-within .custom-input {
+        border-color: var(--accent-color) !important;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15) !important;
+    }
+
+    /* Premium Checkbox */
+    .custom-checkbox .form-check-input {
+        background-color: rgba(0,0,0,0.5);
+        border: 1px solid rgba(255,255,255,0.2);
+        cursor: pointer;
+    }
+    .custom-checkbox .form-check-input:checked {
+        background-color: var(--accent-color);
+        border-color: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-glow);
+    }
+    .hover-accent:hover {
+        text-shadow: 0 0 8px var(--accent-glow);
     }
 </style>
 {% endblock %}

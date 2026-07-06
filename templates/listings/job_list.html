@@ -2,28 +2,30 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-end mb-5">
+<div class="d-flex justify-content-between align-items-end mb-5" data-aos="fade-down">
     <div>
-        <h1 class="fw-bold text-white mb-1"><i class="bi bi-briefcase-fill text-success me-2"></i>IT Кариери</h1>
-        <p class="text-light mb-0">Актуални предложения от Dev.bg и водещи компании.</p>
+        <h1 class="fw-bold text-white mb-2" style="letter-spacing: -0.5px;">
+            <i class="bi bi-terminal-fill text-success me-2"></i>IT Кариери
+        </h1>
+        <p class="text-light mb-0 opacity-75">Технологични позиции от водещи компании.</p>
     </div>
     <div>
-        <span class="badge rounded-pill px-3 py-2" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid var(--success-color); font-size: 0.9rem;">
-            {{ total_count }} позиции
+        <span class="badge rounded-pill px-4 py-2" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.3); font-size: 0.9rem; box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);">
+            <i class="bi bi-code-slash me-1"></i> {{ total_count }} позиции
         </span>
     </div>
 </div>
 
-<div class="mb-5">
+<div class="mb-5" data-aos="fade-right" data-aos-delay="100">
     <div class="d-flex flex-wrap gap-2">
         <a href="{% url 'job_list' %}"
-           class="filter-btn {% if not selected_search_id %}active{% endif %}">
-           Всички
+           class="filter-btn-green {% if not selected_search_id %}active{% endif %}">
+           <i class="bi bi-collection me-1"></i> Всички Задачи
         </a>
 
         {% for search in job_searches %}
             <a href="?search_id={{ search.id }}"
-               class="filter-btn {% if selected_search_id|stringformat:'s' == search.id|stringformat:'s' %}active{% endif %}">
+               class="filter-btn-green {% if selected_search_id|stringformat:'s' == search.id|stringformat:'s' %}active{% endif %}">
                {{ search.title }}
             </a>
         {% endfor %}
@@ -32,85 +34,80 @@
 
 <div class="row">
     {% for job in jobs %}
-    <div class="col-md-6 mb-4">
-        <div class="listing-card">
-            <div class="listing-body">
+    <div class="col-md-6 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+        <div class="listing-card custom-hover-job p-4 h-100 d-flex flex-column" style="background: rgba(10, 10, 15, 0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;">
 
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <div class="d-flex align-items-center gap-2">
-                        {% if job.image_url %}
-                        <div style="width: 32px; height: 32px; background: white; border-radius: 6px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 2px;">
-                            <img src="{{ job.image_url }}" alt="Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
-                        </div>
-                        {% else %}
-                        <div style="width: 32px; height: 32px; background: rgba(16, 185, 129, 0.1); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-                            <i class="bi bi-building text-success"></i>
-                        </div>
-                        {% endif %}
-                        <span class="company-name text-accent mb-0 fw-bold">
-                            {{ job.company_name }}
-                        </span>
+            <div class="d-flex justify-content-between align-items-start mb-4">
+                <div class="d-flex align-items-center gap-3">
+                    {% if job.image_url %}
+                    <div class="shadow-sm" style="width: 48px; height: 48px; background: #fff; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 4px; border: 1px solid rgba(255,255,255,0.1);">
+                        <img src="{{ job.image_url }}" alt="Logo" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                     </div>
-
-                    <small class="text-muted" style="font-size: 0.8rem;">
-                        <i class="bi bi-clock"></i> {{ job.date_posted|date:"d M" }}
-                    </small>
-                </div>
-
-                <h4 class="fw-bold text-white mb-3">
-                    {{ job.title }}
-                </h4>
-
-                <div class="listing-meta mb-4">
-                    <div class="d-flex align-items-center">
-                        <i class="bi bi-geo-alt-fill text-success me-2"></i>
-                        <span class="text-light">{{ job.location }}</span>
-
-                        {% if job.is_remote %}
-                            <span class="badge-remote ms-3" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.3);">
-                                <i class="bi bi-wifi"></i> Remote
-                            </span>
-                        {% endif %}
+                    {% else %}
+                    <div style="width: 48px; height: 48px; background: rgba(16, 185, 129, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <i class="bi bi-building text-success fs-4"></i>
                     </div>
+                    {% endif %}
+                    <span class="text-success fw-bolder text-uppercase" style="letter-spacing: 1px; font-size: 0.9rem;">
+                        {{ job.company_name }}
+                    </span>
                 </div>
 
-                <div class="mt-auto pt-2">
-                    <a href="{{ job.url }}" target="_blank" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center" style="font-size: 0.95rem;">
-                        Кандидатствай Сега <i class="bi bi-box-arrow-up-right ms-1"></i>
-                    </a>
+                <small class="text-muted text-uppercase" style="font-size: 0.75rem; letter-spacing: 1px;">
+                    <i class="bi bi-calendar2-event"></i> {{ job.date_posted|date:"d M" }}
+                </small>
+            </div>
+
+            <h4 class="fw-bold text-white mb-3" style="letter-spacing: -0.5px;">
+                {{ job.title }}
+            </h4>
+
+            <div class="mb-4">
+                <div class="d-inline-flex align-items-center" style="background: rgba(255,255,255,0.03); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+                    <i class="bi bi-geo-alt text-muted me-2"></i>
+                    <span class="text-light small">{{ job.location }}</span>
                 </div>
 
+                {% if job.is_remote %}
+                <div class="d-inline-flex align-items-center ms-2" style="background: rgba(16, 185, 129, 0.1); padding: 6px 12px; border-radius: 8px; border: 1px solid rgba(16, 185, 129, 0.2);">
+                    <i class="bi bi-house-laptop text-success me-2"></i>
+                    <span class="text-success small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Remote</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="mt-auto pt-4 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+                <a href="{{ job.url }}" target="_blank" class="btn w-100 py-2 fw-bold text-dark" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); border: none; border-radius: 10px; letter-spacing: 0.5px; box-shadow: 0 5px 15px rgba(16, 185, 129, 0.2); transition: transform 0.2s;">
+                    Кандидатствай <i class="bi bi-box-arrow-up-right ms-1"></i>
+                </a>
             </div>
         </div>
     </div>
     {% empty %}
     <div class="col-12 text-center py-5">
         {% if is_scanning %}
-            <div class="py-5 mx-auto" style="max-width: 500px;">
-                <div class="scanner-container mb-4 mx-auto" style="width: 100px; height: 100px; position: relative;">
-                    <div class="scanner-circle" style="width: 100%; height: 100%; border: 3px solid #10b981; border-radius: 50%; position: absolute; top: 0; left: 0; animation: pulse-green 1.5s infinite;"></div>
-                    <i class="bi bi-radar text-success" style="font-size: 3rem; line-height: 100px;"></i>
+            <div class="py-5 mx-auto" style="max-width: 500px;" data-aos="zoom-in">
+                <div class="scanner-container mb-4 mx-auto" style="width: 120px; height: 120px; position: relative;">
+                    <div class="scanner-circle" style="width: 100%; height: 100%; border: 2px solid rgba(16, 185, 129, 0.5); border-radius: 50%; position: absolute; top: 0; left: 0; animation: pulse-green 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(16, 185, 129, 0.1); border-radius: 50%; padding: 20px;">
+                        <i class="bi bi-radar text-success" style="font-size: 3rem;"></i>
+                    </div>
                 </div>
-                <h3 class="fw-bold text-white mt-3">Роботът търси позиции...</h3>
-                <p class="text-light">Анализираме пазара за нови обяви. Страницата ще се обнови автоматично.</p>
+                <h3 class="fw-bold text-white mt-4 mb-2">Сканиране на IT сектора...</h3>
+                <p class="text-light opacity-75">Извличане на данни от компаниите. Моля, изчакайте.</p>
             </div>
-            <script>
-                setTimeout(function() {
-                    window.location.reload();
-                }, 5000);
-            </script>
+            <script>setTimeout(function() { window.location.reload(); }, 5000);</script>
             <style>
                 @keyframes pulse-green {
-                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-                    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(16, 185, 129, 0); }
-                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+                    0% { transform: scale(0.8); opacity: 1; }
+                    100% { transform: scale(1.5); opacity: 0; }
                 }
             </style>
         {% else %}
-            <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
-                <i class="bi bi-briefcase d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
-                <h3 class="fw-bold text-white mt-3">Няма намерени позиции</h3>
-                <p class="text-light">Опитай да добавиш нови критерии за търсене в Контролния панел.</p>
+            <div class="py-5 mx-auto" style="max-width: 500px; opacity: 0.5;" data-aos="fade-up">
+                <i class="bi bi-briefcase text-muted d-block mb-3" style="font-size: 5rem;"></i>
+                <h4 class="fw-bold text-white mt-3">Липсват Данни</h4>
+                <p class="text-light">Конфигурирайте нова задача в Контролния Панел.</p>
             </div>
         {% endif %}
     </div>
@@ -118,29 +115,52 @@
 </div>
 
 {% if jobs.has_other_pages %}
-<div class="d-flex justify-content-center mt-5 mb-4">
-    <div class="d-flex flex-wrap gap-2">
+<div class="d-flex justify-content-center mt-5 mb-4" data-aos="fade-up">
+    <div class="d-flex flex-wrap gap-2 pagination-glass-green">
         {% if jobs.has_previous %}
-            <a href="?page={{ jobs.previous_page_number }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">
-                <i class="bi bi-chevron-left me-1"></i> Предишна
+            <a href="?page={{ jobs.previous_page_number }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="btn btn-outline-custom-green">
+                <i class="bi bi-chevron-left"></i>
             </a>
         {% endif %}
 
         {% for num in jobs.paginator.page_range %}
             {% if jobs.number == num %}
-                <span class="filter-btn active" style="padding: 8px 16px; margin: 0; cursor: default;">{{ num }}</span>
+                <span class="btn btn-custom-active-green">{{ num }}</span>
             {% elif num > jobs.number|add:'-3' and num < jobs.number|add:'3' %}
-                <a href="?page={{ num }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">{{ num }}</a>
+                <a href="?page={{ num }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="btn btn-outline-custom-green">{{ num }}</a>
             {% endif %}
         {% endfor %}
 
         {% if jobs.has_next %}
-            <a href="?page={{ jobs.next_page_number }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">
-                Следваща <i class="bi bi-chevron-right ms-1"></i>
+            <a href="?page={{ jobs.next_page_number }}{% if selected_search_id %}&search_id={{ selected_search_id }}{% endif %}" class="btn btn-outline-custom-green">
+                <i class="bi bi-chevron-right"></i>
             </a>
         {% endif %}
     </div>
 </div>
 {% endif %}
 
+<style>
+    .custom-hover-job { transition: all 0.3s ease; }
+    .custom-hover-job:hover {
+        transform: translateY(-8px);
+        border-color: rgba(16, 185, 129, 0.3) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.1);
+    }
+
+    .filter-btn-green {
+        border: 1px solid rgba(255,255,255,0.1); background: rgba(255, 255, 255, 0.02);
+        color: var(--text-light); border-radius: 8px; padding: 8px 16px; font-weight: 600;
+        transition: all 0.2s ease; margin-right: 4px; margin-bottom: 8px; display: inline-block;
+    }
+    .filter-btn-green:hover, .filter-btn-green.active {
+        border-color: var(--success-color); color: var(--success-color);
+        background-color: rgba(16, 185, 129, 0.1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    }
+
+    .pagination-glass-green .btn { padding: 8px 16px; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+    .btn-outline-custom-green { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
+    .btn-outline-custom-green:hover { background: rgba(16, 185, 129, 0.1); border-color: var(--success-color); color: var(--success-color); }
+    .btn-custom-active-green { background: var(--success-color); color: #fff; border: 1px solid var(--success-color); cursor: default; }
+</style>
 {% endblock %}

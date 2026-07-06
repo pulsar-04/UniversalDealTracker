@@ -5,118 +5,123 @@
     <div class="row">
         <div class="col-md-10 offset-md-1">
             
-            <a href="{% url 'car_list' %}" class="btn btn-link text-light text-decoration-none mb-3">
-                <i class="bi bi-arrow-left me-1"></i> Обратно към офертите
+            <a href="{% url 'car_list' %}" class="btn btn-link text-light text-decoration-none mb-4 d-inline-flex align-items-center opacity-75 hover-accent-text" data-aos="fade-right">
+                <i class="bi bi-arrow-left me-2"></i> Обратно към авто мониторинга
             </a>
 
-            <div class="feature-card p-4 p-md-5">
-                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start mb-4">
-                    <div class="mb-3 mb-md-0">
-                        <span class="badge-custom mb-2">{{ car.brand }} {{ car.model }}</span>
-                        <h2 class="text-white fw-bold">{{ car.title }}</h2>
-                        <div class="d-flex gap-3 text-light mt-2">
-                            <span><i class="bi bi-calendar text-accent"></i> {{ car.year }} г.</span>
-                            <span><i class="bi bi-cash-stack text-success"></i> Текуща цена: {{ car.price|floatformat:0 }} €</span>
+            <div class="feature-card p-4 p-md-5 shadow-lg" data-aos="zoom-in" data-aos-duration="800" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
+
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start gap-3 mb-4">
+                    <div>
+                        <div class="mb-2">
+                            <span class="badge" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid rgba(0, 240, 255, 0.2); padding: 6px 14px; border-radius: 8px; font-weight: 600; letter-spacing: 0.5px;">
+                                {{ car.brand }} {{ car.model }}
+                            </span>
+                        </div>
+                        <h2 class="text-white fw-bold mb-2" style="letter-spacing: -0.5px;">{{ car.title }}</h2>
+
+                        <div class="d-flex flex-wrap gap-3 text-light opacity-75 small mt-3">
+                            <span class="d-flex align-items-center"><i class="bi bi-calendar3 text-accent me-2"></i> Модел: {{ car.year }} г.</span>
+                            <span class="d-flex align-items-center"><i class="bi bi-tag text-success me-2"></i> Индексирана цена: {{ car.price|floatformat:0 }} EU</span>
                         </div>
                     </div>
-                    <a href="{{ car.url }}" target="_blank" class="btn btn-primary-custom px-4 py-2">
-                        Отвори в източника <i class="bi bi-box-arrow-up-right ms-1"></i>
+
+                    <a href="{{ car.url }}" target="_blank" class="btn btn-primary-custom py-3 px-4 d-flex align-items-center gap-2" style="font-size: 0.95rem;">
+                        Преглед на източника <i class="bi bi-box-arrow-up-right"></i>
                     </a>
                 </div>
 
-                <hr class="border-secondary mb-4" style="opacity: 0.1;">
+                <hr class="mb-5" style="border-color: rgba(255,255,255,0.05) !important;">
 
-                <h4 class="text-white mb-4"><i class="bi bi-graph-up-arrow text-accent me-2"></i> Тенденция на цената</h4>
-                
-                <div style="height: 400px; width: 100%; position: relative;">
-                    <canvas id="priceChart"></canvas>
+                <div class="mb-4">
+                    <h5 class="text-white fw-bold mb-4 d-flex align-items-center" style="letter-spacing: -0.3px;">
+                        <i class="bi bi-graph-up-arrow text-accent me-2"></i> Хронологично изменение на пазарната стойност
+                    </h5>
+
+                    <div style="height: 380px; width: 100%; position: relative; background: rgba(0,0,0,0.2); border-radius: 12px; padding: 15px; border: 1px solid rgba(255,255,255,0.02);">
+                        <canvas id="priceChart"></canvas>
+                    </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-
         const labels = JSON.parse('{{ chart_dates|escapejs }}');
         const dataPrices = JSON.parse('{{ chart_prices|escapejs }}');
-
         const ctx = document.getElementById('priceChart').getContext('2d');
-        
 
-        let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-        gradient.addColorStop(0, 'rgba(0, 240, 255, 0.4)'); // Неоново синьо горе
-        gradient.addColorStop(1, 'rgba(0, 240, 255, 0.0)'); // Прозрачно долу
-        
+        let gradient = ctx.createLinearGradient(0, 0, 0, 350);
+        gradient.addColorStop(0, 'rgba(0, 240, 255, 0.25)');
+        gradient.addColorStop(1, 'rgba(0, 240, 255, 0.0)');
+
         new Chart(ctx, {
             type: 'line',
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Цена (€)',
+                    label: 'Цена (BGN)',
                     data: dataPrices,
                     borderColor: '#00f0ff',
                     backgroundColor: gradient,
                     borderWidth: 3,
-                    pointBackgroundColor: '#121212',
+                    pointBackgroundColor: '#050505',
                     pointBorderColor: '#00f0ff',
                     pointHoverBackgroundColor: '#00f0ff',
                     pointHoverBorderColor: '#fff',
-                    pointRadius: 5,
-                    pointHoverRadius: 8,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
                     fill: true,
-                    tension: 0.3
+                    tension: 0.2
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
-                    legend: {
-                        display: false
-                    },
+                    legend: { display: false },
                     tooltip: {
-                        backgroundColor: 'rgba(18, 18, 18, 0.9)',
+                        backgroundColor: 'rgba(10, 10, 15, 0.95)',
                         titleColor: '#00f0ff',
                         bodyColor: '#fff',
-                        borderColor: 'rgba(0, 240, 255, 0.2)',
+                        borderColor: 'rgba(255, 255, 255, 0.08)',
                         borderWidth: 1,
-                        padding: 10,
+                        padding: 12,
+                        cornerRadius: 8,
                         displayColors: false,
                         callbacks: {
-                            label: function(context) {
-                                return context.parsed.y + ' €';
-                            }
+                            label: function(context) { return context.parsed.y + ' BGN'; }
                         }
                     }
                 },
                 scales: {
                     y: {
                         ticks: {
-                            color: '#94a3b8',
-                            callback: function(value) {
-                                return value + ' €';
-                            }
+                            color: '#64748b',
+                            font: { family: 'Plus Jakarta Sans', size: 11 },
+                            callback: function(value) { return value + ' BGN'; }
                         },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.05)'
-                        }
+                        grid: { color: 'rgba(255, 255, 255, 0.03)' }
                     },
                     x: {
                         ticks: {
-                            color: '#94a3b8'
+                            color: '#64748b',
+                            font: { family: 'Plus Jakarta Sans', size: 11 }
                         },
-                        grid: {
-                            color: 'rgba(255, 255, 255, 0.05)'
-                        }
+                        grid: { display: false }
                     }
                 }
             }
         });
     });
 </script>
+
+<style>
+    .hover-accent-text { transition: all 0.2s ease; }
+    .hover-accent-text:hover { color: var(--accent-color) !important; transform: translateX(-3px); }
+</style>
 {% endblock %}

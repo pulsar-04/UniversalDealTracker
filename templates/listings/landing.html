@@ -3,81 +3,102 @@
 {% block content %}
 <div class="container pb-5">
 
-    <div class="hero-section text-center">
-        <div class="d-inline-block mb-3 px-3 py-1 rounded-pill" style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-color); color: var(--accent-color); font-size: 0.85rem; font-weight: 600;">
-            <i class="bi bi-lightning-charge-fill me-1"></i> Система от ново поколение
+    <div class="hero-section text-center py-5" data-aos="zoom-in" data-aos-duration="1000">
+        <div class="d-inline-block mb-4 px-4 py-2 rounded-pill" style="background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.2); color: var(--accent-color); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;">
+            <i class="bi bi-cpu-fill me-2"></i> Интелигентна Автоматизация
         </div>
-        <h1 class="hero-title text-white">
-            Спри да търсиш.<br>
-            <span style="color: var(--accent-color); text-shadow: 0 0 20px var(--accent-glow);">Започни да намираш.</span> 🚀
+        <h1 class="display-4 fw-bolder text-white mb-4" style="line-height: 1.2;">
+            Спри да търсиш ръчно.<br>
+            <span style="color: transparent; background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Алгоритъмът работи за теб.</span>
         </h1>
 
-        <p class="hero-subtitle text-light mt-3 mb-5">
-            DealTracker е твоят личен асистент, който сканира всички сайтове за обяви
-            (Mobile.bg, Dev.bg) и ти показва само най-добрите оферти в реално време.
+        <p class="lead text-light mx-auto mb-5" style="max-width: 700px; opacity: 0.8;">
+            DealTracker е автономна система, която агрегира данни от водещите платформи в България. Изградена с мощна микросървисна архитектура, тя ти доставя най-добрите оферти в реално време.
         </p>
 
-        <div class="d-flex justify-content-center gap-3">
-            <a href="{% url 'register' %}" class="btn btn-primary-custom">
-                Започни Безплатно
+        <div class="d-flex justify-content-center gap-4 mt-2">
+            <a href="{% url 'register' %}" class="btn btn-primary-custom d-flex align-items-center gap-2">
+                Започни Безплатно <i class="bi bi-arrow-right"></i>
             </a>
-            <a href="{% url 'login' %}" class="btn btn-secondary-custom">
-                Вход в системата
+            <a href="{% url 'login' %}" class="btn btn-secondary-custom d-flex align-items-center gap-2">
+                <i class="bi bi-terminal"></i> Вход в системата
             </a>
         </div>
     </div>
 
-    <div class="row text-center mt-5 mb-5 pt-4">
-        <div class="col-md-4 mb-3">
-            <h2 class="fw-bold text-white mb-0">14,500+</h2>
-            <p class="text-muted small text-uppercase tracking-wider">Сканирани Обяви</p>
+    <div class="row text-center mt-5 pt-5 border-top" style="border-color: rgba(255,255,255,0.05) !important;" data-aos="fade-up" data-aos-delay="200">
+        <div class="col-md-4 mb-4">
+            <div class="p-4 rounded-4" style="background: rgba(255,255,255,0.02);">
+                <h2 class="display-5 fw-bold mb-0 text-white" style="text-shadow: 0 0 15px rgba(255,255,255,0.2);">14.5K+</h2>
+                <p class="text-muted small text-uppercase mt-2 mb-0" style="letter-spacing: 1.5px;">Обработени Записи</p>
+            </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <h2 class="fw-bold text-white mb-0">30 мин</h2>
-            <p class="text-muted small text-uppercase tracking-wider">Време на опресняване</p>
+        <div class="col-md-4 mb-4">
+            <div class="p-4 rounded-4" style="background: rgba(255,255,255,0.02);">
+                <h2 class="display-5 fw-bold mb-0 text-white" style="text-shadow: 0 0 15px rgba(255,255,255,0.2);">Sub-sec</h2>
+                <p class="text-muted small text-uppercase mt-2 mb-0" style="letter-spacing: 1.5px;">Време за реакция</p>
+            </div>
         </div>
-        <div class="col-md-4 mb-3">
-            <h2 class="fw-bold text-white mb-0">24/7</h2>
-            <p class="text-muted small text-uppercase tracking-wider">Непрекъснат Мониторинг</p>
+        <div class="col-md-4 mb-4">
+            <div class="p-4 rounded-4" style="background: rgba(255,255,255,0.02);">
+                <h2 class="display-5 fw-bold mb-0 text-white" style="text-shadow: 0 0 15px rgba(255,255,255,0.2);">24/7</h2>
+                <p class="text-muted small text-uppercase mt-2 mb-0" style="letter-spacing: 1.5px;">Celery Мониторинг</p>
+            </div>
         </div>
     </div>
 
-    <div class="row mt-5">
-        <div class="col-md-4 mb-4">
-            <div class="feature-card">
-                <div class="feature-icon-wrapper" style="background: rgba(0, 240, 255, 0.1);">
-                    <i class="bi bi-car-front-fill" style="color: var(--accent-color); text-shadow: 0 0 10px var(--accent-glow);"></i>
+    <div class="row mt-5 pt-4">
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="feature-card h-100" style="overflow: hidden;">
+                <div style="height: 180px; width: 100%; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?auto=format&fit=crop&q=80&w=600" alt="Automotive Data" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, var(--glass-bg));"></div>
                 </div>
-                <h4 class="fw-bold mb-3 text-white">Авто Агрегатор</h4>
-                <p class="text-light" style="font-size: 0.95rem;">
-                    Следим пазара на автомобили на всеки 30 минути.
-                    Виждаш веднага, когато излезе нова оферта за Audi A4 B5 или рали класика.
-                </p>
+                <div class="p-4 text-center mt-n4" style="position: relative; z-index: 2;">
+                    <div class="feature-icon-wrapper mb-3 mx-auto" style="background: rgba(0, 240, 255, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(0, 240, 255, 0.2);">
+                        <i class="bi bi-car-front-fill fs-4" style="color: var(--accent-color); text-shadow: 0 0 10px var(--accent-glow);"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Авто Агрегатор</h4>
+                    <p class="text-light" style="font-size: 0.95rem;">
+                        Сканираме пазара без прекъсване. Системата обединява данни от най-големите платформи в България (Mobile.bg и Cars.bg), за да не изпуснеш нито една изгодна сделка.
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="feature-card">
-                <div class="feature-icon-wrapper" style="background: rgba(16, 185, 129, 0.1);">
-                    <i class="bi bi-briefcase-fill" style="color: var(--success-color); text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);"></i>
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="feature-card h-100" style="overflow: hidden;">
+                <div style="height: 180px; width: 100%; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=600" alt="Code Backend" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, var(--glass-bg));"></div>
                 </div>
-                <h4 class="fw-bold mb-3 text-white">IT Кариери</h4>
-                <p class="text-light" style="font-size: 0.95rem;">
-                    Не изпускай мечтаната работа. Агрегираме Junior и Senior позиции за Python, Django и C# директно в твоя дашборд.
-                </p>
+                <div class="p-4 text-center mt-n4" style="position: relative; z-index: 2;">
+                    <div class="feature-icon-wrapper mb-3 mx-auto" style="background: rgba(16, 185, 129, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(16, 185, 129, 0.2);">
+                        <i class="bi bi-braces-asterisk fs-4" style="color: var(--success-color); text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">IT Кариери</h4>
+                    <p class="text-light" style="font-size: 0.95rem;">
+                        Ускори кариерното си развитие. Автоматизирано извличане на премиум позиции за целия технологичен сектор – от Frontend и Backend разработка до DevOps архитектури.
+                    </p>
+                </div>
             </div>
         </div>
 
-        <div class="col-md-4 mb-4">
-            <div class="feature-card">
-                <div class="feature-icon-wrapper" style="background: rgba(168, 85, 247, 0.1);">
-                    <i class="bi bi-graph-up-arrow" style="color: #a855f7; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);"></i>
+        <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="500">
+            <div class="feature-card h-100" style="overflow: hidden;">
+                <div style="height: 180px; width: 100%; position: relative;">
+                    <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&q=80&w=600" alt="Trading Charts" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.7;">
+                    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, var(--glass-bg));"></div>
                 </div>
-                <h4 class="fw-bold mb-3 text-white">История на Цените</h4>
-                <p class="text-light" style="font-size: 0.95rem;">
-                    Ние помним това, което търговците трият.
-                    Виж дали цената е била променена и хвани най-добрия момент за покупка.
-                </p>
+                <div class="p-4 text-center mt-n4" style="position: relative; z-index: 2;">
+                    <div class="feature-icon-wrapper mb-3 mx-auto" style="background: rgba(168, 85, 247, 0.1); width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(168, 85, 247, 0.2);">
+                        <i class="bi bi-graph-up-arrow fs-4" style="color: #a855f7; text-shadow: 0 0 10px rgba(168, 85, 247, 0.4);"></i>
+                    </div>
+                    <h4 class="fw-bold mb-3 text-white">Data Analytics</h4>
+                    <p class="text-light" style="font-size: 0.95rem;">
+                        Проследявай пазарните тенденции. Съхраняваме хронология на цените, за да знаеш точния момент за инвестиция, дори когато търговците променят условията.
+                    </p>
+                </div>
             </div>
         </div>
     </div>

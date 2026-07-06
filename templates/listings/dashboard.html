@@ -1,17 +1,23 @@
 {% extends 'listings/base.html' %}
 
 {% block content %}
-<div class="row mb-4">
-    <div class="col-md-8">
-        <h1 class="fw-bold text-white">🎛️ Контролен Панел</h1>
-        <p class="text-light">Управлявай своите процеси и следи активността на роботите в реално време.</p>
+<div class="row mb-5" data-aos="fade-in">
+    <div class="col-12">
+        <div style="height: 160px; border-radius: 20px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.08);">
+            <img src="https://images.unsplash.com/photo-1550525811-e5869dd03032?auto=format&fit=crop&q=80&w=1200" alt="Tech Background" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.4;">
+            <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(10,10,15,1) 0%, rgba(10,10,15,0.2) 100%);"></div>
+            <div style="position: absolute; top: 50%; left: 30px; transform: translateY(-50%); z-index: 2;">
+                <h3 class="text-white fw-bold mb-1">Контролен Център</h3>
+                <p class="text-accent small mb-0"><i class="bi bi-broadcast me-1"></i> Система за мониторинг: Online</p>
+            </div>
+        </div>
     </div>
 </div>
 
 <div class="row mb-5">
-    <div class="col-md-4 mb-3 mb-md-0">
-        <div class="dashboard-card p-3 d-flex align-items-center" style="border-left: 4px solid var(--accent-color);">
-            <div class="rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px; background: rgba(0, 240, 255, 0.1);">
+    <div class="col-md-4 mb-3 mb-md-0" data-aos="fade-up" data-aos-delay="100">
+        <div class="dashboard-card p-3 d-flex align-items-center h-100" style="border-left: 4px solid var(--accent-color); background: rgba(10, 10, 15, 0.6);">
+            <div class="rounded-circle d-flex justify-content-center align-items-center me-3 shadow-lg" style="width: 50px; height: 50px; background: rgba(0, 240, 255, 0.1); border: 1px solid rgba(0, 240, 255, 0.2);">
                 <i class="bi bi-robot text-accent fs-4"></i>
             </div>
             <div>
@@ -21,21 +27,21 @@
         </div>
     </div>
 
-    <div class="col-md-4 mb-3 mb-md-0">
-        <div class="dashboard-card p-3 d-flex align-items-center" style="border-left: 4px solid var(--success-color);">
-            <div class="rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.1);">
+    <div class="col-md-4 mb-3 mb-md-0" data-aos="fade-up" data-aos-delay="200">
+        <div class="dashboard-card p-3 d-flex align-items-center h-100" style="border-left: 4px solid var(--success-color); background: rgba(10, 10, 15, 0.6);">
+            <div class="rounded-circle d-flex justify-content-center align-items-center me-3 shadow-lg" style="width: 50px; height: 50px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.2);">
                 <i class="bi bi-database text-success fs-4"></i>
             </div>
             <div>
-                <p class="text-muted small mb-0 fw-bold text-uppercase" style="letter-spacing: 0.5px;">Общо Намерени</p>
+                <p class="text-muted small mb-0 fw-bold text-uppercase" style="letter-spacing: 0.5px;">Общо Извлечени</p>
                 <h3 class="text-white mb-0 fw-bolder">{{ total_items|default:"В процес..." }}</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="dashboard-card p-3 d-flex align-items-center" style="border-left: 4px solid #f59e0b;">
-            <div class="rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 50px; height: 50px; background: rgba(245, 158, 11, 0.1);">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="dashboard-card p-3 d-flex align-items-center h-100" style="border-left: 4px solid #f59e0b; background: rgba(10, 10, 15, 0.6);">
+            <div class="rounded-circle d-flex justify-content-center align-items-center me-3 shadow-lg" style="width: 50px; height: 50px; background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.2);">
                 <i class="bi bi-activity text-warning fs-4"></i>
             </div>
             <div>
@@ -50,104 +56,60 @@
 </div>
 
 <div class="row">
-    <div class="col-md-4 mb-4">
-        <div class="dashboard-card p-4">
-            <h4 class="fw-bold mb-4 text-white">
-                <i class="bi bi-plus-square text-accent me-2"></i>Нова Задача
-            </h4>
+    <div class="col-md-4 mb-4" data-aos="fade-right" data-aos-delay="200">
+        <div class="dashboard-card p-4" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08);">
+            <h5 class="fw-bold mb-4 text-white"><i class="bi bi-plus-circle-dotted text-accent me-2"></i>Нова Заявка</h5>
             <form method="POST">
                 {% csrf_token %}
                 {% for field in form %}
                 <div class="mb-3">
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">{{ field.label }}</label>
-                    {{ field }}
-                    {% if field.errors %}
-                        <div class="text-danger small mt-1"><i class="bi bi-exclamation-triangle-fill me-1"></i>{{ field.errors }}</div>
-                    {% endif %}
+                    <div class="custom-form-wrapper">{{ field }}</div>
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn w-100 py-3 mt-3 fw-bold text-dark" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 8px; letter-spacing: 0.5px;">
-                    <i class="bi bi-cpu me-1"></i> Стартирай Търсене
+                <button type="submit" class="btn w-100 py-3 mt-3 fw-bold text-dark" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 12px; transition: 0.3s;">
+                    <i class="bi bi-rocket-takeoff me-1"></i> Стартирай Процеса
                 </button>
             </form>
         </div>
     </div>
 
-    <div class="col-md-8">
-        <div class="dashboard-card overflow-hidden">
+    <div class="col-md-8" data-aos="fade-left" data-aos-delay="400">
+        <div class="dashboard-card overflow-hidden" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08);">
             <div class="p-4 border-bottom d-flex justify-content-between align-items-center flex-wrap" style="border-color: rgba(255,255,255,0.05) !important;">
-                <h5 class="fw-bold m-0 text-white mb-2 mb-md-0">
-                    <i class="bi bi-list-task text-accent me-2"></i>Списък със задачи
-                </h5>
+                <h5 class="fw-bold m-0 text-white"><i class="bi bi-hdd-network text-accent me-2"></i>Списък със Задачи</h5>
                 <div class="d-flex gap-2">
-                    <a href="{% url 'export_cars_csv' %}" class="btn btn-sm btn-outline-info" style="border-color: rgba(0, 240, 255, 0.4);">
-                        <i class="bi bi-car-front me-1"></i> Свали Коли (CSV)
-                    </a>
-                    <a href="{% url 'export_jobs_csv' %}" class="btn btn-sm btn-outline-success" style="border-color: rgba(16, 185, 129, 0.4);">
-                        <i class="bi bi-briefcase me-1"></i> Свали Обяви (CSV)
-                    </a>
+                    <a href="{% url 'export_cars_csv' %}" class="btn btn-sm btn-outline-info">CSV Коли</a>
+                    <a href="{% url 'export_jobs_csv' %}" class="btn btn-sm btn-outline-success">CSV Обяви</a>
                 </div>
             </div>
             <div class="table-responsive">
-                <table class="table table-dark table-hover align-middle mb-0" style="background-color: transparent;">
-                    <thead style="background: rgba(255,255,255,0.02);">
+                <table class="table table-hover align-middle mb-0 custom-table">
+                    <thead>
                         <tr>
-                            <th class="ps-4 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">Задача</th>
-                            <th style="border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">Статус</th>
-                            <th style="border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">Детайли</th>
-                            <th class="text-end pe-4" style="border-bottom: 1px solid rgba(255,255,255,0.05); color: var(--text-muted);">Действие</th>
+                            <th class="ps-4 py-3 text-muted">Задача</th>
+                            <th class="text-muted">Статус</th>
+                            <th class="text-end pe-4 text-muted">Контрол</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for search in searches %}
-                        <tr {% if search.is_paused %}style="opacity: 0.6;"{% endif %}>
-                            <td class="ps-4 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
-                                <span class="fw-bold text-white d-block mb-1">{{ search.title }}</span>
-                                <a href="{{ search.url }}" target="_blank" class="small text-info text-decoration-none">
-                                    <i class="bi bi-link-45deg"></i> Източник
-                                </a>
-                            </td>
-                            <td style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
-                                {% if search.is_paused %}
-                                    <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);"><i class="bi bi-pause-circle me-1"></i>Пауза</span>
-                                {% elif search.category == 'car' %}
-                                    <span class="badge" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid rgba(0, 240, 255, 0.3);">Коли</span>
-                                {% else %}
-                                    <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.3);">Работа</span>
-                                {% endif %}
-                            </td>
-                            <td style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
-                                <small class="text-light">
-                                    {% if search.brand %}{{ search.brand }}{% endif %}
-                                    {% if search.model %}/ {{ search.model }}{% endif %}
-                                </small>
-                            </td>
-                            <td class="text-end pe-4" style="border-bottom: 1px solid rgba(255,255,255,0.05); background: transparent;">
-
-                                <a href="{% url 'toggle_search_status' search.id %}"
-                                   class="btn btn-sm btn-outline-warning me-2"
-                                   style="border-color: rgba(245, 158, 11, 0.5);"
-                                   title="{% if search.is_paused %}Пусни робота{% else %}Спри робота временно{% endif %}">
+                        <tr id="row-{{ search.id }}" style="{% if search.is_paused %}opacity: 0.5;{% endif %}">
+                            <td class="ps-4 py-3"><span class="fw-bold text-white d-block">{{ search.title }}</span></td>
+                            <td>
+                                <div id="badge-{{ search.id }}">
                                     {% if search.is_paused %}
-                                        <i class="bi bi-play-fill"></i>
+                                        <span class="badge bg-warning text-dark"><i class="bi bi-pause-circle"></i> Спрян</span>
                                     {% else %}
-                                        <i class="bi bi-pause-fill"></i>
+                                        <span class="badge bg-primary">Активен</span>
                                     {% endif %}
-                                </a>
-
-                                <a href="{% url 'delete_search' search.id %}"
-                                   class="btn btn-sm btn-outline-danger"
-                                   style="border-color: rgba(220, 53, 69, 0.5);"
-                                   onclick="return confirm('Сигурен ли си? Всички изстъргани обяви по това търсене ще бъдат ИЗТРИТИ завинаги!')">
-                                    <i class="bi bi-trash"></i>
-                                </a>
+                                </div>
                             </td>
-                        </tr>
-                        {% empty %}
-                        <tr>
-                            <td colspan="4" class="text-center py-5 text-muted" style="border-bottom: none; background: transparent;">
-                                <i class="bi bi-robot fs-1 d-block mb-3 opacity-50"></i>
-                                Все още нямаш активни задачи. Роботите спят.
+                            <td class="text-end pe-4">
+                                <a href="{% url 'toggle_search_status' search.id %}" class="btn btn-sm btn-outline-warning toggle-btn" data-id="{{ search.id }}">
+                                    <i id="icon-{{ search.id }}" class="{% if search.is_paused %}bi bi-play-fill{% else %}bi bi-pause-fill{% endif %}"></i>
+                                </a>
+                                <a href="{% url 'delete_search' search.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Сигурен ли си?')"><i class="bi bi-trash3"></i></a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -158,79 +120,34 @@
     </div>
 </div>
 
-<style>
-    .status-dot {
-        width: 10px;
-        height: 10px;
-        background-color: var(--success-color);
-        border-radius: 50%;
-        display: inline-block;
-        box-shadow: 0 0 8px var(--success-color);
-        animation: pulse-green 2s infinite;
-    }
-    @keyframes pulse-green {
-        0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-        70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
-    }
-</style>
-
 <script>
-    document.querySelectorAll('.dashboard-card form input, .dashboard-card form select').forEach(input => {
-        input.classList.add('form-control', 'text-light');
-        input.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
-        input.style.border = '1px solid rgba(255,255,255,0.1)';
-        input.style.borderRadius = '8px';
-        input.style.padding = '0.8rem 1rem';
+    document.querySelectorAll('.toggle-btn').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const searchId = this.getAttribute('data-id');
+            const row = document.getElementById('row-' + searchId);
+            const icon = document.getElementById('icon-' + searchId);
+            const badge = document.getElementById('badge-' + searchId);
 
-        input.addEventListener('focus', () => {
-            input.style.border = '1px solid #00f0ff';
-            input.style.boxShadow = '0 0 0 0.2rem rgba(0, 240, 255, 0.15)';
+            fetch(this.getAttribute('href'), { headers: {'X-Requested-With': 'XMLHttpRequest'} })
+            .then(res => res.json())
+            .then(data => {
+                if(data.is_paused) {
+                    row.style.opacity = '0.5';
+                    icon.className = 'bi bi-play-fill';
+                    badge.innerHTML = '<span class="badge bg-warning text-dark"><i class="bi bi-pause-circle"></i> Спрян</span>';
+                } else {
+                    row.style.opacity = '1';
+                    icon.className = 'bi bi-pause-fill';
+                    badge.innerHTML = '<span class="badge bg-primary">Активен</span>';
+                }
+            });
         });
-        input.addEventListener('blur', () => {
-            input.style.border = '1px solid rgba(255,255,255,0.1)';
-            input.style.boxShadow = 'none';
-        });
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const categorySelect = document.getElementById('id_category');
-        const titleInput = document.getElementById('id_title');
-        const urlInput = document.getElementById('id_url');
-
-
-        const brandWrapper = document.getElementById('id_brand').closest('.mb-3');
-        const modelWrapper = document.getElementById('id_model').closest('.mb-3');
-
-        function updateFormUI() {
-            const selectedCategory = categorySelect.value;
-
-            if (selectedCategory === 'car') {
-                titleInput.placeholder = 'Напр. Търсене за Audi A4 2015';
-                urlInput.placeholder = 'https://mobile.bg/.... или cars.bg/...';
-                brandWrapper.style.display = 'block';
-                modelWrapper.style.display = 'block';
-            }
-            else if (selectedCategory === 'job') {
-                titleInput.placeholder = 'Напр. Python Backend Developer';
-                urlInput.placeholder = 'https://dev.bg/....';
-                brandWrapper.style.display = 'none';
-                modelWrapper.style.display = 'none';
-
-                document.getElementById('id_brand').value = '';
-                document.getElementById('id_model').value = '';
-            }
-            else {
-                titleInput.placeholder = 'Въведи кратко име на задачата...';
-                urlInput.placeholder = 'Постави линк от сайта тук...';
-                brandWrapper.style.display = 'none';
-                modelWrapper.style.display = 'none';
-            }
-        }
-
-        categorySelect.addEventListener('change', updateFormUI);
-
-        updateFormUI();
     });
 </script>
+
+<style>
+    .status-dot { width: 10px; height: 10px; background-color: var(--success-color); border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite; }
+    @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 100% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } }
+</style>
 {% endblock %}

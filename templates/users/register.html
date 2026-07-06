@@ -1,31 +1,40 @@
 {% extends "listings/base.html" %}
 
 {% block content %}
-<div class="row justify-content-center align-items-center" style="min-height: 80vh;">
+<div class="row justify-content-center align-items-center flex-grow-1" style="min-height: 80vh;">
     <div class="col-md-6 col-lg-5">
 
-        <div class="text-center mb-5">
+        <!-- Header с анимация -->
+        <div class="text-center mb-5" data-aos="fade-down" data-aos-duration="800">
+            <div class="d-inline-block mb-3 p-3 rounded-circle" style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-color); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
+                <i class="bi bi-person-plus-fill text-accent fs-2"></i>
+            </div>
             <h2 class="fw-bolder text-white" style="letter-spacing: -0.5px;">Създай профил</h2>
-            <p class="text-secondary small">Присъедини се към платформата за умни сделки.</p>
+            <p class="text-secondary small">Присъедини се към мрежата за интелигентни сделки.</p>
         </div>
 
-        <div class="auth-card p-4 p-sm-5" style="background: rgba(15, 15, 20, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; backdrop-filter: blur(10px);">
+        <!-- Главен панел -->
+        <div class="auth-card p-4 p-sm-5 shadow-lg" data-aos="fade-up" data-aos-duration="1000" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
             <form method="POST">
                 {% csrf_token %}
+
                 {% if form.non_field_errors %}
-                <div class="alert alert-danger p-2 mb-4 text-center small fw-bold" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.5); color: #ff6b6b; border-radius: 8px;">
+                <div class="alert alert-danger p-3 mb-4 text-center small fw-bold" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 10px;">
                     {% for error in form.non_field_errors %}
                         <i class="bi bi-exclamation-triangle-fill me-1"></i> {{ error }}<br>
                     {% endfor %}
                 </div>
                 {% endif %}
+
                 {% for field in form %}
                 <div class="mb-4">
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">
                         {{ field.label }}
                     </label>
 
-                    {{ field }}
+                    <div class="custom-form-wrapper">
+                        {{ field }}
+                    </div>
 
                     {% for error in field.errors %}
                     <div class="text-danger small mt-2 fw-medium">
@@ -35,37 +44,38 @@
                 </div>
                 {% endfor %}
 
-                <button type="submit" class="btn w-100 py-3 mt-3 fw-bold text-white" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 8px; letter-spacing: 0.5px;">
-                    Регистрирай се
+                <button type="submit" class="btn w-100 py-3 mt-4 fw-bold text-dark" style="background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); border: none; border-radius: 12px; letter-spacing: 0.5px; box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3); transition: transform 0.2s;">
+                    Инициализирай Акаунт <i class="bi bi-chevron-right ms-1"></i>
                 </button>
             </form>
 
             <div class="text-center mt-4 pt-4" style="border-top: 1px solid rgba(255,255,255,0.05);">
-                <p class="text-secondary small mb-0">Вече имаш акаунт? <a href="{% url 'login' %}" class="text-info text-decoration-none fw-semibold ms-1">Влез тук</a></p>
+                <p class="text-secondary small mb-0">Вече си в системата? <a href="{% url 'login' %}" class="text-info text-decoration-none fw-bold ms-1 hover-accent">Влез тук</a></p>
             </div>
         </div>
 
     </div>
 </div>
 
-<script>
-
-    document.querySelectorAll('input').forEach(input => {
-        input.classList.add('form-control', 'text-light');
-        input.style.backgroundColor = 'rgba(0, 0, 0, 0.3)';
-        input.style.border = '1px solid rgba(255,255,255,0.1)';
-        input.style.borderRadius = '8px';
-        input.style.padding = '0.8rem 1rem';
-
-
-        input.addEventListener('focus', () => {
-            input.style.border = '1px solid #00f0ff';
-            input.style.boxShadow = '0 0 0 0.2rem rgba(0, 240, 255, 0.15)';
-        });
-        input.addEventListener('blur', () => {
-            input.style.border = '1px solid rgba(255,255,255,0.1)';
-            input.style.boxShadow = 'none';
-        });
-    });
-</script>
+<style>
+    /* CSS трик за автоматично стилизиране на Django полетата без Widget Tweaks */
+    .custom-form-wrapper input, .custom-form-wrapper select {
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.4) !important;
+        border: 1px solid rgba(255,255,255,0.1) !important;
+        border-radius: 10px !important;
+        padding: 0.9rem 1rem !important;
+        color: #f8fafc !important;
+        transition: all 0.3s ease;
+    }
+    .custom-form-wrapper input:focus, .custom-form-wrapper select:focus {
+        outline: none;
+        border-color: #00f0ff !important;
+        background-color: rgba(0, 0, 0, 0.6) !important;
+        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15) !important;
+    }
+    .hover-accent:hover {
+        text-shadow: 0 0 8px var(--accent-glow);
+    }
+</style>
 {% endblock %}

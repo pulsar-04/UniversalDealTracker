@@ -34,11 +34,18 @@ def custom_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
+        remember_me = request.POST.get('remember_me')
 
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
+
+            if remember_me:
+                request.session.set_expiry(2592000)
+            else:
+                request.session.set_expiry(0)
+
             messages.success(request, f'Добре дошъл отново, {user.username}!')
             return redirect('car_list')
         else:

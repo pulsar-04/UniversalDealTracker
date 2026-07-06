@@ -2,23 +2,25 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-between align-items-end mb-5">
+<div class="d-flex justify-content-between align-items-end mb-5" data-aos="fade-down">
     <div>
-        <h1 class="fw-bold text-white mb-1"><i class="bi bi-car-front-fill text-accent me-2"></i>Намерени Оферти</h1>
-        <p class="text-light mb-0">Следим пазара за теб в реално време.</p>
+        <h1 class="fw-bold text-white mb-2" style="letter-spacing: -0.5px;">
+            <i class="bi bi-car-front-fill text-accent me-2"></i>Авто Мониторинг
+        </h1>
+        <p class="text-light mb-0 opacity-75">Анализ на пазара в реално време.</p>
     </div>
     <div>
-        <span class="badge rounded-pill px-3 py-2" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid var(--accent-color); font-size: 0.9rem;">
-            {{ total_count }} обяви
+        <span class="badge rounded-pill px-4 py-2" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid rgba(0, 240, 255, 0.3); font-size: 0.9rem; box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);">
+            <i class="bi bi-database me-1"></i> {{ total_count }} активни записа
         </span>
     </div>
 </div>
 
-<div class="mb-5">
+<div class="mb-5" data-aos="fade-right" data-aos-delay="100">
     <div class="d-flex flex-wrap gap-2">
         <a href="{% url 'car_list' %}"
            class="filter-btn {% if not selected_brand %}active{% endif %}">
-           Всички
+           <i class="bi bi-grid-fill me-1"></i> Всички Марки
         </a>
 
         {% for brand in brands %}
@@ -34,44 +36,45 @@
 
 <div class="row">
     {% for car in cars %}
-    <div class="col-md-4 mb-4">
-        <div class="listing-card" style="overflow: hidden;">
+    <div class="col-md-4 mb-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter0|add:1 }}00">
+        <div class="listing-card custom-hover-card" style="overflow: hidden; background: rgba(10, 10, 15, 0.6); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px;">
+
             {% if car.image_url %}
-            <div style="height: 200px; width: 100%; background-color: rgba(0,0,0,0.5);">
-                <img src="{{ car.image_url }}" alt="{{ car.brand }}" style="width: 100%; height: 100%; object-fit: cover;">
+            <div style="height: 220px; width: 100%; position: relative;">
+                <img src="{{ car.image_url }}" alt="{{ car.brand }}" style="width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease;" class="card-img-zoom">
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 50%, rgba(10,10,15,1));"></div>
             </div>
             {% else %}
-            <div style="height: 200px; width: 100%; background: rgba(255,255,255,0.02); display: flex; justify-content: center; align-items: center;">
-                <i class="bi bi-car-front text-muted" style="font-size: 3.5rem; opacity: 0.5;"></i>
+            <div style="height: 220px; width: 100%; background: rgba(0, 240, 255, 0.02); display: flex; justify-content: center; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05);">
+                <i class="bi bi-car-front text-accent" style="font-size: 4rem; opacity: 0.3;"></i>
             </div>
             {% endif %}
 
-            <div class="listing-body">
-                <div class="d-flex justify-content-between align-items-start mb-3">
-                    <span class="badge-custom">{{ car.brand }}</span>
-                    <small class="text-muted" style="font-size: 0.8rem;">
-                        <i class="bi bi-clock"></i> {{ car.date_posted|date:"d M" }}
+            <div class="listing-body p-4" style="margin-top: {% if car.image_url %}-40px{% else %}0{% endif %}; position: relative; z-index: 2;">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge" style="background: rgba(0, 240, 255, 0.15); color: var(--accent-color); border: 1px solid rgba(0, 240, 255, 0.3); padding: 6px 12px; letter-spacing: 0.5px;">{{ car.brand }}</span>
+                    <small class="text-muted" style="font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;">
+                        <i class="bi bi-clock-history"></i> {{ car.date_posted|date:"d M" }}
                     </small>
                 </div>
 
-                <h5 class="fw-bold text-white mb-2 text-truncate" title="{{ car.title }}">
+                <h5 class="fw-bold text-white mb-3 text-truncate" title="{{ car.title }}" style="letter-spacing: -0.5px;">
                     {{ car.title }}
                 </h5>
 
-                <div class="listing-meta">
-                    <i class="bi bi-car-front"></i>
+                <div class="d-flex align-items-center mb-4 text-light opacity-75 small">
+                    <i class="bi bi-info-circle me-2 text-accent"></i>
                     <span>{{ car.model }}</span>
-                    <span class="mx-1">•</span>
-                    <span>{{ car.year }}г.</span>
+                    <span class="mx-2 text-muted">|</span>
+                    <span><i class="bi bi-calendar3 me-1"></i> {{ car.year }} г.</span>
                 </div>
 
-                <div class="listing-price">
-                    {{ car.price|floatformat:0 }} €
-                </div>
-
-                <div class="mt-auto pt-3">
-                    <a href="{% url 'car_detail' car.pk %}" class="btn btn-primary-custom w-100 py-2 rounded-3 text-center">
-                        Виж Анализ <i class="bi bi-graph-up ms-1"></i>
+                <div class="mt-auto d-flex justify-content-between align-items-center pt-3 border-top" style="border-color: rgba(255,255,255,0.05) !important;">
+                    <div class="fw-bolder text-white fs-4" style="text-shadow: 0 0 15px rgba(255,255,255,0.2);">
+                        {{ car.price|floatformat:0 }} <span class="fs-6 text-muted fw-normal">EU</span>
+                    </div>
+                    <a href="{% url 'car_detail' car.pk %}" class="btn btn-sm" style="background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; transition: 0.3s;">
+                        Детайли <i class="bi bi-arrow-right ms-1 text-accent"></i>
                     </a>
                 </div>
             </div>
@@ -80,33 +83,30 @@
     {% empty %}
     <div class="col-12 text-center py-5">
         {% if is_scanning %}
-            <div class="py-5 mx-auto" style="max-width: 500px;">
-                <div class="scanner-container mb-4 mx-auto" style="width: 100px; height: 100px; position: relative;">
-                    <div class="scanner-circle" style="width: 100%; height: 100%; border: 3px solid #00f0ff; border-radius: 50%; position: absolute; top: 0; left: 0; animation: pulse 1.5s infinite;"></div>
-                    <i class="bi bi-radar text-accent" style="font-size: 3rem; line-height: 100px;"></i>
+            <div class="py-5 mx-auto" style="max-width: 500px;" data-aos="zoom-in">
+                <div class="scanner-container mb-4 mx-auto" style="width: 120px; height: 120px; position: relative;">
+                    <div class="scanner-circle" style="width: 100%; height: 100%; border: 2px solid rgba(0, 240, 255, 0.5); border-radius: 50%; position: absolute; top: 0; left: 0; animation: pulse-blue 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;"></div>
+                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0, 240, 255, 0.1); border-radius: 50%; padding: 20px;">
+                        <i class="bi bi-radar text-accent" style="font-size: 3rem;"></i>
+                    </div>
                 </div>
-                <h3 class="fw-bold text-white mt-3">Роботът сканира мрежата...</h3>
-                <p class="text-light">Събираме най-добрите оферти в момента. Страницата ще се обнови автоматично.</p>
+                <h3 class="fw-bold text-white mt-4 mb-2">Инициализация на Скрейпър...</h3>
+                <p class="text-light opacity-75">Установяване на връзка с източниците. Екранът ще се опресни автоматично.</p>
             </div>
 
-            <script>
-                setTimeout(function() {
-                    window.location.reload();
-                }, 5000);
-            </script>
+            <script>setTimeout(function() { window.location.reload(); }, 5000);</script>
 
             <style>
-                @keyframes pulse {
-                    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); }
-                    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(0, 240, 255, 0); }
-                    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); }
+                @keyframes pulse-blue {
+                    0% { transform: scale(0.8); opacity: 1; }
+                    100% { transform: scale(1.5); opacity: 0; }
                 }
             </style>
         {% else %}
-            <div class="py-5 feature-card mx-auto" style="max-width: 500px;">
-                <i class="bi bi-robot d-block mb-3" style="font-size: 4rem; color: var(--text-muted);"></i>
-                <h3 class="fw-bold text-white mt-3">Роботът почива...</h3>
-                <p class="text-light">Все още няма намерени автомобили по тези критерии.</p>
+            <div class="py-5 mx-auto" style="max-width: 500px; opacity: 0.5;" data-aos="fade-up">
+                <i class="bi bi-inbox text-muted d-block mb-3" style="font-size: 5rem;"></i>
+                <h4 class="fw-bold text-white mt-3">Липсват Данни</h4>
+                <p class="text-light">Конфигурирайте нова задача в Контролния Панел.</p>
             </div>
         {% endif %}
     </div>
@@ -114,29 +114,43 @@
 </div>
 
 {% if cars.has_other_pages %}
-<div class="d-flex justify-content-center mt-5 mb-4">
-    <div class="d-flex flex-wrap gap-2">
+<div class="d-flex justify-content-center mt-5 mb-4" data-aos="fade-up">
+    <div class="d-flex flex-wrap gap-2 pagination-glass">
         {% if cars.has_previous %}
-            <a href="?page={{ cars.previous_page_number }}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">
-                <i class="bi bi-chevron-left me-1"></i> Предишна
+            <a href="?page={{ cars.previous_page_number }}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}" class="btn btn-outline-custom">
+                <i class="bi bi-chevron-left"></i>
             </a>
         {% endif %}
 
         {% for num in cars.paginator.page_range %}
             {% if cars.number == num %}
-                <span class="filter-btn active" style="padding: 8px 16px; margin: 0; cursor: default;">{{ num }}</span>
+                <span class="btn btn-custom-active">{{ num }}</span>
             {% elif num > cars.number|add:'-3' and num < cars.number|add:'3' %}
-                <a href="?page={{ num }}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">{{ num }}</a>
+                <a href="?page={{ num }}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}" class="btn btn-outline-custom">{{ num }}</a>
             {% endif %}
         {% endfor %}
 
         {% if cars.has_next %}
-            <a href="?page={{ cars.next_page_number }}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}" class="filter-btn" style="padding: 8px 16px; margin: 0;">
-                Следваща <i class="bi bi-chevron-right ms-1"></i>
+            <a href="?page={{ cars.next_page_number }}{% if selected_brand %}&brand={{ selected_brand }}{% endif %}" class="btn btn-outline-custom">
+                <i class="bi bi-chevron-right"></i>
             </a>
         {% endif %}
     </div>
 </div>
 {% endif %}
 
+<style>
+    .custom-hover-card { transition: all 0.3s ease; }
+    .custom-hover-card:hover {
+        transform: translateY(-8px);
+        border-color: rgba(0, 240, 255, 0.3) !important;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 240, 255, 0.1);
+    }
+    .custom-hover-card:hover .card-img-zoom { transform: scale(1.05); }
+
+    .pagination-glass .btn { padding: 8px 16px; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+    .btn-outline-custom { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
+    .btn-outline-custom:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--accent-color); color: #fff; }
+    .btn-custom-active { background: var(--accent-color); color: #000; border: 1px solid var(--accent-color); cursor: default; }
+</style>
 {% endblock %}
