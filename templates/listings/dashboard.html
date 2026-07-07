@@ -4,7 +4,7 @@
 <div class="row mb-5" data-aos="fade-in">
     <div class="col-12">
         <div style="height: 160px; border-radius: 20px; overflow: hidden; position: relative; border: 1px solid rgba(255,255,255,0.08);">
-            <img src="https://images.unsplash.com/photo-1550525811-e5869dd03032?auto=format&fit=crop&q=80&w=1200" alt="Tech Background" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.4;">
+            <img src="https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&q=80&w=1200" alt="Tech Background" style="width: 100%; height: 100%; object-fit: cover; opacity: 0.5;">
             <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(10,10,15,1) 0%, rgba(10,10,15,0.2) 100%);"></div>
             <div style="position: absolute; top: 50%; left: 30px; transform: translateY(-50%); z-index: 2;">
                 <h3 class="text-white fw-bold mb-1">Контролен Център</h3>
@@ -85,31 +85,52 @@
             </div>
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0 custom-table">
-                    <thead>
+                    <thead style="background: rgba(255,255,255,0.02);">
                         <tr>
                             <th class="ps-4 py-3 text-muted">Задача</th>
-                            <th class="text-muted">Статус</th>
+                            <th class="text-muted">Тип</th>
+                            <th class="text-muted">Параметри</th>
                             <th class="text-end pe-4 text-muted">Контрол</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for search in searches %}
-                        <tr id="row-{{ search.id }}" style="{% if search.is_paused %}opacity: 0.5;{% endif %}">
-                            <td class="ps-4 py-3"><span class="fw-bold text-white d-block">{{ search.title }}</span></td>
-                            <td>
+                        <tr id="row-{{ search.id }}" style="transition: all 0.3s ease; {% if search.is_paused %}opacity: 0.5;{% endif %}">
+                            <td class="ps-4 py-3" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <span class="fw-bold text-white d-block mb-1">{{ search.title }}</span>
+                                <a href="{{ search.url }}" target="_blank" class="small text-info text-decoration-none hover-accent">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i> Източник
+                                </a>
+                            </td>
+                            <td style="border-bottom: 1px solid rgba(255,255,255,0.05);">
                                 <div id="badge-{{ search.id }}">
                                     {% if search.is_paused %}
-                                        <span class="badge bg-warning text-dark"><i class="bi bi-pause-circle"></i> Спрян</span>
+                                        <span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px;"><i class="bi bi-pause-circle me-1"></i>Спрян</span>
+                                    {% elif search.category == 'car' %}
+                                        <span class="badge" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 6px;">Авто</span>
                                     {% else %}
-                                        <span class="badge bg-primary">Активен</span>
+                                        <span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px;">IT</span>
                                     {% endif %}
                                 </div>
                             </td>
-                            <td class="text-end pe-4">
-                                <a href="{% url 'toggle_search_status' search.id %}" class="btn btn-sm btn-outline-warning toggle-btn" data-id="{{ search.id }}">
+                            <td style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <small class="text-light opacity-75">
+                                    {% if search.brand %}{{ search.brand }}{% endif %}
+                                    {% if search.model %}/ {{ search.model }}{% endif %}
+                                    {% if not search.brand and not search.model %}Всички{% endif %}
+                                </small>
+                            </td>
+                            <td class="text-end pe-4" style="border-bottom: 1px solid rgba(255,255,255,0.05);">
+                                <a href="{% url 'toggle_search_status' search.id %}"
+                                   class="btn btn-sm me-2 btn-action toggle-btn"
+                                   data-id="{{ search.id }}"
+                                   data-category="{{ search.category }}"
+                                   style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 8px;">
                                     <i id="icon-{{ search.id }}" class="{% if search.is_paused %}bi bi-play-fill{% else %}bi bi-pause-fill{% endif %}"></i>
                                 </a>
-                                <a href="{% url 'delete_search' search.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('Сигурен ли си?')"><i class="bi bi-trash3"></i></a>
+                                <a href="{% url 'delete_search' search.id %}" class="btn btn-sm btn-action" style="background: rgba(220, 53, 69, 0.1); color: #ff6b6b; border: 1px solid rgba(220, 53, 69, 0.3); border-radius: 8px;" onclick="return confirm('Сигурен ли си?')">
+                                    <i class="bi bi-trash3"></i>
+                                </a>
                             </td>
                         </tr>
                         {% endfor %}
@@ -121,33 +142,80 @@
 </div>
 
 <script>
-    document.querySelectorAll('.toggle-btn').forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const searchId = this.getAttribute('data-id');
-            const row = document.getElementById('row-' + searchId);
-            const icon = document.getElementById('icon-' + searchId);
-            const badge = document.getElementById('badge-' + searchId);
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.toggle-btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
 
-            fetch(this.getAttribute('href'), { headers: {'X-Requested-With': 'XMLHttpRequest'} })
-            .then(res => res.json())
-            .then(data => {
-                if(data.is_paused) {
-                    row.style.opacity = '0.5';
-                    icon.className = 'bi bi-play-fill';
-                    badge.innerHTML = '<span class="badge bg-warning text-dark"><i class="bi bi-pause-circle"></i> Спрян</span>';
-                } else {
-                    row.style.opacity = '1';
-                    icon.className = 'bi bi-pause-fill';
-                    badge.innerHTML = '<span class="badge bg-primary">Активен</span>';
-                }
+                let url = this.getAttribute('href');
+                url = url.includes('?') ? url + '&ajax=1' : url + '?ajax=1';
+
+                const searchId = this.getAttribute('data-id');
+                const category = this.getAttribute('data-category');
+                const row = document.getElementById('row-' + searchId);
+                const icon = document.getElementById('icon-' + searchId);
+                const badge = document.getElementById('badge-' + searchId);
+
+                fetch(url, {
+                    method: 'GET',
+                    headers: { 'X-Requested-With': 'XMLHttpRequest' }
+                })
+                .then(res => {
+                    const contentType = res.headers.get("content-type");
+                    if (!contentType || !contentType.includes("application/json")) {
+                        throw new Error("Бекендът не върна JSON.");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if(data.is_paused) {
+                        row.style.opacity = '0.5';
+                        icon.className = 'bi bi-play-fill';
+                        badge.innerHTML = '<span class="badge" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 6px;"><i class="bi bi-pause-circle me-1"></i>Спрян</span>';
+                    } else {
+                        row.style.opacity = '1';
+                        icon.className = 'bi bi-pause-fill';
+                        if (category === 'car') {
+                            badge.innerHTML = '<span class="badge" style="background: rgba(0, 240, 255, 0.1); color: var(--accent-color); border: 1px solid rgba(0, 240, 255, 0.3); border-radius: 6px;">Авто</span>';
+                        } else {
+                            badge.innerHTML = '<span class="badge" style="background: rgba(16, 185, 129, 0.1); color: var(--success-color); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 6px;">IT</span>';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Грешка:', error);
+                    alert("Грешка! Увери се, че обнови views.py правилно.");
+                });
             });
         });
+
+        const categorySelect = document.getElementById('id_category');
+        const titleInput = document.getElementById('id_title');
+        const urlInput = document.getElementById('id_url');
+        const brandWrapper = document.getElementById('id_brand').closest('.mb-3');
+        const modelWrapper = document.getElementById('id_model').closest('.mb-3');
+
+        function updateFormUI() {
+            const selectedCategory = categorySelect.value;
+            if (selectedCategory === 'car') {
+                titleInput.placeholder = 'Напр. Търсене за Audi A4 2015';
+                urlInput.placeholder = 'https://mobile.bg/... или cars.bg/...';
+                brandWrapper.style.display = 'block';
+                modelWrapper.style.display = 'block';
+            }
+            else if (selectedCategory === 'job') {
+                titleInput.placeholder = 'Напр. Python Backend Developer';
+                urlInput.placeholder = 'https://dev.bg/...';
+                brandWrapper.style.display = 'none';
+                modelWrapper.style.display = 'none';
+                document.getElementById('id_brand').value = '';
+                document.getElementById('id_model').value = '';
+            }
+        }
+        if(categorySelect) {
+            categorySelect.addEventListener('change', updateFormUI);
+            updateFormUI();
+        }
     });
 </script>
-
-<style>
-    .status-dot { width: 10px; height: 10px; background-color: var(--success-color); border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite; }
-    @keyframes pulse-green { 0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 100% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); } }
-</style>
 {% endblock %}

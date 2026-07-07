@@ -62,44 +62,4 @@
         </div>
     </div>
 </div>
-
-<style>
-    .custom-input {
-        background-color: rgba(0, 0, 0, 0.4) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 0 10px 10px 0 !important;
-        padding: 0.9rem 1rem !important;
-        transition: all 0.3s ease;
-    }
-    .input-group-text {
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-right: none !important;
-        border-radius: 10px 0 0 10px !important;
-    }
-    .custom-input:focus {
-        border-color: #00f0ff !important;
-        box-shadow: none !important;
-        background-color: rgba(0, 0, 0, 0.6) !important;
-    }
-    .input-group:focus-within .input-group-text,
-    .input-group:focus-within .custom-input {
-        border-color: var(--accent-color) !important;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15) !important;
-    }
-
-    /* Premium Checkbox */
-    .custom-checkbox .form-check-input {
-        background-color: rgba(0,0,0,0.5);
-        border: 1px solid rgba(255,255,255,0.2);
-        cursor: pointer;
-    }
-    .custom-checkbox .form-check-input:checked {
-        background-color: var(--accent-color);
-        border-color: var(--accent-color);
-        box-shadow: 0 0 10px var(--accent-glow);
-    }
-    .hover-accent:hover {
-        text-shadow: 0 0 8px var(--accent-glow);
-    }
-</style>
 {% endblock %}

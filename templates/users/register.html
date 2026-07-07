@@ -4,7 +4,6 @@
 <div class="row justify-content-center align-items-center flex-grow-1" style="min-height: 80vh;">
     <div class="col-md-6 col-lg-5">
 
-        <!-- Header с анимация -->
         <div class="text-center mb-5" data-aos="fade-down" data-aos-duration="800">
             <div class="d-inline-block mb-3 p-3 rounded-circle" style="background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-color); box-shadow: 0 0 20px rgba(0, 240, 255, 0.2);">
                 <i class="bi bi-person-plus-fill text-accent fs-2"></i>
@@ -12,8 +11,6 @@
             <h2 class="fw-bolder text-white" style="letter-spacing: -0.5px;">Създай профил</h2>
             <p class="text-secondary small">Присъедини се към мрежата за интелигентни сделки.</p>
         </div>
-
-        <!-- Главен панел -->
         <div class="auth-card p-4 p-sm-5 shadow-lg" data-aos="fade-up" data-aos-duration="1000" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
             <form method="POST">
                 {% csrf_token %}
@@ -56,26 +53,4 @@
 
     </div>
 </div>
-
-<style>
-    /* CSS трик за автоматично стилизиране на Django полетата без Widget Tweaks */
-    .custom-form-wrapper input, .custom-form-wrapper select {
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.4) !important;
-        border: 1px solid rgba(255,255,255,0.1) !important;
-        border-radius: 10px !important;
-        padding: 0.9rem 1rem !important;
-        color: #f8fafc !important;
-        transition: all 0.3s ease;
-    }
-    .custom-form-wrapper input:focus, .custom-form-wrapper select:focus {
-        outline: none;
-        border-color: #00f0ff !important;
-        background-color: rgba(0, 0, 0, 0.6) !important;
-        box-shadow: 0 0 15px rgba(0, 240, 255, 0.15) !important;
-    }
-    .hover-accent:hover {
-        text-shadow: 0 0 8px var(--accent-glow);
-    }
-</style>
 {% endblock %}

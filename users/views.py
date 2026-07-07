@@ -5,6 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django_ratelimit.core import is_ratelimited
+from django.http import JsonResponse
 
 def register(request):
     if request.method == 'POST':

@@ -86083,3 +86083,44 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-06 12:30:07] WARNING [crawl_cars]:    [Price Change] BMW 530: 4550.00 -> 4500
 [2026-07-06 12:30:07] WARNING [crawl_cars]:    [Price Change] BMW X3: 3199.00 -> 2999
 [2026-07-06 12:30:54] INFO [crawl_cars]:    Saved 5 new cars for 'BMW-cars.bg'
+[2026-07-06 13:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-06 13:00:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-06 13:00:51] INFO [crawl_cars]:    Saved 2 new cars for 'BMW-cars.bg'
+[2026-07-06 13:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-06 13:30:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-06 13:30:00] WARNING [crawl_cars]:    [Price Change] BMW 523 2,5I LPG- BRC: 4350.00 -> 4300
+[2026-07-06 13:30:48] INFO [crawl_cars]:    Saved 0 new cars for 'BMW-cars.bg'
+[2026-07-06 14:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-06 14:00:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-06 14:00:49] INFO [crawl_cars]:    Saved 0 new cars for 'BMW-cars.bg'
+[2026-07-06 14:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-06 14:30:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-06 14:30:50] INFO [crawl_cars]:    Saved 1 new cars for 'BMW-cars.bg'
+[2026-07-07 15:47:19] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-07 15:47:19] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-07 15:47:20] WARNING [crawl_cars]:    [Price Change] BMW 325 2.5 xi: 3850.00 -> 3500
+[2026-07-07 15:47:20] WARNING [crawl_cars]:    [Price Change] BMW 525 525i: 3700.00 -> 2700
+[2026-07-07 15:47:20] WARNING [crawl_cars]:    [Price Change] BMW X5 3.0i/KLIMA/ГАЗ: 3999.00 -> 3900
+[2026-07-07 15:47:20] WARNING [crawl_cars]:    [Price Change] BMW X5 3000i: 3400.00 -> 3200
+[2026-07-07 15:47:20] WARNING [crawl_cars]:    [Price Change] BMW 320 2.0 и: 1999.00 -> 1998
+[2026-07-07 15:47:22] WARNING [crawl_cars]:    [Price Change] BMW 318 1.8: 1700.00 -> 1500
+[2026-07-07 15:47:22] WARNING [crawl_cars]:    [Price Change] BMW 523 2.3: 3750.00 -> 3699
+[2026-07-07 15:47:22] WARNING [crawl_cars]:    [Price Change] BMW 320: 2000.00 -> 1900
+[2026-07-07 15:47:25] WARNING [crawl_cars]:    [Price Change] BMW X5 3.0i: 3000.00 -> 2700
+[2026-07-07 15:47:27] WARNING [crawl_cars]:    [Price Change] BMW 320 2.0i: 4500.00 -> 4200
+[2026-07-07 15:47:30] WARNING [crawl_cars]:    [Price Change] BMW 520 Е60: 1999.00 -> 2999
+[2026-07-07 15:47:30] WARNING [crawl_cars]:    [Price Change] BMW 323: 2200.00 -> 2000
+[2026-07-07 15:48:14] INFO [crawl_cars]:    Saved 4 new cars for 'BMW-cars.bg'
+[2026-07-07 16:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-07 16:00:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-07 16:00:00] WARNING [crawl_cars]:    [Price Change] BMW 325 325i: 2700.00 -> 2500
+[2026-07-07 16:00:00] WARNING [crawl_cars]:    [Price Change] BMW 320 320i: 3500.00 -> 3400
+[2026-07-07 16:00:00] WARNING [crawl_cars]:    [Price Change] BMW 523 2.3: 3000.00 -> 3400
+[2026-07-07 16:00:50] INFO [crawl_cars]:    Saved 1 new cars for 'BMW-cars.bg'
+[2026-07-07 16:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-07 16:30:00] INFO [crawl_cars]: --> Processing: BMW-cars.bg
+[2026-07-07 16:30:49] INFO [crawl_cars]:    Saved 0 new cars for 'BMW-cars.bg'
+[2026-07-07 16:31:44] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-07 16:31:44] INFO [crawl_cars]: --> Processing: Audi
+[2026-07-07 16:31:56] INFO [crawl_cars]:    Saved 118 new cars for 'Audi'
+[2026-07-07 16:31:56] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.

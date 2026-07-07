@@ -1,22 +1,14 @@
-from .models import CarListing, JobListing
-from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SearchForm
-from .models import Search
 from django.contrib import messages
-from django.db.models import Q
-from .tasks import auto_crawl_cars, auto_crawl_jobs
 from django.core.paginator import Paginator
 import json
 from listings.tasks import auto_crawl_cars, auto_crawl_jobs
-from django.core.management import call_command
 import csv
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-from .models import CarListing, Search
+from .models import CarListing, Search, JobListing
 from django.http import JsonResponse
-from django.shortcuts import get_object_or_404
-
 def landing(request):
 
     if request.user.is_authenticated:
@@ -195,7 +187,7 @@ def toggle_search_status(request, search_id):
     search.is_paused = not search.is_paused
     search.save()
 
-    if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+    if 'ajax' in request.GET or request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
         return JsonResponse({'is_paused': search.is_paused})
 
     return redirect('dashboard')

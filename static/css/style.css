@@ -8,10 +8,12 @@
     --glass-border: rgba(255, 255, 255, 0.08);
 
     /* Neon Accents */
-    --accent-color: #38bdf8;
-    --accent-hover: #0ea5e9;
-    --accent-glow: rgba(56, 189, 248, 0.15);
+    --accent-color: #00f0ff;
+    --accent-hover: #00c3ff;
+    --accent-glow: rgba(0, 240, 255, 0.15);
     --success-color: #10b981;
+    --danger-color: #ff6b6b;
+    --warning-color: #f59e0b;
 
     /* Typography */
     --text-main: #f8fafc;
@@ -24,16 +26,22 @@
     --shadow-hover: 0 0 20px var(--accent-glow);
 }
 
-/* --- 2. GLOBAL RESET & BACKGROUND --- */
-body {
+/* --- 2. GLOBAL RESET & STICKY FOOTER --- */
+html {
+    height: 100%;
+}
+
+/* МАГИЯТА ЗА ФУТЪРА - Използваме твърд Grid, който игнорира съдържанието */
+body.site-wrapper {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--bg-body);
     color: var(--text-main);
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    position: relative;
+    margin: 0;
+    display: grid !important;
+    grid-template-rows: auto 1fr auto !important;
+    min-height: 100vh !important;
     overflow-x: hidden;
+    position: relative;
 }
 
 /* Ambient Glow Effects */
@@ -41,22 +49,19 @@ body {
     position: absolute;
     width: 40vw;
     height: 40vw;
-    background: radial-gradient(circle, rgba(0,240,255,0.05) 0%, rgba(5,5,5,0) 70%);
     border-radius: 50%;
     z-index: -1;
     pointer-events: none;
 }
-.glow-top-left { top: -20vw; left: -20vw; }
+.glow-top-left { top: -20vw; left: -20vw; background: radial-gradient(circle, rgba(0,240,255,0.05) 0%, rgba(5,5,5,0) 70%); }
 .glow-bottom-right { bottom: -20vw; right: -20vw; background: radial-gradient(circle, rgba(16,185,129,0.03) 0%, rgba(5,5,5,0) 70%); }
 
-a {
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
+a { text-decoration: none; transition: all 0.3s ease; }
 .text-accent { color: var(--accent-color) !important; }
+.hover-accent:hover { color: var(--accent-color) !important; text-shadow: 0 0 8px var(--accent-glow); }
+.hover-accent-text:hover { color: var(--accent-color) !important; transform: translateX(-3px); display: inline-block; }
 
-/* --- 3. GLASSMORPHISM NAVBAR --- */
+/* --- 3. GLASSMORPHISM NAVBAR & FOOTER --- */
 .custom-navbar {
     background: rgba(5, 5, 5, 0.7);
     backdrop-filter: blur(12px);
@@ -64,93 +69,30 @@ a {
     border-bottom: 1px solid var(--glass-border);
     padding: 1rem 0;
 }
-
-.brand-logo {
-    color: #fff;
-    font-size: 1.5rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-}
-.brand-logo:hover {
-    text-shadow: 0 0 10px var(--accent-glow);
-}
-
-.nav-link-custom {
-    color: var(--text-light) !important;
-    font-weight: 500;
-    margin: 0 10px;
-    font-size: 0.95rem;
-    position: relative;
-}
-.nav-link-custom:hover,
-.nav-link-custom.active {
-    color: #fff !important;
-}
-
+.brand-logo { color: #fff; font-size: 1.5rem; font-weight: 800; letter-spacing: -0.5px; }
+.brand-logo:hover { text-shadow: 0 0 10px var(--accent-glow); }
+.nav-link-custom { color: var(--text-light) !important; font-weight: 500; margin: 0 10px; font-size: 0.95rem; }
+.nav-link-custom:hover, .nav-link-custom.active { color: #fff !important; }
 .nav-divider { color: var(--text-muted); margin: 0 15px; }
+.user-greeting { color: #fff; font-weight: 500; margin-right: 15px; padding: 4px 12px; background: rgba(255,255,255,0.05); border-radius: 50px; border: 1px solid var(--glass-border); }
 
-.user-greeting {
-    color: #fff;
-    font-weight: 500;
-    margin-right: 15px;
-    padding: 4px 12px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 50px;
-    border: 1px solid var(--glass-border);
-}
-
-/* --- 4. BUTTONS (Global) --- */
+/* --- 4. BUTTONS --- */
 .btn-custom-outline {
-    border: 1px solid var(--glass-border);
-    color: #fff;
-    border-radius: 8px;
-    padding: 8px 20px;
-    font-size: 0.9rem;
-    background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
+    border: 1px solid var(--glass-border); color: #fff; border-radius: 8px; padding: 8px 20px; font-size: 0.9rem; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(5px); transition: all 0.3s ease;
 }
-.btn-custom-outline:hover {
-    border-color: var(--accent-color);
-    background-color: rgba(0, 240, 255, 0.1);
-    color: var(--accent-color);
-    box-shadow: var(--shadow-hover);
-}
+.btn-custom-outline:hover { border-color: var(--accent-color); background-color: rgba(0, 240, 255, 0.1); color: var(--accent-color); box-shadow: var(--shadow-hover); }
 
 .btn-primary-custom {
-    background-color: var(--accent-color);
-    color: #000 !important;
-    padding: 12px 32px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 50px;
-    box-shadow: 0 0 15px var(--accent-glow);
-    border: none;
-    transition: all 0.3s ease;
+    background: linear-gradient(135deg, #00f0ff 0%, #0070f3 100%); color: #000 !important; padding: 12px 32px; font-size: 1rem; font-weight: 700; border-radius: 50px; box-shadow: 0 0 15px var(--accent-glow); border: none; transition: all 0.3s ease;
 }
-.btn-primary-custom:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6);
-    background-color: var(--accent-hover);
-}
+.btn-primary-custom:hover { transform: translateY(-2px); box-shadow: 0 5px 25px rgba(0, 240, 255, 0.4); }
 
 .btn-secondary-custom {
-    background-color: transparent;
-    color: #fff;
-    border: 1px solid var(--glass-border);
-    padding: 12px 32px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s ease;
+    background-color: transparent; color: #fff; border: 1px solid var(--glass-border); padding: 12px 32px; font-size: 1rem; font-weight: 600; border-radius: 50px; backdrop-filter: blur(5px); transition: all 0.3s ease;
 }
-.btn-secondary-custom:hover {
-    border-color: #fff;
-    background-color: rgba(255,255,255,0.05);
-}
+.btn-secondary-custom:hover { border-color: #fff; background-color: rgba(255,255,255,0.05); }
 
-/* --- 5. GLASSMORPHISM CARDS (Base class for all cards) --- */
+/* --- 5. GLASSMORPHISM CARDS --- */
 .feature-card, .listing-card, .auth-card, .dashboard-card {
     background: var(--glass-bg);
     backdrop-filter: blur(16px);
@@ -160,154 +102,73 @@ a {
     box-shadow: var(--shadow-glass);
     transition: all 0.3s ease;
 }
-.feature-card:hover, .listing-card:hover {
-    transform: translateY(-5px);
-    border-color: rgba(0, 240, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 240, 255, 0.1);
+
+/* Hover Effects for Specific Cards */
+.custom-hover-card:hover {
+    transform: translateY(-8px);
+    border-color: rgba(0, 240, 255, 0.3) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(0, 240, 255, 0.1);
+}
+.custom-hover-card:hover .card-img-zoom { transform: scale(1.05); }
+
+.custom-hover-job:hover {
+    transform: translateY(-8px);
+    border-color: rgba(16, 185, 129, 0.3) !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(16, 185, 129, 0.1);
 }
 
 /* --- 6. FORMS & INPUTS --- */
-.form-label-custom {
-    font-weight: 500;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    margin-bottom: 0.5rem;
-    display: block;
-}
-.form-control-custom {
-    background-color: rgba(0, 0, 0, 0.2);
-    border: 1px solid var(--glass-border);
-    color: #fff;
-    padding: 12px 16px;
-    border-radius: 10px;
+.custom-form-wrapper input,
+.custom-form-wrapper select {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    border: 1px solid rgba(255,255,255,0.1) !important;
+    border-radius: 10px !important;
+    padding: 0.9rem 1rem !important;
+    color: #f8fafc !important;
     transition: all 0.3s ease;
 }
-.form-control-custom:focus {
-    background-color: rgba(0, 0, 0, 0.4);
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 2px var(--accent-glow);
-    color: #fff;
+.custom-form-wrapper input:focus,
+.custom-form-wrapper select:focus {
     outline: none;
+    border-color: #00f0ff !important;
+    background-color: rgba(0, 0, 0, 0.6) !important;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.15) !important;
 }
 
-/* --- 7. FOOTER --- */
-.custom-footer {
-    background-color: transparent;
-    border-top: 1px solid var(--glass-border);
-    padding: 2rem 0;
-    color: var(--text-muted);
-    margin-top: auto;
+/* Switch & Checkbox */
+.custom-switch .form-check-input { background-color: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255,255,255,0.15); }
+.custom-switch .form-check-input:checked { background-color: var(--accent-color) !important; border-color: var(--accent-color) !important; box-shadow: 0 0 15px var(--accent-glow) !important; }
+
+/* --- 7. DASHBOARD & TABLES --- */
+.custom-table tbody tr { transition: background-color 0.2s ease; }
+.custom-table tbody tr:hover td { background-color: rgba(255,255,255,0.03) !important; }
+.btn-action { transition: all 0.2s ease; }
+.btn-action:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+.status-dot {
+    width: 10px; height: 10px; background-color: var(--success-color); border-radius: 50%; display: inline-block; animation: pulse-green 2s infinite;
 }
 
-/* --- 8. RESTORED & DARK-THEMED LISTING CARDS --- */
-.listing-card {
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    height: 100%;
+/* --- 8. FILTERS & PAGINATION --- */
+.filter-btn, .filter-btn-green {
+    border: 1px solid rgba(255,255,255,0.1); background: rgba(255, 255, 255, 0.02); color: var(--text-light); border-radius: 8px; padding: 8px 16px; font-weight: 600; transition: all 0.2s ease; margin-right: 4px; margin-bottom: 8px; display: inline-block;
 }
+.filter-btn:hover, .filter-btn.active { border-color: var(--accent-color); color: var(--accent-color); background-color: rgba(0, 240, 255, 0.1); box-shadow: 0 0 10px var(--accent-glow); }
+.filter-btn-green:hover, .filter-btn-green.active { border-color: var(--success-color); color: var(--success-color); background-color: rgba(16, 185, 129, 0.1); box-shadow: 0 0 10px rgba(16, 185, 129, 0.2); }
 
-.listing-body {
-    padding: 1.5rem;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
+.pagination-glass .btn, .pagination-glass-green .btn { padding: 8px 16px; border-radius: 8px; font-weight: 600; transition: 0.2s; }
+.btn-outline-custom { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
+.btn-outline-custom:hover { background: rgba(0, 240, 255, 0.1); border-color: var(--accent-color); color: #fff; }
+.btn-custom-active { background: var(--accent-color); color: #000; border: 1px solid var(--accent-color); cursor: default; }
 
-.badge-custom {
-    background-color: rgba(0, 240, 255, 0.1);
-    color: var(--accent-color);
-    font-weight: 600;
-    padding: 6px 12px;
-    border-radius: 8px;
-    font-size: 0.8rem;
-    letter-spacing: 0.5px;
-    display: inline-block;
-    border: 1px solid rgba(0, 240, 255, 0.2);
-}
+.btn-outline-custom-green { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
+.btn-outline-custom-green:hover { background: rgba(16, 185, 129, 0.1); border-color: var(--success-color); color: var(--success-color); }
+.btn-custom-active-green { background: var(--success-color); color: #fff; border: 1px solid var(--success-color); cursor: default; }
 
-.listing-price {
-    color: var(--success-color);
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.5px;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-}
-
-.listing-meta {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    margin-bottom: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-/* --- 9. FILTERS (Dark Theme) --- */
-.filter-btn {
-    border: 1px solid var(--glass-border);
-    background: rgba(255, 255, 255, 0.05);
-    color: var(--text-light);
-    border-radius: 50px;
-    padding: 8px 20px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    margin-right: 8px;
-    margin-bottom: 8px;
-    display: inline-block;
-}
-
-.filter-btn:hover, .filter-btn.active {
-    border-color: var(--accent-color);
-    color: #fff;
-    background-color: rgba(0, 240, 255, 0.1);
-    box-shadow: var(--shadow-hover);
-}
-
-/* --- 10. JOB SPECIFIC --- */
-.badge-remote {
-    background-color: rgba(16, 185, 129, 0.1);
-    color: var(--success-color);
-    font-size: 0.75rem;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-left: 8px;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-}
-
-.company-name {
-    color: var(--accent-color);
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-}
-
-/* --- 11. БРОНИРАН STICKY FOOTER --- */
-html {
-    height: 100%;
-    background-color: var(--bg-body);
-}
-
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    margin: 0;
-}
-
-.main-content {
-    flex: 1 0 auto;
-}
-
-.custom-footer {
-    flex-shrink: 0;
-    width: 100%;
-}
+/* --- 9. ANIMATIONS --- */
+@keyframes pulse { 0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0.7); } 70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(0, 240, 255, 0); } 100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 240, 255, 0); } }
+@keyframes pulse-blue { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } }
+@keyframes pulse-green { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } }
+@keyframes pulse-red { 0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } 50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.2; } 100% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.5; } }
+@keyframes pulse-blue-scanner { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(1.5); opacity: 0; } }
