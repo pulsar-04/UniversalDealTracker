@@ -86124,3 +86124,7 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-07 16:31:44] INFO [crawl_cars]: --> Processing: Audi
 [2026-07-07 16:31:56] INFO [crawl_cars]:    Saved 118 new cars for 'Audi'
 [2026-07-07 16:31:56] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-08 10:23:27] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-08 10:23:27] INFO [crawl_cars]: --> Processing: Audi
+[2026-07-08 10:23:31] WARNING [crawl_cars]:    [Price Change] Audi A3: 1100.00 -> 999
+[2026-07-08 10:23:45] INFO [crawl_cars]:    Saved 3 new cars for 'Audi'

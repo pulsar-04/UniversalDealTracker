@@ -181,14 +181,22 @@ def car_detail(request, pk):
 
 
 @login_required
-def toggle_search_status(request, search_id):
-    search = get_object_or_404(Search, id=search_id, user=request.user)
+def toggle_search_status(request, pk):
+    search = get_object_or_404(Search, id=pk, user=request.user)
 
     search.is_paused = not search.is_paused
     search.save()
 
-    if 'ajax' in request.GET or request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest':
-        return JsonResponse({'is_paused': search.is_paused})
+    is_ajax = (
+        request.headers.get('x-requested-with') == 'XMLHttpRequest' or
+        request.GET.get('ajax') == '1'
+    )
+
+    if is_ajax:
+        return JsonResponse({
+            'is_paused': search.is_paused,
+            'status': 'success'
+        })
 
     return redirect('dashboard')
 
