@@ -3,7 +3,7 @@ import types
 from django.core.management.base import BaseCommand
 from listings.scrapers.job_scraper import DevBgScraper
 from listings.models import JobListing, Search
-from django.core.mail import send_mail
+from listings.tasks import send_deal_email_task
 from django.conf import settings
 
 logger = logging.getLogger('scrapers')
@@ -58,7 +58,12 @@ class Command(BaseCommand):
                             if not is_first_run and search.user.email and hasattr(search.user, 'profile') and search.user.profile.receive_emails:
                                 subject = f"💼 DealTracker: Нова IT позиция за {search.title}"
                                 message = f"Здравей!\n\nНова позиция:\n🏢 {item['company']}\n📌 {item['title']}\n\nЛинк: {item['link']}"
-                                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [search.user.email], fail_silently=True)
+                                send_deal_email_task.delay(
+                                    subject,
+                                    message,
+                                    settings.DEFAULT_FROM_EMAIL,
+                                    [search.user.email]
+                                )
                         else:
                             job.title = item['title']
                             job.company_name = item['company']

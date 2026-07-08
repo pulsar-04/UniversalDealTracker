@@ -3,7 +3,7 @@ import types
 from django.core.management.base import BaseCommand
 from listings.scrapers.car_scraper import MobileBgScraper, CarsBgScraper
 from listings.models import CarListing, Search, PriceHistory
-from django.core.mail import send_mail
+from listings.tasks import send_deal_email_task
 from django.conf import settings
 
 logger = logging.getLogger('scrapers')
@@ -73,8 +73,12 @@ class Command(BaseCommand):
                                                                                   'profile') and search.user.profile.receive_emails:
                                 subject = f"🚀 DealTracker: Нова обява за {search.title}"
                                 message = f"Здравей, {search.user.username}!\n\nРоботът откри нова обява:\n🚗 {item['title']}\n💰 {item['price']} лв\n\nЛинк: {item['link']}"
-                                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [search.user.email],
-                                          fail_silently=True)
+                                send_deal_email_task.delay(
+                                    subject,
+                                    message,
+                                    settings.DEFAULT_FROM_EMAIL,
+                                    [search.user.email]
+                                )
 
                         else:
                             old_price = car.price
