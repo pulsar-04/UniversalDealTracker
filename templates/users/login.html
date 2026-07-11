@@ -43,7 +43,10 @@
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Парола</label>
                     <div class="input-group has-validation">
                         <span class="input-group-text border-0" style="background: rgba(0,0,0,0.4); color: var(--text-muted);"><i class="bi bi-key"></i></span>
-                        <input type="password" name="password" class="form-control text-light custom-input border-start-0 pl-0" required placeholder="••••••••">
+                        <input type="password" name="password" id="passwordInput" class="form-control text-light custom-input border-start-0 border-end-0 pl-0" required placeholder="••••••••">
+                        <span class="input-group-text border-0" id="togglePasswordBtn" style="background: rgba(0,0,0,0.4); color: var(--text-muted); cursor: pointer; transition: color 0.3s;" title="Покажи/Скрий паролата">
+                            <i class="bi bi-eye" id="toggleIcon"></i>
+                        </span>
                         <div class="invalid-feedback" style="font-size: 0.8rem; color: #ff6b6b;">
                             Моля, въведи парола.
                         </div>
@@ -85,7 +88,6 @@
             }, 3500);
         }
 
-        // 2. Клиентска Bootstrap валидация за празни полета
         const forms = document.querySelectorAll('.needs-validation');
         Array.from(forms).forEach(form => {
             form.addEventListener('submit', event => {
@@ -96,6 +98,22 @@
                 form.classList.add('was-validated');
             }, false);
         });
+
+        const togglePasswordBtn = document.getElementById('togglePasswordBtn');
+        const passwordInput = document.getElementById('passwordInput');
+        const toggleIcon = document.getElementById('toggleIcon');
+
+        if (togglePasswordBtn && passwordInput && toggleIcon) {
+            togglePasswordBtn.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                toggleIcon.classList.toggle('bi-eye');
+                toggleIcon.classList.toggle('bi-eye-slash');
+
+                togglePasswordBtn.style.color = type === 'text' ? 'var(--accent-color)' : 'var(--text-muted)';
+            });
+        }
     });
 </script>
 {% endblock %}
