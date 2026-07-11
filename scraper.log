@@ -86132,3 +86132,154 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-08 11:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
 [2026-07-08 11:30:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
 [2026-07-08 12:00:00] WARNING [crawl_cars]: No searches found in database! Go to Admin and add one.
+[2026-07-08 12:02:11] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-08 12:02:11] INFO [crawl_cars]: --> Processing: VW
+[2026-07-08 12:07:27] INFO [crawl_cars]:    Saved 2671 new cars for 'VW'
+[2026-07-08 12:07:27] INFO [crawl_cars]:    [Muted] Initial scan completed. Future updates will trigger emails.
+[2026-07-08 12:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-08 12:30:00] INFO [crawl_cars]: --> Processing: VW
+[2026-07-08 12:34:55] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI, DSG, Pano, Dynamic lights, Digital cockpi: 15300.00 -> 15000
+[2026-07-08 12:35:11] INFO [crawl_cars]:    Saved 5 new cars for 'VW'
+[2026-07-08 13:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-08 13:00:00] INFO [crawl_cars]: --> Processing: VW
+[2026-07-08 13:03:17] WARNING [crawl_cars]:    [Price Change] VW Golf Highline 1, 4 TSI -160к.с. 6 скорости: 5200.00 -> 4999
+[2026-07-08 13:04:29] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0TDI: 10300.00 -> 9700
+[2026-07-08 13:05:09] INFO [crawl_cars]:    Saved 3 new cars for 'VW'
+[2026-07-11 11:20:27] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-11 11:20:27] INFO [crawl_cars]: --> Processing: VW
+[2026-07-11 11:20:27] WARNING [crawl_cars]:    [Price Change] VW Golf = = 110 ХИЛЯДИ= = ИТАЛИЯ= = 1.6-102= = GOAL= =: 4199.00 -> 3999
+[2026-07-11 11:20:27] WARNING [crawl_cars]:    [Price Change] VW Golf 6 2.0TDI Navi, Xenon, 140к.с: 4700.00 -> 4500
+[2026-07-11 11:20:29] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6TDI-6ск-110кс- NAVI !!!: 8100.00 -> 7990
+[2026-07-11 11:20:34] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9TDI(ALH)(90)* НОВ ВНОС*: 1750.00 -> 1650
+[2026-07-11 11:20:34] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9TDI(101)* FACELIFT-2006* НОВ ВНОС*: 1750.00 -> 1650
+[2026-07-11 11:20:34] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9TDI(ALH)(90)* FACELIFT* КЛИМАТРОНИК* НОВ ВНОС*: 1750.00 -> 1650
+[2026-07-11 11:20:34] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9TDI(90кс)* * HOB BHOC* *: 1800.00 -> 1750
+[2026-07-11 11:20:34] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9TDI* (90кс)* FACELIFT* * КЛИМАТРОНИК* НОВ ВНОС*: 1900.00 -> 1850
+[2026-07-11 11:20:36] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6 TDI 105 k.c.  170 000 kм NAVI: 2399.00 -> 2099
+[2026-07-11 11:20:39] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0SDI* (75кс)* * HOB BHOC* *: 2699.00 -> 2650
+[2026-07-11 11:20:41] WARNING [crawl_cars]:    [Price Change] VW Golf 4х4  1.9 TDI: 2999.00 -> 2799
+[2026-07-11 11:20:41] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9 тди автоматик: 3050.00 -> 2999
+[2026-07-11 11:20:43] WARNING [crawl_cars]:    [Price Change] VW Golf Обслужен 200 коня в топ топ състояние запазен: 3200.00 -> 3100
+[2026-07-11 11:20:43] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6 i ГАЗ/ИТАЛИЯ/АВТОПИЛОТ/КЛИМАТРОНИК: 3330.00 -> 3250
+[2026-07-11 11:20:48] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4TSI AVTOMAT DSG: 3699.00 -> 3500
+[2026-07-11 11:20:48] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9TDI* (105кс)* * KLIMATRONIK* * НОВ ВНОС*: 3600.00 -> 3550
+[2026-07-11 11:20:48] WARNING [crawl_cars]:    [Price Change] VW Golf VI 1.4TSI 160к.с. Клима: 3666.00 -> 3699
+[2026-07-11 11:20:50] WARNING [crawl_cars]:    [Price Change] VW Golf 6 High line  топ екстри, Рециклирани Дюзи: 4243.00 -> 4199
+[2026-07-11 11:20:53] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4i* Highline* UNIKAT*: 4599.00 -> 4499
+[2026-07-11 11:20:55] WARNING [crawl_cars]:    [Price Change] VW Golf 1.8т-350 к.с: 4600.00 -> 4800
+[2026-07-11 11:20:55] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6TDI!!HIGHLINE!!TEMPOMAT!!: 4890.00 -> 4889
+[2026-07-11 11:20:55] WARNING [crawl_cars]:    [Price Change] VW Golf 6* R-LINE* 1.6 TDI* KATO НОВ* EURO-5B*: 5100.00 -> 4990
+[2026-07-11 11:20:57] WARNING [crawl_cars]:    [Price Change] VW Golf 1, 6TDI HI-LINE: 5350.00 -> 5000
+[2026-07-11 11:21:02] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4tgi: 6100.00 -> 5999
+[2026-07-11 11:21:02] WARNING [crawl_cars]:    [Price Change] VW Golf GTI 211+ 6 Скорости Навигация Реални километри: 6500.00 -> 5999
+[2026-07-11 11:21:07] WARNING [crawl_cars]:    [Price Change] VW Golf 6 / 2.0 TDI DSG: 6900.00 -> 6800
+[2026-07-11 11:21:07] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6TDI, Highline, evro6: 7200.00 -> 7000
+[2026-07-11 11:21:09] WARNING [crawl_cars]:    [Price Change] VW Golf 2009г/BLUEMOTION/EDITION30/БЕЗ-АНАЛОГ: 7699.00 -> 7399
+[2026-07-11 11:21:12] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0TDI / ТОП СЪСТОЯНИЕ// МАСАЖ//ОБСЛУЖЕН//AutoHold: 8333.00 -> 7888
+[2026-07-11 11:21:14] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0/150/DSG/NAVI/LED/F1/PANO/DYNAUDIO/ACC: 9200.00 -> 8800
+[2026-07-11 11:21:16] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI ALLSTAR: 9300.00 -> 8990
+[2026-07-11 11:21:19] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI 150 Highline: 10695.00 -> 10600
+[2026-07-11 11:21:19] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI | DISTRONIC | PANORAMA: 11999.00 -> 11700
+[2026-07-11 11:21:23] WARNING [crawl_cars]:    [Price Change] VW Golf 7+ Германия Автоматик Пълна История 2.0TDi 150kc: 11100.00 -> 14700
+[2026-07-11 11:21:26] WARNING [crawl_cars]:    [Price Change] VW Golf E-HYBRID: 18399.00 -> 18100
+[2026-07-11 11:21:28] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6 ГАЗОВ ИНЖЕКЦИОН: 450.00 -> 400
+[2026-07-11 11:21:28] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6: 650.00 -> 550
+[2026-07-11 11:21:33] WARNING [crawl_cars]:    [Price Change] VW Golf 1.8 LPG: 999.00 -> 900
+[2026-07-11 11:21:33] WARNING [crawl_cars]:    [Price Change] VW Golf: 1000.00 -> 950
+[2026-07-11 11:21:33] WARNING [crawl_cars]:    [Price Change] VW Golf: 1100.00 -> 980
+[2026-07-11 11:21:37] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 метан: 1200.00 -> 1100
+[2026-07-11 11:21:40] WARNING [crawl_cars]:    [Price Change] VW Golf: 1280.00 -> 1200
+[2026-07-11 11:21:42] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9 SDI 90к.с. без документи ЦЯЛ РАБОТЕЩ ЗА ЧАСТИ: 1400.00 -> 1300
+[2026-07-11 11:21:44] WARNING [crawl_cars]:    [Price Change] VW Golf: 1450.00 -> 1350
+[2026-07-11 11:21:44] WARNING [crawl_cars]:    [Price Change] VW Golf: 1400.00 -> 1350
+[2026-07-11 11:21:44] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9 TDI: 1500.00 -> 1350
+[2026-07-11 11:21:47] WARNING [crawl_cars]:    [Price Change] VW Golf: 1550.00 -> 1400
+[2026-07-11 11:21:54] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9 TDI: 1650.00 -> 1600
+[2026-07-11 11:21:54] WARNING [crawl_cars]:    [Price Change] VW Golf: 1800.00 -> 1700
+[2026-07-11 11:21:54] WARNING [crawl_cars]:    [Price Change] VW Golf 1.8: 1800.00 -> 1700
+[2026-07-11 11:22:01] WARNING [crawl_cars]:    [Price Change] VW Golf: 1900.00 -> 1800
+[2026-07-11 11:22:03] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9tdi 110* Italy*: 1950.00 -> 1900
+[2026-07-11 11:22:03] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9tdi* внос Италия*: 1999.00 -> 1950
+[2026-07-11 11:22:10] WARNING [crawl_cars]:    [Price Change] VW Golf 1.8T GTI: 2099.00 -> 2088
+[2026-07-11 11:22:12] WARNING [crawl_cars]:    [Price Change] VW Golf Cabrio 1.8   Mauritius Blue   Karmann Edition: 2350.00 -> 2100
+[2026-07-11 11:22:12] WARNING [crawl_cars]:    [Price Change] VW Golf 5 fsi.: 2400.00 -> 2200
+[2026-07-11 11:22:12] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9tdi klima: 1900.00 -> 2200
+[2026-07-11 11:22:15] WARNING [crawl_cars]:    [Price Change] VW Golf: 2350.00 -> 2250
+[2026-07-11 11:22:17] WARNING [crawl_cars]:    [Price Change] VW Golf 1.8i* 90*: 2600.00 -> 2333
+[2026-07-11 11:22:19] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9 TDI: 2549.00 -> 2400
+[2026-07-11 11:22:22] WARNING [crawl_cars]:    [Price Change] VW Golf: 2700.00 -> 2500
+[2026-07-11 11:22:26] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI 4motion: 2399.00 -> 2599
+[2026-07-11 11:22:26] WARNING [crawl_cars]:    [Price Change] VW Golf: 2700.00 -> 2600
+[2026-07-11 11:22:26] WARNING [crawl_cars]:    [Price Change] VW Golf Голф5: 2800.00 -> 2600
+[2026-07-11 11:22:31] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4 80kc: 2800.00 -> 2650
+[2026-07-11 11:22:31] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9tdi 105кс: 2750.00 -> 2650
+[2026-07-11 11:22:31] WARNING [crawl_cars]:    [Price Change] VW Golf: 2750.00 -> 2699
+[2026-07-11 11:22:31] WARNING [crawl_cars]:    [Price Change] VW Golf: 2750.00 -> 2700
+[2026-07-11 11:22:33] WARNING [crawl_cars]:    [Price Change] VW Golf 5 1.9 TDI 90к.с: 3000.00 -> 2800
+[2026-07-11 11:22:38] WARNING [crawl_cars]:    [Price Change] VW Golf: 3050.00 -> 2950
+[2026-07-11 11:22:43] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0TDI GT: 3200.00 -> 3000
+[2026-07-11 11:22:43] WARNING [crawl_cars]:    [Price Change] VW Golf Vw Golf 4: 3000.00 -> 2500
+[2026-07-11 11:22:43] WARNING [crawl_cars]:    [Price Change] VW Golf: 3300.00 -> 3000
+[2026-07-11 11:22:45] WARNING [crawl_cars]:    [Price Change] VW Golf 5: 3200.00 -> 3000
+[2026-07-11 11:22:45] WARNING [crawl_cars]:    [Price Change] VW Golf: 3200.00 -> 3100
+[2026-07-11 11:22:52] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4Т: 3500.00 -> 3350
+[2026-07-11 11:22:54] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6 tdi klima: 3500.00 -> 3400
+[2026-07-11 11:22:56] WARNING [crawl_cars]:    [Price Change] VW Golf 1, 6  Бензин / Газ: 3550.00 -> 3500
+[2026-07-11 11:22:59] WARNING [crawl_cars]:    [Price Change] VW Golf 1.9 TDI, 105 кс: 4000.00 -> 3500
+[2026-07-11 11:23:01] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI 140HP / DSG: 3650.00 -> 3550
+[2026-07-11 11:23:01] WARNING [crawl_cars]:    [Price Change] VW Golf Газов инжекцион: 3600.00 -> 3550
+[2026-07-11 11:23:06] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6/90кс 118000км EVRO5A КЛИМАТРОНИК: 3900.00 -> 3800
+[2026-07-11 11:23:08] WARNING [crawl_cars]:    [Price Change] VW Golf: 3899.00 -> 3849
+[2026-07-11 11:23:08] WARNING [crawl_cars]:    [Price Change] VW Golf 5: 4300.00 -> 3899
+[2026-07-11 11:23:08] WARNING [crawl_cars]:    [Price Change] VW Golf: 4000.00 -> 3899
+[2026-07-11 11:23:13] WARNING [crawl_cars]:    [Price Change] VW Golf 1, 9TDi: 4300.00 -> 3999
+[2026-07-11 11:23:13] WARNING [crawl_cars]:    [Price Change] VW Golf: 4200.00 -> 4000
+[2026-07-11 11:23:17] WARNING [crawl_cars]:    [Price Change] VW Golf: 4200.00 -> 4100
+[2026-07-11 11:23:20] WARNING [crawl_cars]:    [Price Change] VW Golf 3: 4800.00 -> 4200
+[2026-07-11 11:23:27] WARNING [crawl_cars]:    [Price Change] VW Golf: 4600.00 -> 4500
+[2026-07-11 11:23:27] WARNING [crawl_cars]:    [Price Change] VW Golf TSI, FLY: 4700.00 -> 4500
+[2026-07-11 11:23:29] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4TSI-122k-6sk-GPL: 4900.00 -> 4500
+[2026-07-11 11:23:29] WARNING [crawl_cars]:    [Price Change] VW Golf: 4600.00 -> 4599
+[2026-07-11 11:23:43] WARNING [crawl_cars]:    [Price Change] VW Golf: 4990.00 -> 4999
+[2026-07-11 11:23:50] WARNING [crawl_cars]:    [Price Change] VW Golf: 5600.00 -> 5200
+[2026-07-11 11:23:50] WARNING [crawl_cars]:    [Price Change] VW Golf Golf 6 2.0 140HP: 5600.00 -> 5299
+[2026-07-11 11:23:50] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0TDI 6speed 140h.p: 0.00 -> 5300
+[2026-07-11 11:23:50] WARNING [crawl_cars]:    [Price Change] VW Golf 1.2: 5600.00 -> 5300
+[2026-07-11 11:23:50] WARNING [crawl_cars]:    [Price Change] VW Golf 6: 5500.00 -> 5300
+[2026-07-11 11:23:57] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6TDI-110к.с. Bluemotion: 5900.00 -> 5500
+[2026-07-11 11:24:04] WARNING [crawl_cars]:    [Price Change] VW Golf 7 TSI 2014г Нов Внос!!!: 6000.00 -> 5950
+[2026-07-11 11:24:04] WARNING [crawl_cars]:    [Price Change] VW Golf 1, 4 TFSi: 6300.00 -> 5999
+[2026-07-11 11:24:04] WARNING [crawl_cars]:    [Price Change] VW Golf: 6100.00 -> 6000
+[2026-07-11 11:24:11] WARNING [crawl_cars]:    [Price Change] VW Golf: 6500.00 -> 6400
+[2026-07-11 11:24:13] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0GTI: 6999.00 -> 6500
+[2026-07-11 11:24:16] WARNING [crawl_cars]:    [Price Change] VW Golf: 6800.00 -> 6600
+[2026-07-11 11:24:18] WARNING [crawl_cars]:    [Price Change] VW Golf 1.4 TGI: 6750.00 -> 6700
+[2026-07-11 11:24:18] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 GTD DSG: 6800.00 -> 6700
+[2026-07-11 11:24:27] WARNING [crawl_cars]:    [Price Change] VW Golf 2, 0 TDI-DSG: 7350.00 -> 7200
+[2026-07-11 11:24:32] WARNING [crawl_cars]:    [Price Change] VW Golf 1.6D РЕВИЗИРАНА КУТИЯ: 7800.00 -> 7600
+[2026-07-11 11:24:32] WARNING [crawl_cars]:    [Price Change] VW Golf VI 2.0 GTI: 7800.00 -> 7700
+[2026-07-11 11:24:41] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 TDI..170 hp..GTD..SPORT: 7900.00 -> 8300
+[2026-07-11 11:24:44] WARNING [crawl_cars]:    [Price Change] VW Golf GOLF 7 2.0TDI ЛИЗИНГ!: 9800.00 -> 8500
+[2026-07-11 11:24:46] WARNING [crawl_cars]:    [Price Change] VW Golf 7 - 2.0TDI DSG: 9000.00 -> 8600
+[2026-07-11 11:24:51] WARNING [crawl_cars]:    [Price Change] VW Golf VII + багажник 190 л и багажник за велосипед: 9379.00 -> 8999
+[2026-07-11 11:24:55] WARNING [crawl_cars]:    [Price Change] VW Golf 4X4: 9500.00 -> 9400
+[2026-07-11 11:25:05] WARNING [crawl_cars]:    [Price Change] VW Golf 7.5, 1.5TGI, KEYLESS, DISTRONIC, FULL LED, ЛИЗИНГ: 11299.00 -> 10999
+[2026-07-11 11:25:05] WARNING [crawl_cars]:    [Price Change] VW Golf GTD: 11800.00 -> 10999
+[2026-07-11 11:25:07] WARNING [crawl_cars]:    [Price Change] VW Golf 1, 4 GTE Virtual cockpit: 10700.00 -> 11200
+[2026-07-11 11:25:07] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 GTI: 11700.00 -> 11490
+[2026-07-11 11:25:14] WARNING [crawl_cars]:    [Price Change] VW Golf e-golf Термопомпа: 12900.00 -> 12880
+[2026-07-11 11:25:16] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 GTD: 13999.00 -> 13700
+[2026-07-11 11:25:23] WARNING [crawl_cars]:    [Price Change] VW Golf Life/1.5e-TSI/150k.c./6MT: 15700.00 -> 15500
+[2026-07-11 11:25:30] WARNING [crawl_cars]:    [Price Change] VW Golf 2.0 GTI MATRIX PERFORMANCE: 25000.00 -> 24500
+[2026-07-11 11:25:33] WARNING [crawl_cars]:    [Price Change] VW Golf 8.5 LifePlus: 27000.00 -> 26000
+[2026-07-11 11:25:33] WARNING [crawl_cars]:    [Price Change] VW Golf: 27000.00 -> 26500
+[2026-07-11 11:25:33] WARNING [crawl_cars]:    [Price Change] VW Golf: 24990.00 -> 24490
+[2026-07-11 11:25:35] WARNING [crawl_cars]:    [Price Change] VW Golf 8.5 R-Line Plus* Sport TDI/ Black Style/ ПОРЪЧКОВ: 37000.00 -> 33500
+[2026-07-11 11:25:37] INFO [crawl_cars]:    Saved 137 new cars for 'VW'
+[2026-07-11 11:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-11 11:30:00] INFO [crawl_cars]: --> Processing: VW
+[2026-07-11 11:35:09] INFO [crawl_cars]:    Saved 0 new cars for 'VW'
+[2026-07-11 12:00:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-11 12:00:00] INFO [crawl_cars]: --> Processing: VW
+[2026-07-11 12:02:20] WARNING [crawl_cars]:    [Price Change] VW Golf R-line: 4350.00 -> 3200
+[2026-07-11 12:05:10] INFO [crawl_cars]:    Saved 2 new cars for 'VW'
