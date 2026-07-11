@@ -86296,3 +86296,8 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-11 13:00:07] WARNING [crawl_cars]:    [Price Change] Audi A3 s tronic, s line, лимузина: 11900.00 -> 10900
 [2026-07-11 13:00:12] INFO [crawl_cars]:    Saved 4 new cars for 'Audi'
 [2026-07-11 13:00:12] INFO [crawl_cars]: --> Processing: VW
+[2026-07-11 13:30:01] INFO [crawl_cars]: Found 2 active searches. Starting job...
+[2026-07-11 13:30:01] INFO [crawl_cars]: --> Processing: Audi
+[2026-07-11 13:30:13] INFO [crawl_cars]:    Saved 0 new cars for 'Audi'
+[2026-07-11 13:30:13] INFO [crawl_cars]: --> Processing: VW
+[2026-07-11 13:35:24] INFO [crawl_cars]:    Saved 0 new cars for 'VW'
