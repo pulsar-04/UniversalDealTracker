@@ -86286,3 +86286,13 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-11 12:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
 [2026-07-11 12:30:00] INFO [crawl_cars]: --> Processing: VW
 [2026-07-11 12:35:10] INFO [crawl_cars]:    Saved 0 new cars for 'VW'
+[2026-07-11 13:00:00] INFO [crawl_cars]: Found 2 active searches. Starting job...
+[2026-07-11 13:00:00] INFO [crawl_cars]: --> Processing: Audi
+[2026-07-11 13:00:00] WARNING [crawl_cars]:    [Price Change] Audi A3 Facelift: 12900.00 -> 12300
+[2026-07-11 13:00:05] WARNING [crawl_cars]:    [Price Change] Audi A3 S-lain: 3800.00 -> 3600
+[2026-07-11 13:00:05] WARNING [crawl_cars]:    [Price Change] Audi A3: 3600.00 -> 3900
+[2026-07-11 13:00:05] WARNING [crawl_cars]:    [Price Change] Audi A3 A3: 6700.00 -> 6490
+[2026-07-11 13:00:07] WARNING [crawl_cars]:    [Price Change] Audi A3 1.8 TFSI S- TRONIC: 8990.00 -> 8499
+[2026-07-11 13:00:07] WARNING [crawl_cars]:    [Price Change] Audi A3 s tronic, s line, лимузина: 11900.00 -> 10900
+[2026-07-11 13:00:12] INFO [crawl_cars]:    Saved 4 new cars for 'Audi'
+[2026-07-11 13:00:12] INFO [crawl_cars]: --> Processing: VW
