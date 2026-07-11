@@ -46,11 +46,11 @@ def custom_login(request):
             else:
                 request.session.set_expiry(0)
 
-            messages.success(request, f'Добре дошъл отново, {user.username}!')
             return redirect('car_list')
         else:
             is_ratelimited(request, group='login_failed', key='ip', rate='5/15m', increment=True)
             messages.error(request, 'Грешно потребителско име или парола!')
+            return render(request, 'users/login.html', {'submitted_username': username})
 
     return render(request, 'users/login.html')
 

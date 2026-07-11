@@ -13,28 +13,40 @@
         </div>
 
         <div class="auth-card p-4 p-sm-5 shadow-lg" data-aos="fade-up" data-aos-duration="1000" style="background: rgba(10, 10, 15, 0.65); border: 1px solid rgba(255,255,255,0.08); border-radius: 20px; backdrop-filter: blur(16px);">
-            <form method="POST">
-                {% csrf_token %}
 
-                {% if form.errors %}
-                <div class="alert alert-danger p-3 mb-4 text-center small fw-bold" style="background: rgba(220,53,69,0.1); border: 1px solid rgba(220,53,69,0.3); color: #ff6b6b; border-radius: 10px;">
-                    <i class="bi bi-exclamation-triangle-fill me-1"></i> Отказан достъп. Опитай отново.
+            {% if messages %}
+                {% for message in messages %}
+                <div id="error-alert" class="alert p-3 mb-4 text-center small fw-bold d-flex align-items-center justify-content-center gap-2"
+                     style="background: rgba(220, 53, 69, 0.12); border: 1px solid rgba(220, 53, 69, 0.35); color: #ff6b6b; border-radius: 12px; backdrop-filter: blur(10px); transition: opacity 0.5s ease;"
+                     data-aos="fade-in" data-aos-duration="300">
+                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                    <span>{{ message }}</span>
                 </div>
-                {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            <form method="POST" class="needs-validation" novalidate>
+                {% csrf_token %}
 
                 <div class="mb-4 position-relative">
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Потребителско име</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text border-0" style="background: rgba(0,0,0,0.4); color: var(--text-muted);"><i class="bi bi-person"></i></span>
-                        <input type="text" name="username" class="form-control text-light custom-input border-start-0 pl-0" required placeholder="admin_user">
+                        <input type="text" name="username" value="{{ submitted_username|default:'' }}" class="form-control text-light custom-input border-start-0 pl-0" required placeholder="admin_user">
+                        <div class="invalid-feedback" style="font-size: 0.8rem; color: #ff6b6b;">
+                            Моля, въведи потребителско име.
+                        </div>
                     </div>
                 </div>
 
                 <div class="mb-4 position-relative">
                     <label class="form-label text-muted small fw-bold text-uppercase mb-2" style="letter-spacing: 1px; font-size: 0.75rem;">Парола</label>
-                    <div class="input-group">
+                    <div class="input-group has-validation">
                         <span class="input-group-text border-0" style="background: rgba(0,0,0,0.4); color: var(--text-muted);"><i class="bi bi-key"></i></span>
                         <input type="password" name="password" class="form-control text-light custom-input border-start-0 pl-0" required placeholder="••••••••">
+                        <div class="invalid-feedback" style="font-size: 0.8rem; color: #ff6b6b;">
+                            Моля, въведи парола.
+                        </div>
                     </div>
                 </div>
 
@@ -62,4 +74,28 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const alertBox = document.getElementById("error-alert");
+        if (alertBox) {
+            setTimeout(() => {
+                alertBox.style.opacity = '0';
+                setTimeout(() => alertBox.remove(), 500);
+            }, 3500);
+        }
+
+        // 2. Клиентска Bootstrap валидация за празни полета
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    });
+</script>
 {% endblock %}

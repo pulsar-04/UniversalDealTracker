@@ -86283,3 +86283,6 @@ DETAIL:  Key (url)=(https://www.mobile.bg/obiava-21782372947400631-bmw-x6-137000
 [2026-07-11 12:00:00] INFO [crawl_cars]: --> Processing: VW
 [2026-07-11 12:02:20] WARNING [crawl_cars]:    [Price Change] VW Golf R-line: 4350.00 -> 3200
 [2026-07-11 12:05:10] INFO [crawl_cars]:    Saved 2 new cars for 'VW'
+[2026-07-11 12:30:00] INFO [crawl_cars]: Found 1 active searches. Starting job...
+[2026-07-11 12:30:00] INFO [crawl_cars]: --> Processing: VW
+[2026-07-11 12:35:10] INFO [crawl_cars]:    Saved 0 new cars for 'VW'
