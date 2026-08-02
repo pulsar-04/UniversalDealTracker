@@ -8,6 +8,7 @@ from django.conf import settings
 
 logger = logging.getLogger('scrapers')
 
+
 class Command(BaseCommand):
     help = 'Scrapes jobs from Dev.bg based on Search entries'
 
@@ -18,6 +19,8 @@ class Command(BaseCommand):
             return
 
         for search in searches:
+            logger.info(f"--> Processing Job Search: {search.title} [Playwright Engine]")
+
             if 'dev.bg' in search.url:
                 scraper = DevBgScraper(search.url)
             else:
@@ -55,7 +58,8 @@ class Command(BaseCommand):
                             )
                             saved_count += 1
 
-                            if not is_first_run and search.user.email and hasattr(search.user, 'profile') and search.user.profile.receive_emails:
+                            if not is_first_run and search.user.email and hasattr(search.user,
+                                                                                  'profile') and search.user.profile.receive_emails:
                                 subject = f"💼 DealTracker: Нова IT позиция за {search.title}"
                                 message = f"Здравей!\n\nНова позиция:\n🏢 {item['company']}\n📌 {item['title']}\n\nЛинк: {item['link']}"
                                 send_deal_email_task.delay(

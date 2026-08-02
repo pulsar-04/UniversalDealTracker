@@ -22,7 +22,7 @@ class Command(BaseCommand):
         logger.info(f"Found {searches.count()} active searches. Starting job...")
 
         for search in searches:
-            logger.info(f"--> Processing: {search.title}")
+            logger.info(f"--> Processing: {search.title} [Playwright Engine]")
 
             if 'mobile.bg' in search.url:
                 scraper = MobileBgScraper(search.url)
