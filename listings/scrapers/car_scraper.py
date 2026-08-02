@@ -1,8 +1,6 @@
 from .base import BaseScraper
 import re
 import time
-import requests
-from bs4 import BeautifulSoup
 
 
 class MobileBgScraper(BaseScraper):
@@ -12,17 +10,14 @@ class MobileBgScraper(BaseScraper):
 
         while current_url:
             print(f"🌍 Зареждам страница: {current_url}")
+            self.url = current_url
 
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            }
-            try:
-                response = requests.get(current_url, headers=headers, timeout=10)
-                soup = BeautifulSoup(response.content, 'html.parser')
-            except Exception as e:
-                print(f"❌ Грешка при зареждане на {current_url}: {e}")
+            html = self.fetch_page()
+            if not html:
+                print(f"❌ Грешка при зареждане (или празен HTML) на {current_url}")
                 break
 
+            soup = self.parse_html(html)
             page_items = self.scrape_items(soup)
 
             if not page_items:
@@ -134,29 +129,23 @@ class CarsBgScraper(BaseScraper):
                     current_url = f"{original_url}?page={page}"
 
             print(f"🌍 [Cars.bg] Зареждам страница {page}: {current_url}")
+            self.url = current_url
 
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-            }
-
-            try:
-                response = requests.get(current_url, headers=headers, timeout=10)
-                soup = BeautifulSoup(response.content, 'html.parser')
-
-                page_items = self.scrape_items(soup)
-
-                if not page_items:
-                    print("🏁 [Cars.bg] Няма повече обяви (достигнат край).")
-                    break
-
-                yield page_items
-
-                time.sleep(2)
-                page += 1
-
-            except Exception as e:
-                print(f"❌ Грешка при зареждане на {current_url}: {e}")
+            html = self.fetch_page()
+            if not html:
                 break
+
+            soup = self.parse_html(html)
+            page_items = self.scrape_items(soup)
+
+            if not page_items:
+                print("🏁 [Cars.bg] Няма повече обяви (достигнат край).")
+                break
+
+            yield page_items
+
+            time.sleep(2)
+            page += 1
 
     def scrape_items(self, soup):
         items = []
