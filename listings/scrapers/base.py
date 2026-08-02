@@ -1,46 +1,32 @@
-import time
-import cloudscraper
 from bs4 import BeautifulSoup
+from playwright.sync_api import sync_playwright
 
 
 class BaseScraper:
     def __init__(self, url):
         self.url = url
 
-        self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-            'Accept-Language': 'bg-BG,bg;q=0.9,en-US;q=0.8,en;q=0.7',
-            'Connection': 'keep-alive',
-            'Upgrade-Insecure-Requests': '1',
-            'Sec-Fetch-Dest': 'document',
-            'Sec-Fetch-Mode': 'navigate',
-            'Sec-Fetch-Site': 'none',
-            'Sec-Fetch-User': '?1',
-        }
-
     def fetch_page(self):
-        print(f"Connecting to {self.url}...")
+        print(f"🌍 Вдигане на браузър и свързване към {self.url}...")
         try:
-            time.sleep(2)
+            with sync_playwright() as p:
+                browser = p.chromium.launch(headless=True)
 
-            scraper = cloudscraper.create_scraper(
-                browser={
-                    'browser': 'chrome',
-                    'platform': 'windows',
-                    'mobile': False
-                }
-            )
+                context = browser.new_context(
+                    user_agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+                    viewport={'width': 1920, 'height': 1080}
+                )
+                page = context.new_page()
 
+                page.goto(self.url, wait_until='networkidle', timeout=30000)
 
-            response = scraper.get(self.url, headers=self.headers, timeout=15)
-            response.raise_for_status()
+                html_content = page.content()
+                browser.close()
 
-            response.encoding = response.apparent_encoding
-            return response.text
+                return html_content
 
         except Exception as e:
-            print(f"❌ Error fetching page: {e}")
+            print(f"❌ Error fetching page with Playwright: {e}")
             return None
 
     def parse_html(self, html_content):
