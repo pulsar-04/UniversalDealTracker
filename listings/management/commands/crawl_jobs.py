@@ -1,3 +1,4 @@
+import os
 import logging
 import types
 from django.core.management.base import BaseCommand
@@ -13,6 +14,7 @@ class Command(BaseCommand):
     help = 'Scrapes jobs from Dev.bg based on Search entries'
 
     def handle(self, *args, **kwargs):
+        os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
         searches = Search.objects.filter(category='job', is_paused=False)
 
         if not searches.exists():
@@ -79,7 +81,8 @@ class Command(BaseCommand):
 
                     except Exception as e:
                         logger.error(f"Error saving job: {e}")
-
-            if is_first_run:
-                search.is_initial_scan_done = True
-                search.save()
+                if is_first_run and saved_count > 0:
+                    search.is_initial_scan_done = True
+                    search.save()
+                    is_first_run = False
+                    logger.info(f"   [Frontend Update] Първата порция IT обяви е готова. Радарът се изключва!")

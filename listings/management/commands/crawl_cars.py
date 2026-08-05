@@ -1,3 +1,4 @@
+import os
 import logging
 import types
 from django.core.management.base import BaseCommand
@@ -13,6 +14,8 @@ class Command(BaseCommand):
     help = 'Scrapes cars based on saved Searches in database'
 
     def handle(self, *args, **kwargs):
+        os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = "true"
+
         searches = Search.objects.filter(category='car', is_paused=False)
 
         if not searches.exists():
@@ -94,10 +97,9 @@ class Command(BaseCommand):
 
                     except Exception as e:
                         logger.error(f"Error saving car: {e}", exc_info=True)
-
+                if is_first_run and saved_count > 0:
+                    search.is_initial_scan_done = True
+                    search.save()
+                    is_first_run = False
+                    logger.info(f"   [Frontend Update] Първата порция коли е готова. Радарът се изключва!")
             logger.info(f"   Saved {saved_count} new cars for '{search.title}'")
-
-            if is_first_run:
-                search.is_initial_scan_done = True
-                search.save()
-                logger.info(f"   [Muted] Initial scan completed. Future updates will trigger emails.")
