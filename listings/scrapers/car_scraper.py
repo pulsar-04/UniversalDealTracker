@@ -5,206 +5,175 @@ import time
 
 class MobileBgScraper(BaseScraper):
 
-    def run(self):
+    def scrape_logic(self, page):
         current_url = self.url
+        page.goto(current_url, wait_until='networkidle', timeout=30000)
 
-        while current_url:
-            print(f"🌍 Зареждам страница: {current_url}")
-            self.url = current_url
+        while True:
+            print(f"🌍 Зареждам страница: {page.url}")
 
-            html = self.fetch_page()
-            if not html:
-                print(f"❌ Грешка при зареждане (или празен HTML) на {current_url}")
+            items = []
+            ad_links = page.locator('a.title')
+            count = ad_links.count()
+
+            print(f"🔎 Намерих {count} потенциални връзки...")
+            if count == 0:
                 break
 
-            soup = self.parse_html(html)
-            page_items = self.scrape_items(soup)
+            for i in range(count):
+                try:
+                    link_locator = ad_links.nth(i)
+                    href = link_locator.get_attribute('href')
 
-            if not page_items:
-                break
+                    if not href:
+                        continue
+                    if not href.startswith('http'):
+                        href = 'https:' + href
+                    if '/obiava' not in href:
+                        continue
 
-            yield page_items
+                    title = link_locator.inner_text().strip()
 
-            next_btn = soup.find('a', class_='saveSlink next')
+                    parent = link_locator.locator(
+                        "xpath=ancestor::tr | ancestor::div[contains(concat(' ', normalize-space(@class), ' '), ' item ')]").first
 
-            if next_btn and next_btn.get('href'):
-                next_url = next_btn.get('href')
+                    image_url = ""
+                    price = 0
+                    year = 2000
 
-                if next_url.startswith('//'):
-                    current_url = 'https:' + next_url
-                elif next_url.startswith('/'):
-                    current_url = 'https://www.mobile.bg' + next_url
-                else:
-                    current_url = next_url
+                    if parent.count() > 0:
+                        img = parent.locator('img.pic').first
+                        if img.count() == 0:
+                            img = parent.locator('img').first
 
-                time.sleep(2)
-            else:
-                print(f"✅ Край! Достигната е последната страница.")
-                current_url = None
+                        if img.count() > 0:
+                            src = img.get_attribute('src')
+                            if src:
+                                image_url = 'https:' + src if src.startswith('//') else src
 
-    def scrape_items(self, soup):
-        items = []
-        ad_links = soup.find_all('a', class_='title')
+                        price_tag = parent.locator('.price').first
+                        if price_tag.count() > 0:
+                            price_text = price_tag.inner_text()
+                            match = re.search(r'\d[\d\s]*', price_text)
+                            if match:
+                                clean_price = re.sub(r'\s', '', match.group(0))
+                                if clean_price.isdigit():
+                                    price = int(clean_price)
 
-        if not ad_links:
-            return []
+                        info_text = parent.inner_text()
+                        year_match = re.search(r'(19|20)\d{2}', info_text)
+                        if year_match:
+                            year = int(year_match.group(0))
 
-        print(f"🔎 Намерих {len(ad_links)} потенциални връзки...")
+                    items.append({
+                        'title': title,
+                        'price': price,
+                        'link': href,
+                        'year': year,
+                        'image_url': image_url
+                    })
 
-        for link_tag in ad_links:
-            try:
-                href = link_tag.get('href')
-                if href and not href.startswith('http'):
-                    href = 'https:' + href
-
-                if '/obiava' not in href:
+                except Exception as e:
+                    print(f"Error parsing ad: {e}")
                     continue
 
-                title = link_tag.get_text(strip=True)
+            yield items
 
-                parent_container = link_tag.find_parent('tr')
-                if not parent_container:
-                    parent_container = link_tag.find_parent('div', class_=re.compile(r'\bitem\b'))
+            next_btn = page.locator('a.saveSlink.next').first
+            if next_btn.count() > 0:
+                next_url = next_btn.get_attribute('href')
+                if next_url:
+                    if next_url.startswith('//'):
+                        current_url = 'https:' + next_url
+                    elif next_url.startswith('/'):
+                        current_url = 'https://www.mobile.bg' + next_url
+                    else:
+                        current_url = next_url
 
-                image_url = ""
-                if parent_container:
-                    img_tag = parent_container.find('img', class_='pic')
-                    if not img_tag:
-                        img_tag = parent_container.find('img')
-
-                    if img_tag and img_tag.get('src'):
-                        src = img_tag.get('src')
-                        if src.startswith('//'):
-                            image_url = 'https:' + src
-                        else:
-                            image_url = src
-
-                price = 0
-                if parent_container:
-                    price_tag = parent_container.find(class_='price')
-                    if price_tag:
-                        price_text = price_tag.get_text(separator=' ', strip=True)
-                        match = re.search(r'\d[\d\s]*', price_text)
-
-                        if match:
-                            clean_price = match.group(0)
-                            clean_price = re.sub(r'\s', '', clean_price)
-                            if clean_price.isdigit():
-                                price = int(clean_price)
-
-                year = 2000
-                info_text = parent_container.get_text() if parent_container else ""
-                year_match = re.search(r'(19|20)\d{2}', info_text)
-                if year_match:
-                    year = int(year_match.group(0))
-
-                items.append({
-                    'title': title,
-                    'price': price,
-                    'link': href,
-                    'year': year,
-                    'image_url': image_url
-                })
-
-            except Exception as e:
-                print(f"Error parsing ad: {e}")
-                continue
-
-        return items
+                    page.goto(current_url, wait_until='domcontentloaded')
+                    time.sleep(2)
+                else:
+                    break
+            else:
+                print(f"✅ Край! Достигната е последната страница.")
+                break
 
 
 class CarsBgScraper(BaseScraper):
 
-    def run(self):
+    def scrape_logic(self, page):
         original_url = self.url
-        page = 1
+        current_page = 1
 
         while True:
-            if page == 1:
-                current_url = original_url
-            else:
-                if '?' in original_url:
-                    current_url = f"{original_url}&page={page}"
-                else:
-                    current_url = f"{original_url}?page={page}"
+            current_url = original_url if current_page == 1 else f"{original_url}{'&' if '?' in original_url else '?'}page={current_page}"
 
-            print(f"🌍 [Cars.bg] Зареждам страница {page}: {current_url}")
-            self.url = current_url
+            print(f"🌍 [Cars.bg] Зареждам страница {current_page}: {current_url}")
+            page.goto(current_url, wait_until='networkidle', timeout=30000)
 
-            html = self.fetch_page()
-            if not html:
-                break
+            items = []
+            containers = page.locator('div.offer-item')
+            count = containers.count()
 
-            soup = self.parse_html(html)
-            page_items = self.scrape_items(soup)
-
-            if not page_items:
+            print(f"🔎 [Cars.bg] Намерих {count} обяви...")
+            if count == 0:
                 print("🏁 [Cars.bg] Няма повече обяви (достигнат край).")
                 break
 
-            yield page_items
+            for i in range(count):
+                try:
+                    container = containers.nth(i)
 
-            time.sleep(2)
-            page += 1
+                    a_tag = container.locator('a[href*="/offer/"]').first
+                    if a_tag.count() == 0:
+                        continue
 
-    def scrape_items(self, soup):
-        items = []
-        containers = soup.find_all('div', class_='offer-item')
+                    href = a_tag.get_attribute('href')
+                    if not href:
+                        continue
+                    if not href.startswith('http'):
+                        href = 'https://www.cars.bg' + href
 
-        if not containers:
-            return []
+                    title_tag = container.locator('h5.card__title').first
+                    title = title_tag.inner_text().strip() if title_tag.count() > 0 else "Неизвестна обява"
 
-        print(f"🔎 [Cars.bg] Намерих {len(containers)} обяви...")
+                    image_url = ""
+                    media_div = container.locator('div[class*="mdc-card__media"]').first
+                    if media_div.count() > 0:
+                        style_str = media_div.get_attribute('style')
+                        if style_str:
+                            match = re.search(r"url\(['\"]?(.*?)['\"]?\)", style_str)
+                            if match:
+                                image_url = match.group(1)
 
-        for container in containers:
-            try:
-                a_tag = container.find('a', href=re.compile(r'/offer/'))
-                if not a_tag:
+                    price = 0
+                    price_tag = container.locator('[class*="price"]').first
+                    if price_tag.count() > 0:
+                        price_text = price_tag.inner_text()
+                        match = re.search(r'([\d,]+)', price_text)
+                        if match:
+                            clean_price = match.group(1).replace(',', '')
+                            if clean_price.isdigit():
+                                price = int(clean_price)
+
+                    year = 2000
+                    info_text = container.inner_text()
+                    year_match = re.search(r'(19|20)\d{2}', info_text)
+                    if year_match:
+                        year = int(year_match.group(0))
+
+                    items.append({
+                        'title': title,
+                        'price': price,
+                        'link': href,
+                        'year': year,
+                        'image_url': image_url
+                    })
+
+                except Exception as e:
+                    print(f"Error parsing Cars.bg ad: {e}")
                     continue
 
-                href = a_tag.get('href')
-                if not href.startswith('http'):
-                    href = 'https://www.cars.bg' + href
-
-                title_tag = container.find('h5', class_='card__title')
-                title = title_tag.get_text(strip=True) if title_tag else "Неизвестна обява"
-
-                image_url = ""
-                media_div = container.find('div', class_=re.compile(r'mdc-card__media'))
-                if media_div and media_div.get('style'):
-                    style_str = media_div.get('style')
-
-                    match = re.search(r"url\(['\"]?(.*?)['\"]?\)", style_str)
-                    if match:
-                        image_url = match.group(1)
-
-                price = 0
-                price_tag = container.find(class_=re.compile('price'))
-                if price_tag:
-                    price_text = price_tag.get_text(separator=' ', strip=True)
-
-                    match = re.search(r'([\d,]+)', price_text)
-                    if match:
-                        clean_price = match.group(1).replace(',', '')
-                        if clean_price.isdigit():
-                            price = int(clean_price)
-
-                year = 2000
-                info_text = container.get_text()
-                year_match = re.search(r'(19|20)\d{2}', info_text)
-                if year_match:
-                    year = int(year_match.group(0))
-
-                items.append({
-                    'title': title,
-                    'price': price,
-                    'link': href,
-                    'year': year,
-                    'image_url': image_url
-                })
-
-            except Exception as e:
-                print(f"Error parsing Cars.bg ad: {e}")
-                continue
-
-        return items
+            yield items
+            time.sleep(2)
+            current_page += 1
