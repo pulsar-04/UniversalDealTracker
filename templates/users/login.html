@@ -16,12 +16,15 @@
 
             {% if messages %}
                 {% for message in messages %}
-                <div id="error-alert" class="alert p-3 mb-4 text-center small fw-bold d-flex align-items-center justify-content-center gap-2"
-                     style="background: rgba(220, 53, 69, 0.12); border: 1px solid rgba(220, 53, 69, 0.35); color: #ff6b6b; border-radius: 12px; backdrop-filter: blur(10px); transition: opacity 0.5s ease;"
-                     data-aos="fade-in" data-aos-duration="300">
-                    <i class="bi bi-exclamation-triangle-fill fs-5"></i>
-                    <span>{{ message }}</span>
-                </div>
+                    <!-- Показваме САМО съобщения, които реално са грешки (напр. Грешна парола) -->
+                    {% if 'error' in message.tags %}
+                    <div class="alert p-3 mb-4 text-center small fw-bold d-flex align-items-center justify-content-center gap-2 error-alert"
+                         style="background: rgba(220, 53, 69, 0.12); border: 1px solid rgba(220, 53, 69, 0.35); color: #ff6b6b; border-radius: 12px; backdrop-filter: blur(10px); transition: opacity 0.5s ease;"
+                         data-aos="fade-in" data-aos-duration="300">
+                        <i class="bi bi-exclamation-triangle-fill fs-5"></i>
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endif %}
                 {% endfor %}
             {% endif %}
 
@@ -80,13 +83,13 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        const alertBox = document.getElementById("error-alert");
-        if (alertBox) {
+        const alertBoxes = document.querySelectorAll(".error-alert");
+        alertBoxes.forEach(alertBox => {
             setTimeout(() => {
                 alertBox.style.opacity = '0';
                 setTimeout(() => alertBox.remove(), 500);
             }, 3500);
-        }
+        });
 
         const forms = document.querySelectorAll('.needs-validation');
         Array.from(forms).forEach(form => {
